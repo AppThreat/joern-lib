@@ -1,6 +1,6 @@
 # Introduction
 
-High level python library to use Joern [server](https://docs.joern.io/server).
+High level python library to interact with a Joern [server](https://docs.joern.io/server).
 
 ```
 pip install joern-lib
