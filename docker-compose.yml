@@ -1,0 +1,13 @@
+version: "3.9"
+services:
+  joern:
+    build: contrib/joern
+    ports:
+      - "7000:7000"
+    volumes:
+      - /mnt/work:/app # Set this to your directory containing sources
+      - /tmp:/tmp
+    cpus: 2
+    mem_limit: 8000m
+    mem_reservation: 4000m
+    command: joern -J-Xmx4g --server --server-host 0.0.0.0 --server-port 7000 --server-auth-username admin --server-auth-password admin

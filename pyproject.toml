@@ -1,0 +1,41 @@
+[tool.poetry]
+name = "joern-lib"
+version = "0.1.0"
+description = "Python library to interact with Joern server"
+authors = ["Team ngcloudsec <cloud@ngcloud.io>"]
+license = "Apache-2.0"
+readme = "README.md"
+packages = [{include = "joern_lib"}]
+homepage = "https://github.com/ngcloudsec/joern-lib"
+repository = "https://github.com/ngcloudsec/joern-lib"
+keywords = ["joern", "code analysis", "static analysis"]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "Intended Audience :: System Administrators",
+    "Topic :: Utilities",
+    "Topic :: Security",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Operating System :: OS Independent",
+]
+exclude = ["contrib", "tests"]
+
+[tool.poetry.dependencies]
+python = ">=3.7,<3.11"
+httpx = {extras = ["http2"], version = "^0.23.1"}
+websockets = "^10.4"
+uvloop = "^0.17.0"
+orjson = "^3.8.3"
+
+[tool.poetry.dev-dependencies]
+pytest = "^7.1.2"
+black = "^22.3.0"
+flake8 = "^4.0.1"
+pytest-cov = "^3.0.0"
+pyinstaller = "^5.0.1"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

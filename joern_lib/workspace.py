@@ -1,0 +1,72 @@
+from joern_lib import client
+
+
+def extract_dir(res):
+    if res.get("response"):
+        dir_name = res.get("response").split('String = "')[-1].split('"')[0]
+        return dir_name
+    return None
+
+
+async def list(connection):
+    res = await client.query(connection, "workspace")
+    if "[io.joern.joerncli.console.JoernProject] = empty" in res.get("response", ""):
+        return None
+    return res
+
+
+async def import_code(connection, directory, project_name=None):
+    if directory and project_name:
+        res = await client.query(
+            connection, f"""importCode("{directory}", "{project_name}")"""
+        )
+    else:
+        res = await client.query(connection, f"""importCode("{directory}")""")
+    if "Code successfully imported" in res.get("response", ""):
+        # Execute save command
+        await client.query(connection, "save")
+        return True
+    return False
+
+
+async def reset(connection):
+    await client.query(connection, "workspace.reset")
+    return True
+
+
+async def get_path(connection):
+    res = await client.query(connection, "workspace.getPath")
+    return extract_dir(res)
+
+
+async def get_active_project(connection):
+    return await client.query(connection, "workspace.getActiveProject")
+
+
+async def set_active_project(connection, project_name):
+    return await client.query(
+        connection, f"""workspace.setActiveProject("{project_name}")"""
+    )
+
+
+async def delete_project(connection, project_name):
+    return await client.query(
+        connection, f"""workspace.deleteProject("{project_name}")"""
+    )
+
+
+async def cpg_exists(connection, project_name):
+    if project_name:
+        res = await client.query(
+            connection, f"""workspace.cpgExists("{project_name}")"""
+        )
+        if "Boolean = true" in res.get("response", ""):
+            return True
+    return False
+
+
+async def get_overlay_dir(connection, project_name):
+    res = await client.query(
+        connection, f"""workspace.overlayDirByProjectName("{project_name}")"""
+    )
+    return extract_dir(res)
