@@ -65,12 +65,16 @@ def fix_json(sout):
         return {"response": sout}
 
 
-def fix_query(query):
-    if "\\." in query and "\\\\." not in query:
-        query = query.replace("\\.", "\\\\.")
-    if query.startswith("cpg.") and ".toJson" not in query:
-        query = f"{query}.toJsonPretty"
-    return query
+def fix_query(query_str):
+    if "\\." in query_str and "\\\\." not in query_str:
+        query_str = query_str.replace("\\.", "\\\\.")
+    if (
+        query_str.startswith("cpg.")
+        and ".toJson" not in query_str
+        and ".plotDot" not in query_str
+    ):
+        query_str = f"{query_str}.toJsonPretty"
+    return query_str
 
 
 def parse_error(serr):
@@ -79,10 +83,14 @@ def parse_error(serr):
     return serr
 
 
-async def query(connection, query):
+async def q(connection, query_str):
+    return await query(connection, query_str)
+
+
+async def query(connection, query_str):
     client = connection.httpclient
     response = await client.post(
-        url="/query", headers=headers, json={"query": fix_query(query)}
+        url="/query", headers=headers, json={"query": fix_query(query_str)}
     )
     if response.status_code == httpx.codes.OK:
         j = response.json()
@@ -107,9 +115,9 @@ async def bulk_query(connection, query_list):
     websocket = connection.websocket
     uuid_list = []
     response_list = []
-    for query in query_list:
+    for query_str in query_list:
         response = await client.post(
-            url="/query", headers=headers, json={"query": fix_query(query)}
+            url="/query", headers=headers, json={"query": fix_query(query_str)}
         )
         if response.status_code == httpx.codes.OK:
             j = response.json()

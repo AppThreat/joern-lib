@@ -16,6 +16,10 @@ docker compose up -d
 
 ### Common steps
 
+```
+python -m asyncio
+```
+
 Execute single query
 
 ```
@@ -26,7 +30,7 @@ connection = await client.get("http://localhost:7000", "admin", "admin")
 
 # connection = await client.get("http://localhost:7000")
 
-res = await client.query(connection, "val a=1");
+res = await client.q(connection, "val a=1");
 
 # {'response': 'a: Int = 1\n'}
 ```
@@ -63,6 +67,7 @@ Import code for analysis
 
 ```
 res = await workspace.import_code(connection, "/app", "NodeGoat")
+# True
 ```
 
 ### CPG core
@@ -71,6 +76,7 @@ List files
 
 ```
 res = await cpg.list_files(connection)
+# list of files
 ```
 
 ### JavaScript specific

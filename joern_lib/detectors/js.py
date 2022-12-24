@@ -17,12 +17,12 @@ async def list_http_routes(
     include_middlewares=True,
 ):
     if include_middlewares:
-        return await client.query(
+        return await client.q(
             connection,
             f"""cpg.call.code(".*{app_vars}.{http_methods}.*").argument.orderGte(3).location""",
         )
     else:
-        return await client.query(
+        return await client.q(
             connection,
             f"""cpg.call.code(".*{app_vars}.{http_methods}.*").argument.order(3).location""",
         )
@@ -37,41 +37,39 @@ async def get_koa_appvar(connection):
 
 
 async def get_framework_appvar(connection, framework):
-    return await client.query(
+    return await client.q(
         connection,
         f"""cpg.call.name(Operators.assignment).code(".*{framework}\\\\(.*").argument.order(1)""",
     )
 
 
 async def get_framework_config(connection, app_var="app"):
-    return await client.query(
-        connection, f"""cpg.call.code("{app_var}.*").receivedCall"""
-    )
+    return await client.q(connection, f"""cpg.call.code("{app_var}.*").receivedCall""")
 
 
 async def list_requires(connection, require_var="require"):
-    return await client.query(
+    return await client.q(
         connection,
         f'cpg.call.name(Operators.assignment).code(".*{require_var}\\\\(.*").argument.order(1)',
     )
 
 
 async def list_requires_location(connection, require_var="require"):
-    return await client.query(
+    return await client.q(
         connection,
         f'cpg.call.name(Operators.assignment).code(".*{require_var}\\\\(.*").argument.order(1).map(t => (t, t.location)).filter(_._1.isIdentifier).dedup',
     )
 
 
 async def list_nosql_collections(connection, db_list="(db|mongo)"):
-    return await client.query(
+    return await client.q(
         connection,
         f'cpg.call.code("{db_list}\\.collection.*").argument.order(3).location',
     )
 
 
 async def list_imports(connection):
-    return await client.query(connection, 'cpg.dependency.version("import")')
+    return await client.q(connection, 'cpg.dependency.version("import")')
 
 
 async def list_aws_modules(connection):
@@ -83,7 +81,7 @@ async def list_koa_modules(connection):
 
 
 async def list_sdk_modules(connection, sdk):
-    return await client.query(
+    return await client.q(
         connection,
         f'cpg.call.name(Operators.assignment).code(".*require\\\\(.*").argument.isIdentifier.filter(_.typeFullName.contains("{sdk}"))',
     )
@@ -98,7 +96,7 @@ async def used_koa_modules(connection):
 
 
 async def used_sdk_modules(connection, sdk):
-    return await client.query(
+    return await client.q(
         connection,
         f'cpg.call.name("<operator>.new").receiver.isIdentifier.filter(_.typeFullName.contains("{sdk}"))',
     )

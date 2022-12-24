@@ -2,9 +2,9 @@ FROM almalinux/9-minimal:latest
 
 LABEL maintainer="ngcloudsec" \
       org.opencontainers.image.authors="Team ngcloudsec <cloud@ngcloud.io>" \
-      org.opencontainers.image.source="" \
-      org.opencontainers.image.url="" \
-      org.opencontainers.image.version="" \
+      org.opencontainers.image.source="https://github.com/ngcloudsec/joern-lib" \
+      org.opencontainers.image.url="https://github.com/ngcloudsec/joern-lib" \
+      org.opencontainers.image.version="0.2.0" \
       org.opencontainers.image.vendor="ngCloudSec" \
       org.opencontainers.image.licenses="Apache-2.0" \
       org.opencontainers.image.title="joern" \
