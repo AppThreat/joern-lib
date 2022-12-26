@@ -11,3 +11,14 @@ services:
     mem_limit: 8000m
     mem_reservation: 4000m
     command: joern -J-Xmx4g --server --server-host 0.0.0.0 --server-port 7000 --server-auth-username admin --server-auth-password admin
+
+  polynote:
+    build: contrib/polynote
+    volumes:
+      - ./contrib/polynote/notebooks:/opt/notebooks # Set this to your notebook directory
+      - ./contrib/polynote/config.yml:/opt/config/config.yml
+      - ./:/opt/joern_lib
+      - /tmp:/tmp
+    ports:
+      - "8192:8192"
+    command: --config /opt/config/config.yml
