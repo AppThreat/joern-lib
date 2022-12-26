@@ -1,4 +1,4 @@
-name: Upload Package and Container image
+name: Upload polynote Container image
 
 on:
   push:
