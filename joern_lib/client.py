@@ -1,7 +1,6 @@
 import asyncio
 import uvloop
 import orjson
-import signal
 
 asyncio.set_event_loop_policy(uvloop.EventLoopPolicy())
 
@@ -15,11 +14,6 @@ class Connection:
     def __init__(self, httpclient, websocket):
         self.httpclient = httpclient
         self.websocket = websocket
-        # Close the connection when receiving SIGTERM.
-        loop = asyncio.get_running_loop()
-        loop.add_signal_handler(
-            signal.SIGTERM, loop.create_task, self.websocket.close()
-        )
 
     async def ping(self):
         await self.websocket.ping()
@@ -55,6 +49,7 @@ async def receive(connection):
 
 def fix_json(sout):
     try:
+        sout = sout.replace(r'"\"', '"').replace(r'\""', '"')
         if ': String = "[' in sout:
             sout = sout.split(': String = "')[-1][-1]
         elif 'String = """[' in sout:
@@ -72,6 +67,7 @@ def fix_query(query_str):
         query_str.startswith("cpg.")
         and ".toJson" not in query_str
         and ".plotDot" not in query_str
+        and not query_str.endswith(".p")
     ):
         query_str = f"{query_str}.toJsonPretty"
     return query_str

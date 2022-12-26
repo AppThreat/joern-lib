@@ -6,13 +6,21 @@ High level python library to interact with a Joern [server](https://docs.joern.i
 pip install joern-lib
 ```
 
+The repository includes docker compose configuration to interactively query the joern server with polynote notebooks.
+
+![polynote interface](docs/note1.jpg)
+
+![polynote interface](docs/note2.jpg)
+
 ## Usage
 
-Run joern server locally.
+Run joern server and polynote locally.
 
 ```
 docker compose up -d
 ```
+
+Navigate to http://localhost:8192 for an interactive polynote notebook to learn about joern server and this library.
 
 ### Common steps
 
