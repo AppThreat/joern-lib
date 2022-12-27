@@ -66,3 +66,10 @@ async def get_overlay_dir(connection, project_name):
         connection, f"""workspace.overlayDirByProjectName("{project_name}")"""
     )
     return extract_dir(res)
+
+
+async def dir_exists(connection, dir_name):
+    res = await client.q(connection, f"""os.exists(os.Path("{dir_name}"))""")
+    if "Boolean = true" in res.get("response", ""):
+        return True
+    return False

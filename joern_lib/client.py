@@ -4,11 +4,11 @@ import orjson
 import uvloop
 
 asyncio.set_event_loop_policy(uvloop.EventLoopPolicy())
-
+import os
 import httpx
 import websockets
 
-from joern_lib.utils import print_table
+from joern_lib.utils import print_table, print_md
 
 headers = {"Content-Type": "application/json", "Accept-Encoding": "gzip"}
 
@@ -90,11 +90,12 @@ def parse_error(serr):
 
 async def p(connection, query_str, title="", caption=""):
     result = await query(connection, query_str)
-    return print_table(result, title, caption)
+    print_table(result, title, caption)
+    return result
 
 
 async def q(connection, query_str):
-    if query_str.endswith(".p"):
+    if query_str.strip().endswith(".p"):
         query_str = f"{query_str[:-2]}.toJsonPretty"
         return await p(connection, query_str)
     return await query(connection, query_str)
@@ -152,3 +153,27 @@ async def bulk_query(connection, query_list):
         if len(response_list) == len(uuid_list):
             return response_list
     return response_list
+
+
+async def flows(connection, source, sink):
+    return await flowsp(
+        connection, source, sink, print=True if os.getenv("POLYNOTE_VERSION") else False
+    )
+
+
+async def flowsp(connection, source, sink, print=True):
+    results = await bulk_query(
+        connection,
+        [
+            source,
+            sink,
+            "sink.reachableByFlows(source).p",
+        ],
+    )
+    if print and len(results):
+        tmpres = results[-1]
+        if isinstance(tmpres, dict) and tmpres.get("response"):
+            tmpres = tmpres.get("response")
+        tmpA = tmpres.split('"""')[1:-1]
+        print_md("\n".join([n for n in tmpA if len(n.strip()) > 1]))
+    return results

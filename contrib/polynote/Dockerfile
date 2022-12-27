@@ -11,7 +11,7 @@ LABEL maintainer="ngcloudsec" \
       org.opencontainers.image.description="Container image for polynote" \
       org.opencontainers.docker.cmd="docker run --rm -it -v /tmp:/tmp -p 8192:8192 -v $(pwd):/opt/notebooks:rw --cpus=2 --memory=4g -t ngcloudsec/polynote"
 
-ARG POLYNOTE_VERSION="0.5.0"
+ARG POLYNOTE_VERSION="0.6.0"
 ARG SCALA_VERSION="2.12"
 ARG DIST_TAR="polynote-dist.tar.gz"
 ENV JAVA_HOME=/usr/lib/jvm/java-11-openjdk
@@ -32,6 +32,10 @@ RUN microdnf install -y gcc git-core python3 python3-devel which wget zip unzip 
 
 USER polly
 EXPOSE 8192
-ENV POLYNOTE_SCALA_VERSION ${SCALA_VERSION}
+ENV POLYNOTE_SCALA_VERSION=${SCALA_VERSION} \
+    POLYNOTE_VERSION=${POLYNOTE_VERSION} \
+    PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    PYTHONIOENCODING="utf-8"
 
 ENTRYPOINT ["/opt/polynote/polynote.py"]
