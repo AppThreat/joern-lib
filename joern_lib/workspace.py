@@ -17,6 +17,11 @@ async def list(connection):
 
 async def import_code(connection, directory, project_name=None):
     if directory and project_name:
+        res = await dir_exists(connection, directory)
+        if not res:
+            raise ValueError(
+                f"Directory {directory} doesn't exist for import into Joern. Check if the directory is mounted and accessible from the server."
+            )
         res = await client.q(
             connection, f"""importCode("{directory}", "{project_name}")"""
         )
