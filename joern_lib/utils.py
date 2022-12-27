@@ -20,7 +20,7 @@ console = Console(
 )
 
 
-def print_table(result, title="", caption=""):
+def print_table(result, title="", caption="", language="javascript"):
     table = Table(
         title=title,
         caption=caption,
@@ -47,11 +47,21 @@ def print_table(result, title="", caption=""):
                         table.add_column(k, justify=justify, overflow="fold")
                     if isinstance(v, list) and len(v) == 0:
                         v = ""
-                    rows.append(str(v) if v is not None else "")
+                    if k == "code":
+                        rows.append(Syntax(v, language))
+                    else:
+                        rows.append(str(v) if v is not None else "")
                 table.add_row(*rows)
             elif isinstance(row, list):
                 table.add_row(row)
             cols_added = True
         console.print(table)
+    else:
+        console.print(result)
+
+
+def print_md(result):
+    if isinstance(result, dict) and result.get("response"):
+        console.print(result.get("response"))
     else:
         console.print(result)

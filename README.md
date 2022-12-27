@@ -17,10 +17,11 @@ The repository includes docker compose configuration to interactively query the 
 Run joern server and polynote locally.
 
 ```
+git clone https://github.com/ngcloudsec/joern-lib.git
 docker compose up -d
 ```
 
-Navigate to http://localhost:8192 for an interactive polynote notebook to learn about joern server and this library.
+Navigate to http://localhost:8192 for an interactive polynote notebook. You could open one of the sample notebooks from the [contrib](./contrib/polynote/notebooks/joern-notes/) directory to learn about Joern server and this library.
 
 ### Common steps
 

@@ -4,7 +4,7 @@ LABEL maintainer="ngcloudsec" \
       org.opencontainers.image.authors="Team ngcloudsec <cloud@ngcloud.io>" \
       org.opencontainers.image.source="https://github.com/ngcloudsec/joern-lib" \
       org.opencontainers.image.url="https://github.com/ngcloudsec/joern-lib" \
-      org.opencontainers.image.version="0.4.0" \
+      org.opencontainers.image.version="0.6.0" \
       org.opencontainers.image.vendor="ngCloudSec" \
       org.opencontainers.image.licenses="Apache-2.0" \
       org.opencontainers.image.title="polynote" \
@@ -17,7 +17,7 @@ ARG DIST_TAR="polynote-dist.tar.gz"
 ENV JAVA_HOME=/usr/lib/jvm/java-11-openjdk
 WORKDIR /opt
 
-RUN microdnf install -y gcc git-core python3 python3-devel which wget zip unzip tar sudo java-11-openjdk-devel \
+RUN microdnf install -y gcc git-core python3 python3-devel which wget tar zip unzip sudo java-11-openjdk-devel \
     && wget -q https://github.com/polynote/polynote/releases/download/$POLYNOTE_VERSION/$DIST_TAR \
     && tar xfzp $DIST_TAR \
     && echo "DIST_TAR=$DIST_TAR" \
@@ -32,6 +32,10 @@ RUN microdnf install -y gcc git-core python3 python3-devel which wget zip unzip 
 
 USER polly
 EXPOSE 8192
-ENV POLYNOTE_SCALA_VERSION ${SCALA_VERSION}
+ENV POLYNOTE_SCALA_VERSION=${SCALA_VERSION} \
+    POLYNOTE_VERSION=${POLYNOTE_VERSION} \
+    PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    PYTHONIOENCODING="utf-8"
 
 ENTRYPOINT ["/opt/polynote/polynote.py"]
