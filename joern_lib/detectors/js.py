@@ -1,7 +1,7 @@
 from joern_lib import client
 from joern_lib.detectors.common import get_calls
 
-REQUEST_PATTERN = """(?s)(?i).*req\\.(originalUrl|path|protocol|route|secure|signedCookies|stale|subdomains|xhr|app|pipe|file|files|baseUrl|fresh|hostname|ip|url|ips|method|body|param|params|query|cookies).*"""
+REQUEST_PATTERN = """(?s)(?i).*(req|ctx)\\.(originalUrl|path|protocol|route|secure|signedCookies|stale|subdomains|xhr|app|pipe|file|files|baseUrl|fresh|hostname|ip|url|ips|method|body|param|params|query|cookies|request).*"""
 
 RESPONSE_PATTERN = """(?s)(?i).*res\\.(append|attachment|cookie|clearCookie|download|end|format|get|json|jsonp|links|location|redirect|render|send|sendFile|sendStatus|set|status|type|vary).*"""
 

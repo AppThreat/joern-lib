@@ -1,11 +1,14 @@
 import asyncio
-import uvloop
+
 import orjson
+import uvloop
 
 asyncio.set_event_loop_policy(uvloop.EventLoopPolicy())
 
 import httpx
 import websockets
+
+from joern_lib.utils import print_table
 
 headers = {"Content-Type": "application/json", "Accept-Encoding": "gzip"}
 
@@ -15,12 +18,18 @@ class Connection:
         self.httpclient = httpclient
         self.websocket = websocket
 
+    async def __aenter__(self):
+        return self
+
     async def ping(self):
         await self.websocket.ping()
 
     async def close(self):
         await self.httpclient.close()
         await self.websocket.close()
+
+    async def __aexit__(self, exc_type, exc_value, exc_traceback):
+        return await self.close()
 
 
 async def get(base_url, username=None, password=None):
@@ -79,7 +88,15 @@ def parse_error(serr):
     return serr
 
 
+async def p(connection, query_str, title="", caption=""):
+    result = await query(connection, query_str)
+    return print_table(result, title, caption)
+
+
 async def q(connection, query_str):
+    if query_str.endswith(".p"):
+        query_str = f"{query_str[:-2]}.toJsonPretty"
+        return await p(connection, query_str)
     return await query(connection, query_str)
 
 

@@ -23,7 +23,7 @@ RUN microdnf install -y gcc git-core python3 python3-devel which wget zip unzip 
     && echo "DIST_TAR=$DIST_TAR" \
     && rm $DIST_TAR \
     && pip install -r ./polynote/requirements.txt \
-    && pip install poetry GitPython rich pandas matplotlib \
+    && pip install poetry GitPython pandas matplotlib \
     && useradd -ms /bin/bash polly \
     && chown -R polly:polly /opt \
     && microdnf remove -y gcc \

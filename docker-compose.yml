@@ -1,8 +1,8 @@
 version: "3.9"
 services:
   joern:
-    # build: contrib/joern
-    image: ghcr.io/ngcloudsec/joern
+    build: contrib/joern
+    # image: ghcr.io/ngcloudsec/joern
     ports:
       - "7000:7000"
     volumes:
@@ -14,13 +14,13 @@ services:
     command: joern -J-Xmx4g --server --server-host 0.0.0.0 --server-port 7000 --server-auth-username admin --server-auth-password admin
 
   polynote:
-    # build: contrib/polynote
-    image: ghcr.io/ngcloudsec/polynote
+    build: contrib/polynote
+    # image: ghcr.io/ngcloudsec/polynote
     volumes:
       - ./contrib/polynote/notebooks:/opt/notebooks # Set this to your notebook directory
       - ./contrib/polynote/config.yml:/opt/config/config.yml
-      - ./:/opt/joern_lib
       - /tmp:/tmp
+      - ./:/opt/joern_lib
     ports:
       - "8192:8192"
     command: --config /opt/config/config.yml
