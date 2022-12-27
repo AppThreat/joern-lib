@@ -5,10 +5,11 @@ import uvloop
 
 asyncio.set_event_loop_policy(uvloop.EventLoopPolicy())
 import os
+
 import httpx
 import websockets
 
-from joern_lib.utils import print_table, print_md
+from joern_lib.utils import print_md, print_table
 
 headers = {"Content-Type": "application/json", "Accept-Encoding": "gzip"}
 
