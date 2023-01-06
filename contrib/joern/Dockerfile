@@ -17,6 +17,7 @@ RUN microdnf install -y git-core php php-cli python3 pcre2 which zip unzip sudo 
     && curl -LO https://github.com/joernio/joern/releases/latest/download/joern-install.sh \
     && chmod +x ./joern-install.sh \
     && ./joern-install.sh \
+    && mkdir -p /opt/joern/custom_scripts \
     && useradd -ms /bin/bash joern \
     && chown -R joern:joern /opt/joern \
     && rm /joern-cli.zip /joern-install.sh \

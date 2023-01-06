@@ -27,6 +27,8 @@ async def import_code(connection, directory, project_name=None):
         )
     else:
         res = await client.q(connection, f"""importCode("{directory}")""")
+    if isinstance(res, str):
+        return False
     if "Code successfully imported" in res.get("response", ""):
         # Execute save command
         await client.q(connection, "save")
