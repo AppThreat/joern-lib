@@ -59,7 +59,7 @@ jobs:
         uses: docker/metadata-action@v4
         with:
           images: |
-            ghcr.io/ngcloudsec/joern
+            ghcr.io/appthreat/joern
 
       - name: Build and push Docker images
         uses: docker/build-push-action@v3
