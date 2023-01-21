@@ -2,20 +2,20 @@ version: "3.9"
 services:
   joern:
     build: contrib/joern
-    # image: ghcr.io/ngcloudsec/joern
+    # image: ghcr.io/appthreat/joern
     ports:
-      - "7000:7000"
+      - "9000:9000"
     volumes:
-      - /mnt/work:/app # Set this to your directory containing sources
+      - /Volumes/Work:/app # Set this to your directory containing sources
       - /tmp:/tmp
     cpus: 2
     mem_limit: 8000m
     mem_reservation: 4000m
-    command: joern -J-Xmx4g --server --server-host 0.0.0.0 --server-port 7000 --server-auth-username admin --server-auth-password admin
+    command: joern -J-Xmx4g --server --server-host 0.0.0.0 --server-port 9000 --server-auth-username admin --server-auth-password admin
 
   polynote:
     build: contrib/polynote
-    # image: ghcr.io/ngcloudsec/polynote
+    # image: ghcr.io/appthreat/polynote
     volumes:
       - ./contrib/polynote/notebooks:/opt/notebooks # Set this to your notebook directory
       - ./contrib/polynote/config.yml:/opt/config/config.yml

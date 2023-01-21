@@ -1,13 +1,13 @@
 [tool.poetry]
 name = "joern-lib"
-version = "0.6.0"
+version = "0.6.1"
 description = "Python library to interact with Joern server"
-authors = ["Team ngcloudsec <cloud@ngcloud.io>"]
+authors = ["Team AppThreat <cloud@appthreat.com>"]
 license = "Apache-2.0"
 readme = "README.md"
 packages = [{include = "joern_lib"}]
-homepage = "https://github.com/ngcloudsec/joern-lib"
-repository = "https://github.com/ngcloudsec/joern-lib"
+homepage = "https://github.com/AppThreat/joern-lib"
+repository = "https://github.com/AppThreat/joern-lib"
 keywords = ["joern", "code analysis", "static analysis"]
 classifiers = [
     "Development Status :: 5 - Production/Stable",

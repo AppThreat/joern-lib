@@ -12,12 +12,17 @@ The repository includes docker compose configuration to interactively query the 
 
 ![polynote interface](docs/note2.jpg)
 
+![polynote interface](docs/note3.jpg)
+
+![polynote interface](docs/note4.jpg)
+
 ## Usage
 
 Run joern server and polynote locally.
 
 ```
-git clone https://github.com/ngcloudsec/joern-lib.git
+git clone https://github.com/appthreat/joern-lib.git
+# Edit docker-compose.yml to set sources directory
 docker compose up -d
 ```
 
@@ -35,9 +40,9 @@ Execute single query
 from joern_lib import client, workspace
 from joern_lib.detectors import common as cpg
 
-connection = await client.get("http://localhost:7000", "admin", "admin")
+connection = await client.get("http://localhost:9000", "admin", "admin")
 
-# connection = await client.get("http://localhost:7000")
+# connection = await client.get("http://localhost:9000")
 
 res = await client.q(connection, "val a=1");
 
