@@ -83,7 +83,7 @@ async def list_koa_modules(connection):
 async def list_sdk_modules(connection, sdk):
     return await client.q(
         connection,
-        f'cpg.call.name(Operators.assignment).code(".*require\\\\(.*").argument.isIdentifier.filter(_.typeFullName.contains("{sdk}"))',
+        f'cpg.call.name(Operators.assignment).code(".*require\\\\(.*").argument.isIdentifier.filter(_.typeFullName.contains("{sdk}")).map(t => (t, t.location)).filter(_._1.isIdentifier).dedup',
     )
 
 
@@ -98,7 +98,7 @@ async def used_koa_modules(connection):
 async def used_sdk_modules(connection, sdk):
     return await client.q(
         connection,
-        f'cpg.call.name("<operator>.new").receiver.isIdentifier.filter(_.typeFullName.contains("{sdk}"))',
+        f'cpg.call.name("<operator>.new").receiver.isIdentifier.filter(_.typeFullName.contains("{sdk}")).map(t => (t, t.location)).filter(_._1.isIdentifier).dedup',
     )
 
 

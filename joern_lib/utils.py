@@ -28,15 +28,20 @@ def print_table(result, title="", caption="", language="javascript"):
         expand=True,
         header_style="bold magenta",
     )
-    cols_added = False
+    cols_added = {}
     if isinstance(result, dict) and result.get("response"):
         console.print(result.get("response"))
     elif isinstance(result, list) and len(result):
         for row in result:
             if isinstance(row, dict):
                 rows = []
-                for k, v in row.items():
-                    if not cols_added:
+                rowToUse = row
+                if row.get("_2"):
+                    rowToUse = row.get("_2")
+                elif row.get("_1"):
+                    rowToUse = row.get("_1")
+                for k, v in rowToUse.items():
+                    if not cols_added.get(k):
                         justify = "left"
                         if (
                             k in ("id", "order")
@@ -45,6 +50,7 @@ def print_table(result, title="", caption="", language="javascript"):
                         ):
                             justify = "right"
                         table.add_column(k, justify=justify, overflow="fold")
+                        cols_added[k] = True
                     if isinstance(v, list) and len(v) == 0:
                         v = ""
                     if k == "code":
@@ -54,7 +60,6 @@ def print_table(result, title="", caption="", language="javascript"):
                 table.add_row(*rows)
             elif isinstance(row, list):
                 table.add_row(row)
-            cols_added = True
         console.print(table)
     else:
         console.print(result)

@@ -36,6 +36,17 @@ async def import_code(connection, directory, project_name=None):
     return False
 
 
+async def from_string(connection, code_snippet, language="jssrc"):
+    res = await client.q(
+        connection, f'importCode.{language}.fromString("""{code_snippet}""")'
+    )
+    if isinstance(res, str):
+        return False
+    if "Code successfully imported" in res.get("response", ""):
+        return True
+    return False
+
+
 async def reset(connection):
     await client.q(connection, "workspace.reset")
     return True
