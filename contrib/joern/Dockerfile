@@ -13,7 +13,7 @@ LABEL maintainer="appthreat" \
 
 ENV JOERN_HOME=/opt/joern/joern-cli \
     PATH=${PATH}:/opt/joern/joern-cli:
-RUN microdnf install -y git-core php php-cli python3 pcre2 which zip unzip sudo java-11-openjdk-headless ncurses \
+RUN microdnf install -y git-core php php-cli python3 pcre2 which zip unzip sudo java-17-openjdk-headless ncurses \
     && curl -LO https://github.com/joernio/joern/releases/latest/download/joern-install.sh \
     && chmod +x ./joern-install.sh \
     && ./joern-install.sh \

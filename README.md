@@ -24,6 +24,8 @@ Run joern server and polynote locally.
 git clone https://github.com/appthreat/joern-lib.git
 # Edit docker-compose.yml to set sources directory
 docker compose up -d
+
+# podman-compose up --build
 ```
 
 Navigate to http://localhost:8192 for an interactive polynote notebook. You could open one of the sample notebooks from the [contrib](./contrib/polynote/notebooks/joern-notes/) directory to learn about Joern server and this library.
