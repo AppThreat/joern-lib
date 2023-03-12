@@ -1,12 +1,12 @@
 import asyncio
 
+import httpx
+import os
 import orjson
 import uvloop
 
 asyncio.set_event_loop_policy(uvloop.EventLoopPolicy())
-import os
 
-import httpx
 import websockets
 
 from joern_lib.utils import print_md, print_table
@@ -66,7 +66,7 @@ def fix_json(sout):
             tmpA = sout.split("\n")[1:-2]
             sout = "[ " + "\n".join(tmpA) + "]"
         return orjson.loads(sout)
-    except Exception as e:
+    except Exception:
         return {"response": sout}
 
 
@@ -75,6 +75,7 @@ def fix_query(query_str):
         query_str = query_str.replace("\\.", "\\\\.")
     if (
         query_str.startswith("cpg.")
+        or query_str.startswith("({cpg.")
         and ".toJson" not in query_str
         and ".plotDot" not in query_str
         and not query_str.endswith(".p")

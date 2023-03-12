@@ -1,20 +1,34 @@
 version: "3.9"
 services:
+  cpggen:
+    image: ghcr.io/appthreat/cpggen:nightly
+    ports:
+      - "7072:7072"
+    volumes:
+      - /Volumes/Work:/app # Set this to your directory containing sources
+      - /tmp:/tmp
+    cpus: 4
+    mem_limit: 32000m
+    mem_reservation: 16000m
+    command: cpggen --server
   joern:
-    build: contrib/joern
-    # image: ghcr.io/appthreat/joern
+    image: ghcr.io/appthreat/cpggen:nightly
     ports:
       - "9000:9000"
     volumes:
       - /Volumes/Work:/app # Set this to your directory containing sources
       - /tmp:/tmp
-    cpus: 2
-    mem_limit: 8000m
-    mem_reservation: 4000m
-    command: joern -J-Xmx4g --server --server-host 0.0.0.0 --server-port 9000 --server-auth-username admin --server-auth-password admin
-
+    cpus: 4
+    mem_limit: 32000m
+    mem_reservation: 16000m
+    command: joern -J-Xmx16g --server --server-host 0.0.0.0 --server-port 9000 --server-auth-username admin --server-auth-password admin
+    environment:
+      - JOERN_DATAFLOW_TRACKED_WIDTH=128
   polynote:
-    build: contrib/polynote
+    build:
+      dockerfile: contrib/polynote/Dockerfile
+      labels:
+        com.docker.compose.container-number: "2"
     # image: ghcr.io/appthreat/polynote
     volumes:
       - ./contrib/polynote/notebooks:/opt/notebooks # Set this to your notebook directory
