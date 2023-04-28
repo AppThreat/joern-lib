@@ -1,16 +1,8 @@
 import os
 
-from rich import box
 from rich.console import Console
-from rich.markdown import Markdown
-from rich.markup import escape
-from rich.panel import Panel
-from rich.progress import Progress
 from rich.syntax import Syntax
 from rich.table import Table
-from rich.terminal_theme import MONOKAI
-from rich.theme import Theme
-from rich.tree import Tree
 
 console = Console(
     log_time=False,

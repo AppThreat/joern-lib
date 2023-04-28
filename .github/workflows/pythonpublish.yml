@@ -1,6 +1,8 @@
 name: Upload Package and Container image
 
 on:
+  schedule:
+  - cron: "0 */12 * * *"
   push:
     branches:
       - main
@@ -46,25 +48,3 @@ jobs:
         with:
           tag_name: ${{ github.ref }}
           name: Release ${{ github.ref }}
-
-      - name: Log in to the Container registry
-        uses: docker/login-action@v2
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Extract metadata (tags, labels) for Docker
-        id: meta
-        uses: docker/metadata-action@v4
-        with:
-          images: |
-            ghcr.io/appthreat/joern
-
-      - name: Build and push Docker images
-        uses: docker/build-push-action@v3
-        with:
-          context: contrib/joern
-          push: true
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}

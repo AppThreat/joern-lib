@@ -42,7 +42,7 @@ Execute single query
 from joern_lib import client, workspace
 from joern_lib.detectors import common as cpg
 
-connection = await client.get("http://localhost:9000", "admin", "admin")
+connection = await client.get("http://localhost:9000", "http://localhost:7072", "admin", "admin")
 
 # connection = await client.get("http://localhost:9000")
 
@@ -84,6 +84,18 @@ Import code for analysis
 ```
 res = await workspace.import_code(connection, "/app", "NodeGoat")
 # True
+```
+
+Import an existing CPG for analysis
+
+```
+res = await workspace.import_cpg(connection, "/app/sandbox/crAPI/cpg_out/crAPI-python-cpg.bin.zip", "crAPI-python")
+```
+
+Create a CPG with a remote cpggen server
+
+```
+res = await workspace.create_cpg(connection, "/app/sandbox/crAPI", out_dir="/app/sandbox/crAPI/cpg_out", languages="python", project_name="crAPI-python")
 ```
 
 ### CPG core

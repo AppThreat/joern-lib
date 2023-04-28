@@ -4,7 +4,7 @@ LABEL maintainer="appthreat" \
       org.opencontainers.image.authors="Team AppThreat <cloud@appthreat.com>" \
       org.opencontainers.image.source="https://github.com/appthreat/joern-lib" \
       org.opencontainers.image.url="https://github.com/appthreat/joern-lib" \
-      org.opencontainers.image.version="0.6.3" \
+      org.opencontainers.image.version="0.6.5" \
       org.opencontainers.image.vendor="AppThreat" \
       org.opencontainers.image.licenses="Apache-2.0" \
       org.opencontainers.image.title="polynote" \
@@ -14,10 +14,10 @@ LABEL maintainer="appthreat" \
 ARG POLYNOTE_VERSION="0.5.0"
 ARG SCALA_VERSION="2.12"
 ARG DIST_TAR="polynote-dist.tar.gz"
-ENV JAVA_HOME=/usr/lib/jvm/java-11-openjdk
+ENV JAVA_HOME=/usr/lib/jvm/java-17-openjdk
 WORKDIR /opt
 
-RUN microdnf install -y gcc git-core python3 python3-devel which wget tar zip unzip sudo java-11-openjdk-devel \
+RUN microdnf install -y gcc git-core python3 python3-devel which wget tar zip unzip sudo java-17-openjdk-devel \
     && wget -q https://github.com/polynote/polynote/releases/download/$POLYNOTE_VERSION/$DIST_TAR \
     && tar xfzp $DIST_TAR \
     && echo "DIST_TAR=$DIST_TAR" \

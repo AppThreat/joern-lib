@@ -1,3 +1,5 @@
+import os
+
 from joern_lib import client
 
 
@@ -15,13 +17,58 @@ async def list(connection):
     return res
 
 
+async def create_cpg(
+    connection, src, out_dir=None, languages="autodetect", project_name=None
+):
+    if not out_dir:
+        out_dir = os.path.join(src, "cpg_out")
+    res = await client.create_cpg(connection, src, out_dir, languages)
+    if res:
+        app_manifests = res.get("app_manifests")
+        if app_manifests:
+            first_app = app_manifests[0]
+            if not project_name and first_app.get("app"):
+                project_name = first_app.get("app")
+            cpg_path = first_app.get("cpg")
+            res = await dir_exists(connection, cpg_path)
+            if not res:
+                raise ValueError(
+                    f"CPG {cpg_path} doesn't exist for import into Joern. Check if the directory containing this CPG is mounted and accessible from the server."
+                )
+            return await import_cpg(connection, cpg_path, project_name)
+    return False
+
+
+async def import_cpg(connection, cpg_path, project_name=None):
+    if cpg_path:
+        res = await dir_exists(connection, cpg_path)
+        if not res:
+            raise ValueError(
+                f"CPG {cpg_path} doesn't exist for import into Joern. Check if the directory containing this CPG is mounted and accessible from the server."
+            )
+    if project_name:
+        res = await client.q(
+            connection, f"""importCpg("{cpg_path}", "{project_name}")"""
+        )
+    else:
+        res = await client.q(connection, f"""importCpg("{cpg_path}")""")
+    if isinstance(res, str):
+        return False
+    if "The graph has been modified" in res.get("response", ""):
+        # Execute save command
+        await client.q(connection, "save")
+        return True
+    return False
+
+
 async def import_code(connection, directory, project_name=None):
-    if directory and project_name:
+    if directory:
         res = await dir_exists(connection, directory)
         if not res:
             raise ValueError(
                 f"Directory {directory} doesn't exist for import into Joern. Check if the directory is mounted and accessible from the server."
             )
+    if project_name:
         res = await client.q(
             connection, f"""importCode("{directory}", "{project_name}")"""
         )
