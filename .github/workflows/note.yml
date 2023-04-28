@@ -42,10 +42,14 @@ jobs:
             ghcr.io/appthreat/polynote
 
       - name: Build and push Docker images
-        uses: docker/build-push-action@v3
+        uses: docker/build-push-action@v4
         with:
           context: contrib/polynote
           platforms: linux/amd64,linux/arm64
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha,scope=polynote
+          cache-to: type=gha,mode=max,scope=polynote
+          provenance: true
+          sbom: true
