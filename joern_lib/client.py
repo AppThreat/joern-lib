@@ -12,10 +12,12 @@ import websockets
 from joern_lib.utils import print_md, print_table
 
 headers = {"Content-Type": "application/json", "Accept-Encoding": "gzip"}
+CLIENT_TIMEOUT = os.getenv("HTTP_CLIENT_TIMEOUT")
 
 
 class Connection:
-    def __init__(self, httpclient, websocket):
+    def __init__(self, cpggenclient, httpclient, websocket):
+        self.cpggenclient = cpggenclient
         self.httpclient = httpclient
         self.websocket = websocket
 
@@ -26,6 +28,7 @@ class Connection:
         await self.websocket.ping()
 
     async def close(self):
+        await self.cpggenclient.close()
         await self.httpclient.close()
         await self.websocket.close()
 
@@ -33,12 +36,20 @@ class Connection:
         return await self.close()
 
 
-async def get(base_url, username=None, password=None):
+async def get(
+    base_url="http://localhost:9000",
+    cpggen_url="http://localhost:7072",
+    username=None,
+    password=None,
+):
     auth = None
     if username and password:
         auth = httpx.BasicAuth(username, password)
     base_url = base_url.rstrip("/")
-    client = httpx.AsyncClient(base_url=base_url, auth=auth)
+    client = httpx.AsyncClient(base_url=base_url, auth=auth, timeout=CLIENT_TIMEOUT)
+    cpggenclient = None
+    if cpggen_url:
+        cpggenclient = httpx.AsyncClient(base_url=cpggen_url, timeout=CLIENT_TIMEOUT)
     ws_url = f"""{base_url.replace("http://", "ws://").replace("https://", "wss://")}/connect"""
     websocket = await websockets.connect(ws_url, ping_timeout=None)
     connected_msg = await websocket.recv()
@@ -46,7 +57,7 @@ async def get(base_url, username=None, password=None):
         raise websockets.exceptions.InvalidState(
             "Didn't receive connected message from Joern server"
         )
-    return Connection(client, websocket)
+    return Connection(cpggenclient, client, websocket)
 
 
 async def send(connection, message):
@@ -179,3 +190,23 @@ async def flowsp(connection, source, sink, print=True):
         tmpA = tmpres.split('"""')[1:-1]
         print_md("\n".join([n for n in tmpA if len(n.strip()) > 1]))
     return results
+
+
+async def create_cpg(connection, src, out_dir, lang):
+    client = connection.cpggenclient
+    if not client:
+        return {
+            "error": "true",
+            "message": "No active connection to cpggen server. Pass the cpggen url to the client.get method.",
+        }, 500
+    # Suppor for url
+    url = ""
+    if src.startswith("http") or src.startswith("git"):
+        url = src
+        src = ""
+    response = await client.post(
+        url="/cpg",
+        headers=headers,
+        json={"src": src, "url": url, "out_dir": out_dir, "lang": lang},
+    )
+    return response.json()
