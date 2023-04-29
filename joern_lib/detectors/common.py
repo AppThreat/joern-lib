@@ -1,3 +1,6 @@
+import os
+from tempfile import NamedTemporaryFile
+
 from joern_lib import client
 
 
@@ -151,3 +154,67 @@ async def get_too_nested_functions(connection, n=4):
         """({cpg.method.internal.filter(_.depth(_.isControlStructure) > %(n)d).nameNot("<global>")}).location"""
         % dict(n=n),
     )
+
+
+async def get_call_tree(connection, method_name, n=3):
+    await client.q(
+        connection,
+        """
+import scala.collection.mutable.ListBuffer
+def printDashes(count: Int) = {
+    var tabStr = "+--- "
+    var i = 0
+    while (i < count) {
+        tabStr = "|    " + tabStr
+        i += 1
+    }
+    tabStr
+}
+def printCallTree(callerFullName : String, tree: ListBuffer[String], depth: Int) {
+    var dashCount = 0
+    var lastCallerMethod = callerFullName
+    var lastDashCount = 0
+    tree += callerFullName
+    def findCallee(methodName: String, tree: ListBuffer[String]) {
+        var calleeList = cpg.method.fullNameExact(methodName).callee.whereNot(_.name(".*<operator>.*")).l
+        var callerNameList = cpg.method.fullNameExact(methodName).caller.fullName.l
+        if (callerNameList.contains(lastCallerMethod) || (callerNameList.size == 0)) {
+            dashCount = lastDashCount
+        } else {
+            lastDashCount = dashCount
+            lastCallerMethod = methodName
+            dashCount += 1
+        }
+        if (dashCount < depth) {
+            calleeList foreach { c =>
+                tree += printDashes(dashCount) + c.fullName
+                findCallee(c.fullName, tree)
+            }
+        }
+    }
+    findCallee(lastCallerMethod, tree)
+}
+""",
+    )
+    with NamedTemporaryFile(prefix="call-tree-", suffix=".txt", delete=False) as tp:
+        try:
+            os.chmod(tp.name, 0o777)
+        except Exception:
+            # ignore errors
+            pass
+        await client.q(
+            connection,
+            """
+            var tree = new ListBuffer[String]()
+            printCallTree("%(method_name)s", tree, %(n)d)
+            tree.toList |> "%(temp_file)s"
+            """
+            % dict(method_name=method_name, n=n, temp_file=tp.name),
+        )
+        content = open(tp.name).read()
+        try:
+            os.remove(tp.name)
+        except Exception:
+            # ignore errors
+            pass
+        return content.replace("\\n", "\n")

@@ -1,7 +1,7 @@
 import asyncio
+import os
 
 import httpx
-import os
 import orjson
 import uvloop
 
@@ -90,6 +90,8 @@ def fix_query(query_str):
         and ".toJson" not in query_str
         and ".plotDot" not in query_str
         and not query_str.endswith(".p")
+        and "def" not in query_str
+        and "printCallTree" not in query_str
     ):
         query_str = f"{query_str}.toJsonPretty"
     return query_str
