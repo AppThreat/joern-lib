@@ -3,6 +3,7 @@ import os
 from rich.console import Console
 from rich.syntax import Syntax
 from rich.table import Table
+from rich.tree import Tree
 
 console = Console(
     log_time=False,
@@ -62,3 +63,25 @@ def print_md(result):
         console.print(result.get("response"))
     else:
         console.print(result)
+
+
+def walk_tree(paths, tree, level_branches):
+    for path in paths:
+        level = path.count("|    ")
+        if level == 0:
+            branch = tree
+        elif level_branches.get(level - 1):
+            branch = level_branches.get(level - 1)
+            if not level_branches.get(level):
+                level_branches[level] = branch
+        branch.add(path.replace("+--- ", ""))
+
+
+def print_tree(result, guide_style="bold bright_blue"):
+    result = result.split("\n")
+    if result:
+        tree = Tree(result[0].replace("+--- ", ""), guide_style=guide_style)
+        level_branches = {0: tree}
+        if len(result) > 1:
+            walk_tree(result[1:], tree, level_branches)
+    console.print(tree)
