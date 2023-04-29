@@ -39,7 +39,7 @@ python -m asyncio
 Execute single query
 
 ```
-from joern_lib import client, workspace
+from joern_lib import client, workspace, utils
 from joern_lib.detectors import common as cpg
 
 connection = await client.get("http://localhost:9000", "http://localhost:7072", "admin", "admin")
@@ -105,6 +105,13 @@ List files
 ```
 res = await cpg.list_files(connection)
 # list of files
+```
+
+Print call tree
+
+```
+res = await cpg.get_call_tree(connection, "com.example.vulnspring.WebController.issue:java.lang.String(org.springframework.ui.Model,java.lang.String)")
+utils.print_tree(res)
 ```
 
 ### JavaScript specific
