@@ -69,10 +69,29 @@ async def receive(connection):
 
 
 def fix_json(sout):
+    source_sink_mode = False
     try:
-        sout = sout.replace(r'"\"', '"').replace(r'\""', '"')
+        if "defined function source" in sout:
+            source_sink_mode = True
+            sout = sout.replace("defined function source\n", "")
+            sout = sout.replace("defined function sink\n", "")
+        else:
+            sout = sout.replace(r'"\"', '"').replace(r'\""', '"')
         if ': String = "[' in sout:
-            sout = sout.split(': String = "')[-1][-1]
+            if source_sink_mode:
+                sout = (
+                    sout.replace(r"\"", '"')
+                    .replace('}]}]"', "}]}]")
+                    .replace('\\"', '"')
+                )
+                sout = sout.split(': String = "')[-1]
+            else:
+                sout = sout.split(': String = "')[-1][-1]
+        elif "tree: ListBuffer" in sout:
+            sout = sout.split(": String = ")[-1]
+            if '"""' in sout:
+                sout = sout.replace('"""', "")
+            return sout
         elif 'String = """[' in sout:
             tmpA = sout.split("\n")[1:-2]
             sout = "[ " + "\n".join(tmpA) + "]"
@@ -192,6 +211,31 @@ async def flowsp(connection, source, sink, print=True):
         tmpA = tmpres.split('"""')[1:-1]
         print_md("\n".join([n for n in tmpA if len(n.strip()) > 1]))
     return results
+
+
+async def df(connection, source, sink):
+    if not source.startswith("def"):
+        source = f"def source = {source}"
+    if not sink.startswith("def"):
+        sink = f"def sink = {sink}"
+    results = await query(
+        connection,
+        f"""
+        {source}
+        {sink}
+        sink.reachableByFlows(source).map(m => (m, m.elements.location.l)).toJson
+        """,
+    )
+    if len(results):
+        tmpres = results[-1]
+        if isinstance(tmpres, dict) and tmpres.get("response"):
+            tmpres = tmpres.get("response")
+        # print(tmpres)
+    return results
+
+
+async def reachableByFlows(connection, source, sink):
+    return await df(connection, source, sink)
 
 
 async def create_cpg(connection, src, out_dir, lang):
