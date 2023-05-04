@@ -22,6 +22,7 @@ class Connection:
        - http connection to joern server
        - http connection to cpggen server
     """
+
     def __init__(self, cpggenclient, httpclient, websocket):
         self.cpggenclient = cpggenclient
         self.httpclient = httpclient

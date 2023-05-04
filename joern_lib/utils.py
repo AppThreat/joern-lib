@@ -169,12 +169,18 @@ def print_flows(
                 # Allow empty sink
                 if loc.get("filename") == "<empty>" and idx < len(location_list) - 2:
                     continue
-                symbol = loc.get("symbol")
+                symbol = loc.get("symbol", "").encode().decode("unicode_escape")
                 if symbol.startswith("<operator"):
                     continue
                 # Add the various computed fingerprints
                 loc["fingerprints"] = {}
-                code = loc.get("node", {}).get("code", "").strip()
+                code = (
+                    loc.get("node", {})
+                    .get("code", "")
+                    .encode()
+                    .decode("unicode_escape")
+                    .strip()
+                )
                 node_name = loc.get("node", {}).get("name")
                 # Highlight potential check methods
                 if node_name and node_name in code and check_highlight_color:
