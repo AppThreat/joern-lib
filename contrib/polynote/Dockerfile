@@ -4,12 +4,12 @@ LABEL maintainer="appthreat" \
       org.opencontainers.image.authors="Team AppThreat <cloud@appthreat.com>" \
       org.opencontainers.image.source="https://github.com/appthreat/joern-lib" \
       org.opencontainers.image.url="https://github.com/appthreat/joern-lib" \
-      org.opencontainers.image.version="0.7.0" \
+      org.opencontainers.image.version="0.7.1" \
       org.opencontainers.image.vendor="AppThreat" \
       org.opencontainers.image.licenses="Apache-2.0" \
       org.opencontainers.image.title="polynote" \
       org.opencontainers.image.description="Container image for polynote" \
-      org.opencontainers.docker.cmd="docker run --rm -it -v /tmp:/tmp -p 8192:8192 -v $(pwd):/opt/notebooks:rw --cpus=2 --memory=4g -t ghcr.io/appthreat/polynote"
+      org.opencontainers.docker.cmd="docker run --rm -it -v /tmp:/tmp -p 8192:8192 -v $(pwd):/opt/notebooks:rw -t ghcr.io/appthreat/polynote"
 
 ARG POLYNOTE_VERSION="0.5.0"
 ARG SCALA_VERSION="2.12"

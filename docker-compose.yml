@@ -11,9 +11,9 @@ services:
     mem_reservation: 64000m
     command: cpggen --server --server-host 0.0.0.0 --server-port 7072
     environment:
-      - JAVA_OPTS="-Xmx32G"
-      - SL_CPG_OPTS="-J-Xms16g -J-Xmx32g"
-      - SHIFTLEFT_JAVA_OPTS="-Xms16g -Xmx32g"
+      - SL_CPG_OPTS="-J-Xms16g -J-Xmx64g"
+      - SHIFTLEFT_JAVA_OPTS="-Xms16g -Xmx64g"
+      - AT_DEBUG_MODE=debug
   joern:
     image: ghcr.io/appthreat/cpggen:main # change this to joern once it's live
     ports:
@@ -23,7 +23,7 @@ services:
       - /tmp:/tmp
     mem_limit: 128000m
     mem_reservation: 64000m
-    command: joern -J-Xmx32g --server --server-host 0.0.0.0 --server-port 9000 --server-auth-username admin --server-auth-password admin
+    command: joern -J-Xmx64g --server --server-host 0.0.0.0 --server-port 9000 --server-auth-username admin --server-auth-password admin
     environment:
       - JOERN_DATAFLOW_TRACKED_WIDTH=128
   polynote:

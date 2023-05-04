@@ -1,6 +1,3 @@
-import os
-from tempfile import NamedTemporaryFile
-
 from joern_lib import client
 
 
@@ -40,6 +37,13 @@ async def list_identifiers(connection):
     return await client.q(connection, "cpg.identifier")
 
 
+async def list_declared_identifiers(connection):
+    return await client.q(
+        connection,
+        """({cpg.assignment.argument(1).isIdentifier.refsTo ++ cpg.parameter.filter(_.typeFullName != "ANY")})""",
+    )
+
+
 async def list_imports(connection):
     return await client.q(connection, "cpg.imports")
 
@@ -65,7 +69,19 @@ async def list_metadatas(connection):
 
 
 async def list_methods(connection):
-    return await client.q(connection, "cpg.method")
+    return await client.q(
+        connection, """cpg.method.whereNot(_.name(".*<operator>.*"))"""
+    )
+
+
+async def list_constructors(connection):
+    return await client.q(connection, """cpg.method.internal.name("<init>")""")
+
+
+async def list_external_methods(connection):
+    return await client.q(
+        connection, """cpg.method.isExternal(true).whereNot(_.name(".*<operator>.*"))"""
+    )
 
 
 async def list_method_refs(connection):
@@ -92,6 +108,13 @@ async def list_types(connection):
     return await client.q(connection, "cpg.typ")
 
 
+async def list_custom_types(connection):
+    return await client.q(
+        connection,
+        """cpg.typeDecl.filterNot(t => t.isExternal || t.name.matches("(:program|<module>|<init>|<meta>|<body>)"))""",
+    )
+
+
 async def get_calls(connection, pattern):
     return await client.q(connection, f"""cpg.call.code("(?i){pattern}")""")
 
@@ -109,11 +132,19 @@ async def get_identifiers_in_file(connection, filename):
     )
 
 
+async def get_methods_multiple_returns(connection):
+    return await get_functions_multiple_returns(connection)
+
+
 async def get_functions_multiple_returns(connection):
     return await client.q(
         connection,
         """({cpg.method.internal.filter(_.ast.isReturn.l.size > 1).nameNot("<global>")}).location""",
     )
+
+
+async def get_complex_methods(connection, n=4):
+    return await get_complex_functions(connection, n)
 
 
 async def get_complex_functions(connection, n=4):
@@ -124,12 +155,20 @@ async def get_complex_functions(connection, n=4):
     )
 
 
+async def get_long_methods(connection, n=1000):
+    return await get_long_functions(connection, n)
+
+
 async def get_long_functions(connection, n=1000):
     return await client.q(
         connection,
         """({cpg.method.internal.filter(_.numberOfLines > %(n)d).nameNot("<global>")}).location"""
         % dict(n=n),
     )
+
+
+async def get_too_many_loops_methods(connection, n=4):
+    return await get_too_many_loops_functions(connection, n)
 
 
 async def get_too_many_loops_functions(connection, n=4):
@@ -140,12 +179,20 @@ async def get_too_many_loops_functions(connection, n=4):
     )
 
 
+async def get_too_many_params_methods(connection, n=4):
+    return await get_too_many_params_functions(connection, n)
+
+
 async def get_too_many_params_functions(connection, n=4):
     return await client.q(
         connection,
         """({cpg.method.internal.filter(_.parameter.size > %(n)d).nameNot("<global>")}).location"""
         % dict(n=n),
     )
+
+
+async def get_too_nested_methods(connection, n=4):
+    return await get_too_nested_functions(connection, n)
 
 
 async def get_too_nested_functions(connection, n=4):
@@ -196,25 +243,12 @@ def printCallTree(callerFullName : String, tree: ListBuffer[String], depth: Int)
 }
 """,
     )
-    with NamedTemporaryFile(prefix="call-tree-", suffix=".txt", delete=False) as tp:
-        try:
-            os.chmod(tp.name, 0o777)
-        except Exception:
-            # ignore errors
-            pass
-        await client.q(
-            connection,
-            """
-            var tree = new ListBuffer[String]()
-            printCallTree("%(method_name)s", tree, %(n)d)
-            tree.toList |> "%(temp_file)s"
-            """
-            % dict(method_name=method_name, n=n, temp_file=tp.name),
-        )
-        content = open(tp.name).read()
-        try:
-            os.remove(tp.name)
-        except Exception:
-            # ignore errors
-            pass
-        return content.replace("\\n", "\n")
+    return await client.q(
+        connection,
+        """
+        var tree = new ListBuffer[String]()
+        printCallTree("%(method_name)s", tree, %(n)d)
+        tree.toList.mkString("\\n")
+        """
+        % dict(method_name=method_name, n=n),
+    )

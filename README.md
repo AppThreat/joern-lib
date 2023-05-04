@@ -114,6 +114,18 @@ res = await cpg.get_call_tree(connection, "com.example.vulnspring.WebController.
 utils.print_tree(res)
 ```
 
+### Java specific
+
+```
+from joern_lib.detectors import java
+```
+
+List http routes
+
+```
+await java.list_http_routes(connection)
+```
+
 ### JavaScript specific
 
 ```
