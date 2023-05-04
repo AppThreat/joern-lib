@@ -100,8 +100,52 @@ async def list_parameters(connection):
     return await client.q(connection, "cpg.parameter")
 
 
-async def list_tags(connection):
-    return await client.q(connection, "cpg.tag")
+async def list_tags(
+    connection,
+    name=None,
+    value=None,
+    is_call=False,
+    is_method=False,
+    is_parameter=False,
+):
+    suffix = ""
+    if is_call:
+        suffix = ".call"
+    elif is_method:
+        suffix = ".method"
+    elif is_parameter:
+        suffix = ".parameter"
+    if name:
+        return await client.q(connection, f"""cpg.tag.name("{name}"){suffix}""")
+    elif value:
+        return await client.q(connection, f"""cpg.tag.value("{value}"){suffix}""")
+    return await client.q(connection, "cpg.tag{suffix}")
+
+
+async def create_tags(connection, query=None, call=None, method=None, tags=[]):
+    if not query and call:
+        query = f"""cpg.call.name("{call}")"""
+    elif not query and method:
+        query = f"""cpg.method.name("{method}")"""
+    if query and tags:
+        for tag in tags:
+            if isinstance(tag, dict):
+                for k, v in tag.items():
+                    await client.q(
+                        connection,
+                        f"""
+                        {query}.newTagNodePair("{k}", "{v}").store
+                        run.commit
+                        """,
+                    )
+            if isinstance(tag, str):
+                await client.q(
+                    connection,
+                    f"""
+                {query}.newTagNode("{tag}").store
+                run.commit
+                """,
+                )
 
 
 async def list_types(connection):

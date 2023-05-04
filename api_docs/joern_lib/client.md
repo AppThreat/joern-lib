@@ -13,7 +13,7 @@ Functions
 :   Create CPG using cpggen server
 
     
-`df(connection, source, sink)`
+`df(connection, source, sink, print_result=False)`
 :   Execute reachableByFlows query
 
     
@@ -29,7 +29,7 @@ Functions
 :   Execute reachableByFlows query
 
     
-`flowsp(connection, source, sink, print=True)`
+`flowsp(connection, source, sink, print_result=True)`
 :   Execute reachableByFlows query and optionally print the result table
 
     
@@ -53,7 +53,7 @@ Functions
 :   Query joern server
 
     
-`reachableByFlows(connection, source, sink)`
+`reachableByFlows(connection, source, sink, print_result=False)`
 :   Execute reachableByFlows query
 
     

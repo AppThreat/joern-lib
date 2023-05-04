@@ -155,6 +155,8 @@ def print_flows(
     filelocation_highlight_color="grey54",
     check_highlight_color="dim green",
 ):
+    if not result:
+        return
     parsed_flows_list = []
     for res in result:
         useful_flows = []
@@ -162,7 +164,7 @@ def print_flows(
         ftree = None
         floc_list = []
         flow_fingerprint_list = []
-        if res.get("_2"):
+        if isinstance(res, dict) and res.get("_2"):
             location_list = res.get("_2")
             last_symbol = ""
             for idx, loc in enumerate(location_list):

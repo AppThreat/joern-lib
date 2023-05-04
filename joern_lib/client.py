@@ -9,7 +9,7 @@ asyncio.set_event_loop_policy(uvloop.EventLoopPolicy())
 
 import websockets
 
-from joern_lib.utils import print_md, print_table
+from joern_lib.utils import print_flows, print_md, print_table
 
 headers = {"Content-Type": "application/json", "Accept-Encoding": "gzip"}
 CLIENT_TIMEOUT = os.getenv("HTTP_CLIENT_TIMEOUT")
@@ -117,12 +117,11 @@ def fix_query(query_str):
     """Utility method to convert CPGQL queries to become json friendly"""
     if "\\." in query_str and "\\\\." not in query_str:
         query_str = query_str.replace("\\.", "\\\\.")
-    if (
-        query_str.startswith("cpg.")
-        or query_str.startswith("({cpg.")
-        and ".toJson" not in query_str
+    if (query_str.startswith("cpg.") or query_str.startswith("({cpg.")) and (
+        ".toJson" not in query_str
         and ".plotDot" not in query_str
         and not query_str.endswith(".p")
+        and ".store" not in query_str
         and "def" not in query_str
         and "printCallTree" not in query_str
     ):
@@ -211,11 +210,14 @@ async def bulk_query(connection, query_list):
 async def flows(connection, source, sink):
     """Execute reachableByFlows query"""
     return await flowsp(
-        connection, source, sink, print=True if os.getenv("POLYNOTE_VERSION") else False
+        connection,
+        source,
+        sink,
+        print_result=True if os.getenv("POLYNOTE_VERSION") else False,
     )
 
 
-async def flowsp(connection, source, sink, print=True):
+async def flowsp(connection, source, sink, print_result=True):
     """Execute reachableByFlows query and optionally print the result table"""
     results = await bulk_query(
         connection,
@@ -225,7 +227,7 @@ async def flowsp(connection, source, sink, print=True):
             "sink.reachableByFlows(source).p",
         ],
     )
-    if print and len(results):
+    if print_result and len(results):
         tmpres = results[-1]
         if isinstance(tmpres, dict) and tmpres.get("response"):
             tmpres = tmpres.get("response")
@@ -234,13 +236,24 @@ async def flowsp(connection, source, sink, print=True):
     return results
 
 
-async def df(connection, source, sink):
+async def df(
+    connection,
+    source,
+    sink,
+    print_result=True if os.getenv("POLYNOTE_VERSION") else False,
+):
     """Execute reachableByFlows query"""
+    if isinstance(source, dict):
+        for k, v in source.items():
+            source = f"""cpg.tag.name("{v}").{k}"""
+    if isinstance(sink, dict):
+        for k, v in sink.items():
+            sink = f"""cpg.tag.name("{v}").{k}"""
     if not source.startswith("def"):
         source = f"def source = {source}"
     if not sink.startswith("def"):
         sink = f"def sink = {sink}"
-    return await query(
+    results = await query(
         connection,
         f"""
         {source}
@@ -248,11 +261,14 @@ async def df(connection, source, sink):
         sink.reachableByFlows(source).map(m => (m, m.elements.location.l)).toJson
         """,
     )
+    if print_result:
+        print_flows(results)
+    return results
 
 
-async def reachableByFlows(connection, source, sink):
+async def reachableByFlows(connection, source, sink, print_result=False):
     """Execute reachableByFlows query"""
-    return await df(connection, source, sink)
+    return await df(connection, source, sink, print_result)
 
 
 async def create_cpg(connection, src, out_dir, lang):

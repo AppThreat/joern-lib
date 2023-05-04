@@ -5,6 +5,10 @@ Functions
 ---------
 
     
+`create_tags(connection, query=None, call=None, method=None, tags=[])`
+:   
+
+    
 `get_call_tree(connection, method_name, n=3)`
 :   
 
@@ -165,7 +169,7 @@ Functions
 :   
 
     
-`list_tags(connection)`
+`list_tags(connection, name=None, value=None, is_call=False, is_method=False, is_parameter=False)`
 :   
 
     
