@@ -1,6 +1,6 @@
 # Introduction
 
-High level python library to interact with a Joern [server](https://docs.joern.io/server).
+This project offers a high level python library to interact with a Joern [server](https://docs.joern.io/server). Several API methods are offered to perform code analysis on complex code bases without knowing [CPGQL](https://docs.joern.io/c-syntaxtree).
 
 ```
 pip install joern-lib
@@ -15,6 +15,12 @@ The repository includes docker compose configuration to interactively query the 
 ![polynote interface](docs/note3.jpg)
 
 ![polynote interface](docs/note4.jpg)
+
+![polynote interface](docs/sqli.jpg)
+
+![polynote interface](docs/repl.jpg)
+
+![polynote interface](docs/call-tree.jpg)
 
 ## Usage
 

@@ -16,6 +16,10 @@ CLIENT_TIMEOUT = os.getenv("HTTP_CLIENT_TIMEOUT")
 
 
 class Connection:
+    #: Connection object to hold following connections:
+    #:   - Websocket to joern server
+    #:   - http connection to joern server
+    #:   - http connection to cpggen server
     def __init__(self, cpggenclient, httpclient, websocket):
         self.cpggenclient = cpggenclient
         self.httpclient = httpclient
@@ -25,9 +29,11 @@ class Connection:
         return self
 
     async def ping(self):
+        #: Send websocket ping message
         await self.websocket.ping()
 
     async def close(self):
+        #: Close all connections
         await self.cpggenclient.close()
         await self.httpclient.close()
         await self.websocket.close()
@@ -42,6 +48,7 @@ async def get(
     username=None,
     password=None,
 ):
+    #: Method to create a connection to joern and cpggen server
     auth = None
     if username and password:
         auth = httpx.BasicAuth(username, password)
@@ -61,14 +68,17 @@ async def get(
 
 
 async def send(connection, message):
+    #: Send message to the joern server via websocket
     await connection.websocket.send(message)
 
 
 async def receive(connection):
+    #: Receive message from the joern server
     return await connection.websocket.recv()
 
 
 def fix_json(sout):
+    #: Hacky method to convert the joern stdout string to json
     source_sink_mode = False
     try:
         if "defined function source" in sout:
@@ -101,6 +111,7 @@ def fix_json(sout):
 
 
 def fix_query(query_str):
+    #: Utility method to convert CPGQL queries to become json friendly
     if "\\." in query_str and "\\\\." not in query_str:
         query_str = query_str.replace("\\.", "\\\\.")
     if (
@@ -117,18 +128,21 @@ def fix_query(query_str):
 
 
 def parse_error(serr):
+    #: Method to parse joern output and identify friendly error messages
     if "No projects loaded" in serr:
         return """ERROR: Import code using import_code api. Usage: await workspace.import_code(connection, directory_name, app_name)"""
     return serr
 
 
 async def p(connection, query_str, title="", caption=""):
+    #: Method to print the result as a table
     result = await query(connection, query_str)
     print_table(result, title, caption)
     return result
 
 
 async def q(connection, query_str):
+    #: Query joern server and optionally print the result as a table if the query ends with .p
     if query_str.strip().endswith(".p"):
         query_str = f"{query_str[:-2]}.toJsonPretty"
         return await p(connection, query_str)
@@ -136,6 +150,7 @@ async def q(connection, query_str):
 
 
 async def query(connection, query_str):
+    #: Query joern server
     client = connection.httpclient
     response = await client.post(
         url="/query", headers=headers, json={"query": fix_query(query_str)}
@@ -159,6 +174,7 @@ async def query(connection, query_str):
 
 
 async def bulk_query(connection, query_list):
+    #: Bulk query joern server
     client = connection.httpclient
     websocket = connection.websocket
     uuid_list = []
@@ -190,12 +206,14 @@ async def bulk_query(connection, query_list):
 
 
 async def flows(connection, source, sink):
+    #: Execute reachableByFlows query
     return await flowsp(
         connection, source, sink, print=True if os.getenv("POLYNOTE_VERSION") else False
     )
 
 
 async def flowsp(connection, source, sink, print=True):
+    #: Execute reachableByFlows query and optionally print the result table
     results = await bulk_query(
         connection,
         [
@@ -214,11 +232,12 @@ async def flowsp(connection, source, sink, print=True):
 
 
 async def df(connection, source, sink):
+    #: Execute reachableByFlows query
     if not source.startswith("def"):
         source = f"def source = {source}"
     if not sink.startswith("def"):
         sink = f"def sink = {sink}"
-    results = await query(
+    return await query(
         connection,
         f"""
         {source}
@@ -226,19 +245,15 @@ async def df(connection, source, sink):
         sink.reachableByFlows(source).map(m => (m, m.elements.location.l)).toJson
         """,
     )
-    if len(results):
-        tmpres = results[-1]
-        if isinstance(tmpres, dict) and tmpres.get("response"):
-            tmpres = tmpres.get("response")
-        # print(tmpres)
-    return results
 
 
 async def reachableByFlows(connection, source, sink):
+    #: Execute reachableByFlows query
     return await df(connection, source, sink)
 
 
 async def create_cpg(connection, src, out_dir, lang):
+    #: Create CPG using cpggen server
     client = connection.cpggenclient
     if not client:
         return {

@@ -1,0 +1,620 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.10.0" />
+<title>joern_lib.utils API documentation</title>
+<meta name="description" content="" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>joern_lib.utils</code></h1>
+</header>
+<section id="section-intro">
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">import os
+
+from hashlib import blake2b
+
+from rich.console import Console
+from rich.json import JSON
+from rich.syntax import Syntax
+from rich.table import Table
+from rich.tree import Tree
+
+console = Console(
+    log_time=False,
+    log_path=False,
+    color_system=&#34;auto&#34;,
+    width=int(os.getenv(&#34;COLUMNS&#34;, 280)),
+)
+
+check_labels_list = (
+    &#34;check&#34;,
+    &#34;valid&#34;,
+    &#34;sanit&#34;,
+    &#34;escape&#34;,
+    &#34;clean&#34;,
+    &#34;safe&#34;,
+    &#34;serialize&#34;,
+    &#34;convert&#34;,
+    &#34;authenticate&#34;,
+    &#34;authorize&#34;,
+    &#34;encode&#34;,
+    &#34;encrypt&#34;,
+)
+
+
+def t(result, title=&#34;&#34;, caption=&#34;&#34;, language=&#34;javascript&#34;):
+    return print_table(result, title, caption, language)
+
+
+def print_table(result, title=&#34;&#34;, caption=&#34;&#34;, language=&#34;javascript&#34;):
+    table = Table(
+        title=title,
+        caption=caption,
+        show_lines=True,
+        expand=True,
+        header_style=&#34;bold magenta&#34;,
+    )
+    cols_added = {}
+    if isinstance(result, dict) and result.get(&#34;response&#34;):
+        console.print(result.get(&#34;response&#34;))
+    elif isinstance(result, list) and len(result):
+        for row in result:
+            if isinstance(row, dict):
+                rows = []
+                iterrows = []
+                if row.get(&#34;_1&#34;):
+                    iterrows.append(row.get(&#34;_1&#34;))
+                if row.get(&#34;_2&#34;):
+                    iterrows.append(row.get(&#34;_2&#34;))
+                if not row.get(&#34;_1&#34;) and not row.get(&#34;_2&#34;):
+                    iterrows.append(row)
+                for rowToUse in iterrows:
+                    if isinstance(rowToUse, list):
+                        if len(rowToUse):
+                            if rowToUse[0].get(&#34;_label&#34;):
+                                if not cols_added.get(rowToUse[0].get(&#34;_label&#34;)):
+                                    table.add_column(
+                                        rowToUse[0].get(&#34;_label&#34;).lower(),
+                                        overflow=&#34;fold&#34;,
+                                    )
+                                    cols_added[rowToUse[0].get(&#34;_label&#34;)] = True
+                            elif rowToUse[0].get(&#34;name&#34;):
+                                if not cols_added.get(rowToUse[0].get(&#34;name&#34;)):
+                                    table.add_column(
+                                        rowToUse[0].get(&#34;name&#34;).lower(), overflow=&#34;fold&#34;
+                                    )
+                                    cols_added[rowToUse[0].get(&#34;name&#34;)] = True
+                            rows.append(JSON.from_data(rowToUse, default=&#34;&#34;))
+                    elif isinstance(rowToUse, dict):
+                        for k, v in rowToUse.items():
+                            # Simplify the table a bit for display
+                            if k.startswith(&#34;ast&#34;) or k.startswith(&#34;column&#34;):
+                                continue
+                            if not cols_added.get(k):
+                                justify = &#34;left&#34;
+                                if (
+                                    k in (&#34;id&#34;, &#34;order&#34;)
+                                    or &#34;number&#34; in k.lower()
+                                    or &#34;index&#34; in k.lower()
+                                ):
+                                    justify = &#34;right&#34;
+                                table.add_column(k, justify=justify, overflow=&#34;fold&#34;)
+                                cols_added[k] = True
+                            if isinstance(v, list) and len(v) == 0:
+                                v = &#34;&#34;
+                            if k == &#34;code&#34;:
+                                v = v.replace(&#34;&lt;empty&gt;&#34;, &#34;&#34;)
+                                rows.append(Syntax(v, language) if v else v)
+                            elif k == &#34;annotation&#34; or isinstance(v, dict):
+                                rows.append(JSON.from_data(v, default=&#34;&#34;))
+                            else:
+                                rows.append(
+                                    str(v).replace(&#34;&lt;empty&gt;&#34;, &#34;&#34;)
+                                    if v is not None
+                                    else &#34;&#34;
+                                )
+                table.add_row(*rows)
+            elif isinstance(row, list):
+                table.add_row(row)
+        console.print(table)
+    else:
+        console.print(result)
+
+
+def print_md(result):
+    if isinstance(result, dict) and result.get(&#34;response&#34;):
+        console.print(result.get(&#34;response&#34;))
+    else:
+        console.print(result)
+
+
+def walk_tree(paths, tree, level_branches):
+    for path in paths:
+        if not path:
+            continue
+        level = path.count(&#34;|    &#34;)
+        if level == 0:
+            branch = tree
+        elif level_branches.get(level - 1):
+            branch = level_branches.get(level - 1)
+            if not level_branches.get(level):
+                level_branches[level] = branch
+        branch.add(path.replace(&#34;+--- &#34;, &#34;&#34;))
+
+
+def print_tree(result, guide_style=&#34;bold bright_blue&#34;):
+    result = result.split(&#34;\n&#34;)
+    if result:
+        tree = Tree(result[0].replace(&#34;+--- &#34;, &#34;&#34;), guide_style=guide_style)
+        level_branches = {0: tree}
+        if len(result) &gt; 1:
+            walk_tree(result[1:], tree, level_branches)
+        console.print(tree)
+    else:
+        console.print(&#34;Empty tree&#34;)
+
+
+def calculate_hash(content, digest_size=16):
+    h = blake2b(digest_size=digest_size)
+    h.update(content.encode())
+    return h.hexdigest()
+
+
+def print_flows(
+    result,
+    symbol_highlight_color=&#34;bold red&#34;,
+    filelocation_highlight_color=&#34;grey54&#34;,
+    check_highlight_color=&#34;dim green&#34;,
+):
+    parsed_flows_list = []
+    for res in result:
+        useful_flows = []
+        identifiers_list = []
+        ftree = None
+        floc_list = []
+        flow_fingerprint_list = []
+        if res.get(&#34;_2&#34;):
+            location_list = res.get(&#34;_2&#34;)
+            last_symbol = &#34;&#34;
+            for idx, loc in enumerate(location_list):
+                # Allow empty sink
+                if loc.get(&#34;filename&#34;) == &#34;&lt;empty&gt;&#34; and idx &lt; len(location_list) - 2:
+                    continue
+                symbol = loc.get(&#34;symbol&#34;)
+                if symbol.startswith(&#34;&lt;operator&#34;):
+                    continue
+                # Add the various computed fingerprints
+                loc[&#34;fingerprints&#34;] = {}
+                code = loc.get(&#34;node&#34;, {}).get(&#34;code&#34;, &#34;&#34;).strip()
+                node_name = loc.get(&#34;node&#34;, {}).get(&#34;name&#34;)
+                # Highlight potential check methods
+                if node_name and node_name in code and check_highlight_color:
+                    for check_label in check_labels_list:
+                        if check_label in node_name.lower():
+                            code = code.replace(
+                                node_name,
+                                f&#34;[{check_highlight_color}]{node_name}[/{check_highlight_color}]&#34;,
+                            )
+                if code == &#34;&lt;empty&gt;&#34;:
+                    code = &#34;&#34;
+                for lk in (&#34;methodShortName&#34;, &#34;methodFullName&#34;, &#34;symbol&#34;, &#34;filename&#34;):
+                    if loc.get(lk):
+                        loc[&#34;fingerprints&#34;][lk] = calculate_hash(loc.get(lk))
+                if code:
+                    loc[&#34;fingerprints&#34;][&#34;code&#34;] = calculate_hash(code)
+                nodeLabel = loc.get(&#34;nodeLabel&#34;)
+                if nodeLabel in (&#34;METHOD_PARAMETER_IN&#34;, &#34;CALL&#34;):
+                    floc = f&#34;{loc.get(&#39;filename&#39;)}:{loc.get(&#39;lineNumber&#39;)}&#34;
+                    floc_key = f&#34;{floc}|{symbol}&#34;
+                    # If the next entry in the flow is identical to this
+                    # but better then ignore the current
+                    if idx &lt; len(location_list) - 1:
+                        nextloc = location_list[idx + 1]
+                        nextNodeLabel = nextloc.get(&#34;nodeLabel&#34;)
+                        if nextNodeLabel in (&#34;METHOD_PARAMETER_IN&#34;, &#34;CALL&#34;):
+                            nextfloc = (
+                                f&#34;{nextloc.get(&#39;filename&#39;)}:{nextloc.get(&#39;lineNumber&#39;)}&#34;
+                            )
+                            nextfloc_key = f&#34;&#34;&#34;{nextfloc}|{nextloc.get(&#34;symbol&#34;)}&#34;&#34;&#34;
+                            if floc == nextfloc and len(floc_key) &lt; len(nextfloc_key):
+                                continue
+                    if loc.get(&#34;filename&#34;) == &#34;&lt;empty&gt;&#34;:
+                        if symbol_highlight_color:
+                            floc = f&#34;{loc.get(&#39;className&#39;)}.{loc.get(&#39;methodShortName&#39;)}( [{symbol_highlight_color}]{code}[/{symbol_highlight_color}] )&#34;
+                        else:
+                            floc = f&#34;{loc.get(&#39;className&#39;)}.{loc.get(&#39;methodShortName&#39;)}( {code} )&#34;
+                    if floc_key not in floc_list:
+                        if symbol == code and last_symbol and last_symbol != code:
+                            symbol = last_symbol
+                        if (
+                            symbol
+                            and symbol_highlight_color
+                            and symbol in code
+                            and symbol != code
+                        ):
+                            code = code.replace(
+                                symbol,
+                                f&#34;[{symbol_highlight_color}]{symbol}[/{symbol_highlight_color}]&#34;,
+                            )
+                            last_symbol = symbol
+                        if loc.get(&#34;filename&#34;) == &#34;&lt;empty&gt;&#34;:
+                            tree_content = floc
+                        elif filelocation_highlight_color:
+                            tree_content = f&#34;[{filelocation_highlight_color}]{floc}[/{filelocation_highlight_color}] {code}&#34;
+                        else:
+                            tree_content = f&#34;{floc} {code}&#34;
+                        if not ftree:
+                            ftree = Tree(tree_content)
+                        else:
+                            ftree.add(tree_content)
+                        useful_flows.append(loc)
+                        floc_list.append(floc_key)
+                        if loc[&#34;fingerprints&#34;].get(&#34;methodFullName&#34;):
+                            flow_fingerprint_list.append(
+                                f&#39;{loc[&#34;fingerprints&#34;][&#34;methodFullName&#34;]}|{loc[&#34;fingerprints&#34;][&#34;symbol&#34;]}&#39;
+                            )
+                if (
+                    nodeLabel in (&#34;METHOD_PARAMETER_IN&#34;, &#34;IDENTIFIER&#34;)
+                    and symbol not in identifiers_list
+                    and not symbol.startswith(&#34;$&#34;)
+                    and not symbol.startswith(&#34;tmp&#34;)
+                ):
+                    identifiers_list.append(symbol)
+                    last_symbol = symbol
+        if ftree:
+            flow_fingerprint_key = &#34;-&#34;.join(flow_fingerprint_list)
+            if flow_fingerprint_key not in parsed_flows_list:
+                console.print(ftree)
+                console.print(&#34;&#34;)
+                parsed_flows_list.append(flow_fingerprint_key)</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="joern_lib.utils.calculate_hash"><code class="name flex">
+<span>def <span class="ident">calculate_hash</span></span>(<span>content, digest_size=16)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def calculate_hash(content, digest_size=16):
+    h = blake2b(digest_size=digest_size)
+    h.update(content.encode())
+    return h.hexdigest()</code></pre>
+</details>
+</dd>
+<dt id="joern_lib.utils.print_flows"><code class="name flex">
+<span>def <span class="ident">print_flows</span></span>(<span>result, symbol_highlight_color='bold red', filelocation_highlight_color='grey54', check_highlight_color='dim green')</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def print_flows(
+    result,
+    symbol_highlight_color=&#34;bold red&#34;,
+    filelocation_highlight_color=&#34;grey54&#34;,
+    check_highlight_color=&#34;dim green&#34;,
+):
+    parsed_flows_list = []
+    for res in result:
+        useful_flows = []
+        identifiers_list = []
+        ftree = None
+        floc_list = []
+        flow_fingerprint_list = []
+        if res.get(&#34;_2&#34;):
+            location_list = res.get(&#34;_2&#34;)
+            last_symbol = &#34;&#34;
+            for idx, loc in enumerate(location_list):
+                # Allow empty sink
+                if loc.get(&#34;filename&#34;) == &#34;&lt;empty&gt;&#34; and idx &lt; len(location_list) - 2:
+                    continue
+                symbol = loc.get(&#34;symbol&#34;)
+                if symbol.startswith(&#34;&lt;operator&#34;):
+                    continue
+                # Add the various computed fingerprints
+                loc[&#34;fingerprints&#34;] = {}
+                code = loc.get(&#34;node&#34;, {}).get(&#34;code&#34;, &#34;&#34;).strip()
+                node_name = loc.get(&#34;node&#34;, {}).get(&#34;name&#34;)
+                # Highlight potential check methods
+                if node_name and node_name in code and check_highlight_color:
+                    for check_label in check_labels_list:
+                        if check_label in node_name.lower():
+                            code = code.replace(
+                                node_name,
+                                f&#34;[{check_highlight_color}]{node_name}[/{check_highlight_color}]&#34;,
+                            )
+                if code == &#34;&lt;empty&gt;&#34;:
+                    code = &#34;&#34;
+                for lk in (&#34;methodShortName&#34;, &#34;methodFullName&#34;, &#34;symbol&#34;, &#34;filename&#34;):
+                    if loc.get(lk):
+                        loc[&#34;fingerprints&#34;][lk] = calculate_hash(loc.get(lk))
+                if code:
+                    loc[&#34;fingerprints&#34;][&#34;code&#34;] = calculate_hash(code)
+                nodeLabel = loc.get(&#34;nodeLabel&#34;)
+                if nodeLabel in (&#34;METHOD_PARAMETER_IN&#34;, &#34;CALL&#34;):
+                    floc = f&#34;{loc.get(&#39;filename&#39;)}:{loc.get(&#39;lineNumber&#39;)}&#34;
+                    floc_key = f&#34;{floc}|{symbol}&#34;
+                    # If the next entry in the flow is identical to this
+                    # but better then ignore the current
+                    if idx &lt; len(location_list) - 1:
+                        nextloc = location_list[idx + 1]
+                        nextNodeLabel = nextloc.get(&#34;nodeLabel&#34;)
+                        if nextNodeLabel in (&#34;METHOD_PARAMETER_IN&#34;, &#34;CALL&#34;):
+                            nextfloc = (
+                                f&#34;{nextloc.get(&#39;filename&#39;)}:{nextloc.get(&#39;lineNumber&#39;)}&#34;
+                            )
+                            nextfloc_key = f&#34;&#34;&#34;{nextfloc}|{nextloc.get(&#34;symbol&#34;)}&#34;&#34;&#34;
+                            if floc == nextfloc and len(floc_key) &lt; len(nextfloc_key):
+                                continue
+                    if loc.get(&#34;filename&#34;) == &#34;&lt;empty&gt;&#34;:
+                        if symbol_highlight_color:
+                            floc = f&#34;{loc.get(&#39;className&#39;)}.{loc.get(&#39;methodShortName&#39;)}( [{symbol_highlight_color}]{code}[/{symbol_highlight_color}] )&#34;
+                        else:
+                            floc = f&#34;{loc.get(&#39;className&#39;)}.{loc.get(&#39;methodShortName&#39;)}( {code} )&#34;
+                    if floc_key not in floc_list:
+                        if symbol == code and last_symbol and last_symbol != code:
+                            symbol = last_symbol
+                        if (
+                            symbol
+                            and symbol_highlight_color
+                            and symbol in code
+                            and symbol != code
+                        ):
+                            code = code.replace(
+                                symbol,
+                                f&#34;[{symbol_highlight_color}]{symbol}[/{symbol_highlight_color}]&#34;,
+                            )
+                            last_symbol = symbol
+                        if loc.get(&#34;filename&#34;) == &#34;&lt;empty&gt;&#34;:
+                            tree_content = floc
+                        elif filelocation_highlight_color:
+                            tree_content = f&#34;[{filelocation_highlight_color}]{floc}[/{filelocation_highlight_color}] {code}&#34;
+                        else:
+                            tree_content = f&#34;{floc} {code}&#34;
+                        if not ftree:
+                            ftree = Tree(tree_content)
+                        else:
+                            ftree.add(tree_content)
+                        useful_flows.append(loc)
+                        floc_list.append(floc_key)
+                        if loc[&#34;fingerprints&#34;].get(&#34;methodFullName&#34;):
+                            flow_fingerprint_list.append(
+                                f&#39;{loc[&#34;fingerprints&#34;][&#34;methodFullName&#34;]}|{loc[&#34;fingerprints&#34;][&#34;symbol&#34;]}&#39;
+                            )
+                if (
+                    nodeLabel in (&#34;METHOD_PARAMETER_IN&#34;, &#34;IDENTIFIER&#34;)
+                    and symbol not in identifiers_list
+                    and not symbol.startswith(&#34;$&#34;)
+                    and not symbol.startswith(&#34;tmp&#34;)
+                ):
+                    identifiers_list.append(symbol)
+                    last_symbol = symbol
+        if ftree:
+            flow_fingerprint_key = &#34;-&#34;.join(flow_fingerprint_list)
+            if flow_fingerprint_key not in parsed_flows_list:
+                console.print(ftree)
+                console.print(&#34;&#34;)
+                parsed_flows_list.append(flow_fingerprint_key)</code></pre>
+</details>
+</dd>
+<dt id="joern_lib.utils.print_md"><code class="name flex">
+<span>def <span class="ident">print_md</span></span>(<span>result)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def print_md(result):
+    if isinstance(result, dict) and result.get(&#34;response&#34;):
+        console.print(result.get(&#34;response&#34;))
+    else:
+        console.print(result)</code></pre>
+</details>
+</dd>
+<dt id="joern_lib.utils.print_table"><code class="name flex">
+<span>def <span class="ident">print_table</span></span>(<span>result, title='', caption='', language='javascript')</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def print_table(result, title=&#34;&#34;, caption=&#34;&#34;, language=&#34;javascript&#34;):
+    table = Table(
+        title=title,
+        caption=caption,
+        show_lines=True,
+        expand=True,
+        header_style=&#34;bold magenta&#34;,
+    )
+    cols_added = {}
+    if isinstance(result, dict) and result.get(&#34;response&#34;):
+        console.print(result.get(&#34;response&#34;))
+    elif isinstance(result, list) and len(result):
+        for row in result:
+            if isinstance(row, dict):
+                rows = []
+                iterrows = []
+                if row.get(&#34;_1&#34;):
+                    iterrows.append(row.get(&#34;_1&#34;))
+                if row.get(&#34;_2&#34;):
+                    iterrows.append(row.get(&#34;_2&#34;))
+                if not row.get(&#34;_1&#34;) and not row.get(&#34;_2&#34;):
+                    iterrows.append(row)
+                for rowToUse in iterrows:
+                    if isinstance(rowToUse, list):
+                        if len(rowToUse):
+                            if rowToUse[0].get(&#34;_label&#34;):
+                                if not cols_added.get(rowToUse[0].get(&#34;_label&#34;)):
+                                    table.add_column(
+                                        rowToUse[0].get(&#34;_label&#34;).lower(),
+                                        overflow=&#34;fold&#34;,
+                                    )
+                                    cols_added[rowToUse[0].get(&#34;_label&#34;)] = True
+                            elif rowToUse[0].get(&#34;name&#34;):
+                                if not cols_added.get(rowToUse[0].get(&#34;name&#34;)):
+                                    table.add_column(
+                                        rowToUse[0].get(&#34;name&#34;).lower(), overflow=&#34;fold&#34;
+                                    )
+                                    cols_added[rowToUse[0].get(&#34;name&#34;)] = True
+                            rows.append(JSON.from_data(rowToUse, default=&#34;&#34;))
+                    elif isinstance(rowToUse, dict):
+                        for k, v in rowToUse.items():
+                            # Simplify the table a bit for display
+                            if k.startswith(&#34;ast&#34;) or k.startswith(&#34;column&#34;):
+                                continue
+                            if not cols_added.get(k):
+                                justify = &#34;left&#34;
+                                if (
+                                    k in (&#34;id&#34;, &#34;order&#34;)
+                                    or &#34;number&#34; in k.lower()
+                                    or &#34;index&#34; in k.lower()
+                                ):
+                                    justify = &#34;right&#34;
+                                table.add_column(k, justify=justify, overflow=&#34;fold&#34;)
+                                cols_added[k] = True
+                            if isinstance(v, list) and len(v) == 0:
+                                v = &#34;&#34;
+                            if k == &#34;code&#34;:
+                                v = v.replace(&#34;&lt;empty&gt;&#34;, &#34;&#34;)
+                                rows.append(Syntax(v, language) if v else v)
+                            elif k == &#34;annotation&#34; or isinstance(v, dict):
+                                rows.append(JSON.from_data(v, default=&#34;&#34;))
+                            else:
+                                rows.append(
+                                    str(v).replace(&#34;&lt;empty&gt;&#34;, &#34;&#34;)
+                                    if v is not None
+                                    else &#34;&#34;
+                                )
+                table.add_row(*rows)
+            elif isinstance(row, list):
+                table.add_row(row)
+        console.print(table)
+    else:
+        console.print(result)</code></pre>
+</details>
+</dd>
+<dt id="joern_lib.utils.print_tree"><code class="name flex">
+<span>def <span class="ident">print_tree</span></span>(<span>result, guide_style='bold bright_blue')</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def print_tree(result, guide_style=&#34;bold bright_blue&#34;):
+    result = result.split(&#34;\n&#34;)
+    if result:
+        tree = Tree(result[0].replace(&#34;+--- &#34;, &#34;&#34;), guide_style=guide_style)
+        level_branches = {0: tree}
+        if len(result) &gt; 1:
+            walk_tree(result[1:], tree, level_branches)
+        console.print(tree)
+    else:
+        console.print(&#34;Empty tree&#34;)</code></pre>
+</details>
+</dd>
+<dt id="joern_lib.utils.t"><code class="name flex">
+<span>def <span class="ident">t</span></span>(<span>result, title='', caption='', language='javascript')</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def t(result, title=&#34;&#34;, caption=&#34;&#34;, language=&#34;javascript&#34;):
+    return print_table(result, title, caption, language)</code></pre>
+</details>
+</dd>
+<dt id="joern_lib.utils.walk_tree"><code class="name flex">
+<span>def <span class="ident">walk_tree</span></span>(<span>paths, tree, level_branches)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def walk_tree(paths, tree, level_branches):
+    for path in paths:
+        if not path:
+            continue
+        level = path.count(&#34;|    &#34;)
+        if level == 0:
+            branch = tree
+        elif level_branches.get(level - 1):
+            branch = level_branches.get(level - 1)
+            if not level_branches.get(level):
+                level_branches[level] = branch
+        branch.add(path.replace(&#34;+--- &#34;, &#34;&#34;))</code></pre>
+</details>
+</dd>
+</dl>
+</section>
+<section>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="joern_lib" href="index.html">joern_lib</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="two-column">
+<li><code><a title="joern_lib.utils.calculate_hash" href="#joern_lib.utils.calculate_hash">calculate_hash</a></code></li>
+<li><code><a title="joern_lib.utils.print_flows" href="#joern_lib.utils.print_flows">print_flows</a></code></li>
+<li><code><a title="joern_lib.utils.print_md" href="#joern_lib.utils.print_md">print_md</a></code></li>
+<li><code><a title="joern_lib.utils.print_table" href="#joern_lib.utils.print_table">print_table</a></code></li>
+<li><code><a title="joern_lib.utils.print_tree" href="#joern_lib.utils.print_tree">print_tree</a></code></li>
+<li><code><a title="joern_lib.utils.t" href="#joern_lib.utils.t">t</a></code></li>
+<li><code><a title="joern_lib.utils.walk_tree" href="#joern_lib.utils.walk_tree">walk_tree</a></code></li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.10.0</a>.</p>
+</footer>
+</body>
+</html>

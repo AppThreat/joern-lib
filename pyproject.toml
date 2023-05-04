@@ -36,6 +36,7 @@ black = "^22.3.0"
 flake8 = "^4.0.1"
 pytest-cov = "^3.0.0"
 pyinstaller = "^5.0.1"
+pdoc3 = "^0.10.0"
 
 [build-system]
 requires = ["poetry-core"]
