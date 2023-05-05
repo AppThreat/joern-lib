@@ -9,7 +9,13 @@ asyncio.set_event_loop_policy(uvloop.EventLoopPolicy())
 
 import websockets
 
-from joern_lib.utils import expand_search_str, print_flows, print_md, print_table
+from joern_lib.utils import (
+    check_labels_list,
+    expand_search_str,
+    print_flows,
+    print_md,
+    print_table,
+)
 
 headers = {"Content-Type": "application/json", "Accept-Encoding": "gzip"}
 CLIENT_TIMEOUT = os.getenv("HTTP_CLIENT_TIMEOUT")
@@ -162,18 +168,21 @@ async def query(connection, query_str):
     if response.status_code == httpx.codes.OK:
         j = response.json()
         res_uuid = j.get("uuid")
-        completed_uuid = await receive(connection)
-        if completed_uuid == res_uuid:
-            response = await client.get(
-                url=f"/result/{completed_uuid}", headers=headers
-            )
-            if response.status_code == httpx.codes.OK:
-                j = response.json()
-                sout = j.get("stdout", "")
-                serr = j.get("stderr", "")
-                if sout:
-                    return fix_json(sout)
-                return parse_error(serr)
+        try:
+            completed_uuid = await receive(connection)
+            if completed_uuid == res_uuid:
+                response = await client.get(
+                    url=f"/result/{completed_uuid}", headers=headers
+                )
+                if response.status_code == httpx.codes.OK:
+                    j = response.json()
+                    sout = j.get("stdout", "")
+                    serr = j.get("stderr", "")
+                    if sout:
+                        return fix_json(sout)
+                    return parse_error(serr)
+        except Exception:
+            return None
     return None
 
 
@@ -243,8 +252,18 @@ async def df(
     source,
     sink,
     print_result=True if os.getenv("POLYNOTE_VERSION") else False,
+    filter=None,
+    check_labels=check_labels_list,
 ):
-    """Execute reachableByFlows query"""
+    """
+    Execute reachableByFlows query. Optionally accepts filters which could be a raw conditional string or predefined keywords such as skip_control_structures, skip_cfg and skip_checks
+    skip_control_structures: This adds a control structure filter `filter(m => m.elements.isControlStructure.size > 0)` to skip flows with control statements such if condition or break
+    skip_cfg: This adds a cfg filter `filter(m => m.elements.isCfgNode.size > 0)` to skip flows with control flow graph nodes
+    skip_checks: When used with check_labels parameter, this could filter flows containing known validation and sanitization code in the flow. Has a default list.
+    """
+    filter_str = ""
+    if isinstance(check_labels, str):
+        check_labels = check_labels.split("|")
     if isinstance(source, dict):
         for k, v in source.items():
             if k in ("parameter", "tag"):
@@ -261,12 +280,30 @@ async def df(
         source = f"def source = {source}"
     if not sink.startswith("def"):
         sink = f"def sink = {sink}"
+    if filter:
+        if isinstance(filter, str):
+            if filter == "skip_checks":
+                filter_str = f""".filter(m => m.elements.code(".*({'|'.join(check_labels)}).*").size == 0)"""
+            elif not filter.startswith("."):
+                filter_str = f".filter({filter})"
+        elif isinstance(filter, list):
+            for k in filter:
+                if k == "skip_control_structures":
+                    filter_str = f"{filter_str}.filter(m => m.elements.isControlStructure.size > 0)"
+                elif k == "skip_cfg":
+                    filter_str = (
+                        f"{filter_str}.filter(m => m.elements.isCfgNode.size > 0)"
+                    )
+                elif k == "skip_checks":
+                    filter_str = f"""{filter_str}.filter(m => m.elements.code(".*({'|'.join(check_labels)}).*").size == 0)"""
+                else:
+                    filter_str = f"""{filter_str}.filter({k})"""
     results = await query(
         connection,
         f"""
         {source}
         {sink}
-        sink.reachableByFlows(source).map(m => (m, m.elements.location.l)).toJson
+        sink.reachableByFlows(source){filter_str}.map(m => (m, m.elements.location.l)).toJson
         """,
     )
     if print_result:

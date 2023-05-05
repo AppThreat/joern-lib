@@ -9,6 +9,10 @@ Functions
 :   
 
     
+`expand_search_str(search_descriptor)`
+:   Given a descriptor string or dict, this method converts into equivalent cpgql method
+
+    
 `print_flows(result, symbol_highlight_color='bold red', filelocation_highlight_color='grey54', check_highlight_color='dim green')`
 :   
 

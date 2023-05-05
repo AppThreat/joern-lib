@@ -11,10 +11,6 @@ Functions
     Tags could be a list of string or dictionary of key, value pairs
 
     
-`expand_search_str(search_descriptor)`
-:   Given a descriptor string or dict, this method converts into equivalent cpgql method
-
-    
 `get_call_tree(connection, method_name, n=3)`
 :   
 

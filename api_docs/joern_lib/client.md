@@ -13,8 +13,11 @@ Functions
 :   Create CPG using cpggen server
 
     
-`df(connection, source, sink, print_result=False)`
-:   Execute reachableByFlows query
+`df(connection, source, sink, print_result=False, filter=None, check_labels=('check', 'valid', 'sanit', 'escape', 'clean', 'safe', 'serialize', 'convert', 'authenticate', 'authorize', 'encode', 'encrypt'))`
+:   Execute reachableByFlows query. Optionally accepts filters which could be a raw conditional string or predefined keywords such as skip_control_structures, skip_cfg and skip_checks
+    skip_control_structures: This adds a control structure filter `filter(m => m.elements.isControlStructure.size > 0)` to skip flows with control statements such if condition or break
+    skip_cfg: This adds a cfg filter `filter(m => m.elements.isCfgNode.size > 0)` to skip flows with control flow graph nodes
+    skip_checks: When used with check_labels parameter, this could filter flows containing known validation and sanitization code in the flow. Has a default list.
 
     
 `fix_json(sout)`

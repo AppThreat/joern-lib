@@ -11,7 +11,7 @@ LABEL maintainer="appthreat" \
       org.opencontainers.image.description="Container image for polynote" \
       org.opencontainers.docker.cmd="docker run --rm -it -v /tmp:/tmp -p 8192:8192 -v $(pwd):/opt/notebooks:rw -t ghcr.io/appthreat/polynote"
 
-ARG POLYNOTE_VERSION="0.5.0"
+ARG POLYNOTE_VERSION="0.5.1"
 ARG SCALA_VERSION="2.12"
 ARG DIST_TAR="polynote-dist.tar.gz"
 ENV JAVA_HOME=/usr/lib/jvm/java-17-openjdk
@@ -22,6 +22,7 @@ RUN microdnf install -y gcc git-core python3 python3-devel which wget tar zip un
     && tar xfzp $DIST_TAR \
     && echo "DIST_TAR=$DIST_TAR" \
     && rm $DIST_TAR \
+    && python -m pip install --upgrade pip \
     && pip install -r ./polynote/requirements.txt \
     && pip install poetry GitPython pandas matplotlib \
     && useradd -ms /bin/bash polly \
