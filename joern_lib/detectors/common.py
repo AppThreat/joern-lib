@@ -147,6 +147,7 @@ async def create_tags(connection, query=None, call=None, method=None, tags=[]):
                         f"""
                         {query}.newTagNodePair("{k}", "{v}").store
                         run.commit
+                        save
                         """,
                     )
             if isinstance(tag, str):
@@ -155,6 +156,7 @@ async def create_tags(connection, query=None, call=None, method=None, tags=[]):
                     f"""
                 {query}.newTagNode("{tag}").store
                 run.commit
+                save
                 """,
                 )
 
