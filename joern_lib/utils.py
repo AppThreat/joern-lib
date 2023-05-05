@@ -1,4 +1,5 @@
 import os
+import re
 from hashlib import blake2b
 
 from rich.console import Console
@@ -182,7 +183,14 @@ def print_flows(
                     .decode("unicode_escape")
                     .strip()
                 )
+                methodFullName = loc.get("methodFullName", "").replace("<init>", "")
                 methodShortName = loc.get("methodShortName", "").replace("<init>", "")
+                class_name = loc.get("className")
+                # If there is no class name but there is a method full name try to recover
+                if not class_name and methodFullName:
+                    class_name = methodFullName.split(":")[0]
+                    if class_name.endswith("." + methodShortName):
+                        class_name = re.sub(f".{methodShortName}$", "", class_name)
                 node_name = loc.get("node", {}).get("name")
                 # Highlight potential check methods
                 if node_name and node_name in code and check_highlight_color:
@@ -218,9 +226,9 @@ def print_flows(
                     if loc.get("filename") == "<empty>":
                         class_method_sep = "" if not methodShortName else "."
                         if symbol_highlight_color:
-                            floc = f"{loc.get('className')}{class_method_sep}{methodShortName}( [{symbol_highlight_color}]{code}[/{symbol_highlight_color}] )"
+                            floc = f"{class_name}{class_method_sep}{methodShortName}( [{symbol_highlight_color}]{code}[/{symbol_highlight_color}] )"
                         else:
-                            floc = f"{loc.get('className')}{class_method_sep}{methodShortName}( {code} )"
+                            floc = f"{class_name}{class_method_sep}{methodShortName}( {code} )"
                     if floc_key not in floc_list:
                         if symbol == code and last_symbol and last_symbol != code:
                             symbol = last_symbol
