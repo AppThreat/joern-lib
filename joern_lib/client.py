@@ -9,7 +9,7 @@ asyncio.set_event_loop_policy(uvloop.EventLoopPolicy())
 
 import websockets
 
-from joern_lib.utils import print_flows, print_md, print_table
+from joern_lib.utils import expand_search_str, print_flows, print_md, print_table
 
 headers = {"Content-Type": "application/json", "Accept-Encoding": "gzip"}
 CLIENT_TIMEOUT = os.getenv("HTTP_CLIENT_TIMEOUT")
@@ -67,6 +67,8 @@ async def get(
         raise websockets.exceptions.InvalidState(
             "Didn't receive connected message from Joern server"
         )
+    # Workaround to fix websockets.exceptions.ConnectionClosedError
+    await asyncio.sleep(0)
     return Connection(cpggenclient, client, websocket)
 
 
@@ -245,10 +247,16 @@ async def df(
     """Execute reachableByFlows query"""
     if isinstance(source, dict):
         for k, v in source.items():
-            source = f"""cpg.tag.name("{v}").{k}"""
+            if k in ("parameter", "tag"):
+                source = f"""cpg.tag.name("{v}").{k}"""
+            elif k in ("method", "call", "annotation"):
+                source = f"""cpg.{k}{expand_search_str(v)}"""
     if isinstance(sink, dict):
         for k, v in sink.items():
-            sink = f"""cpg.tag.name("{v}").{k}"""
+            if k in ("parameter", "tag"):
+                sink = f"""cpg.tag.name("{v}").{k}"""
+            elif k in ("method", "call", "annotation"):
+                sink = f"""cpg.{k}{expand_search_str(v)}"""
     if not source.startswith("def"):
         source = f"def source = {source}"
     if not sink.startswith("def"):

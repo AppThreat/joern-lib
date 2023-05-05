@@ -193,3 +193,12 @@ If Joern server stops responding after a while restart docker.
 docker compose down
 docker compose up -d
 ```
+
+### Websockets connection closed error
+
+Adding asyncio.sleep(0) seems to fix such errors.
+
+```
+# Workaround to fix websockets.exceptions.ConnectionClosedError
+await asyncio.sleep(0)
+```

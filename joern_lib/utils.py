@@ -1,5 +1,4 @@
 import os
-
 from hashlib import blake2b
 
 from rich.console import Console
@@ -264,3 +263,22 @@ def print_flows(
                 console.print(ftree)
                 console.print("")
                 parsed_flows_list.append(flow_fingerprint_key)
+
+
+def expand_search_str(search_descriptor):
+    """Given a descriptor string or dict, this method converts into equivalent cpgql method"""
+    search_str = ""
+    if isinstance(search_descriptor, str):
+        if "." in search_descriptor:
+            if (
+                ":" in search_descriptor or "(" in search_descriptor
+            ) and ".*" not in search_descriptor:
+                search_str = f'.fullNameExact("{search_descriptor}")'
+            else:
+                search_str = f'.fullName("{search_descriptor}")'
+        else:
+            search_str = f'.name("{search_descriptor}")'
+    elif isinstance(search_descriptor, dict):
+        for k, v in search_descriptor.items():
+            search_str = f'{search_str}.{k}("{v}")'
+    return search_str
