@@ -1,8 +1,28 @@
 from joern_lib import client
 
 
-async def list_files(connection):
-    return await client.q(connection, "cpg.file")
+def expand_search_str(search_descriptor):
+    """Given a descriptor string or dict, this method converts into equivalent cpgql method"""
+    search_str = ""
+    if isinstance(search_descriptor, str):
+        if "." in search_descriptor:
+            if (
+                ":" in search_descriptor or "(" in search_descriptor
+            ) and ".*" not in search_descriptor:
+                search_str = f'.fullNameExact("{search_descriptor}")'
+            else:
+                search_str = f'.fullName("{search_descriptor}")'
+        else:
+            search_str = f'.name("{search_descriptor}")'
+    elif isinstance(search_descriptor, dict):
+        for k, v in search_descriptor.items():
+            search_str = f'{search_str}.{k}("{v}")'
+    return search_str
+
+
+async def list_files(connection, search_descriptor=None):
+    search_str = expand_search_str(search_descriptor)
+    return await client.q(connection, f"cpg.file{search_str}")
 
 
 async def list_annotations(connection):
@@ -17,8 +37,9 @@ async def list_assignments(connection):
     return await client.q(connection, "cpg.assignment")
 
 
-async def list_calls(connection):
-    return await client.q(connection, "cpg.call")
+async def list_calls(connection, search_descriptor=None):
+    search_str = expand_search_str(search_descriptor)
+    return await client.q(connection, f"cpg.call{search_str}")
 
 
 async def list_config_files(connection):
@@ -68,10 +89,13 @@ async def list_metadatas(connection):
     return await client.q(connection, "cpg.metaData")
 
 
-async def list_methods(connection):
-    return await client.q(
-        connection, """cpg.method.whereNot(_.name(".*<operator>.*"))"""
-    )
+async def list_methods(connection, search_descriptor=None, skip_operators=True):
+    search_str = expand_search_str(search_descriptor)
+    filter_str = ""
+    if skip_operators:
+        filter_str = '.whereNot(_.name(".*<operator>.*"))'
+
+    return await client.q(connection, f"""cpg.method{search_str}{filter_str}""")
 
 
 async def list_constructors(connection):
@@ -123,6 +147,11 @@ async def list_tags(
 
 
 async def create_tags(connection, query=None, call=None, method=None, tags=[]):
+    """
+    Method to create custom tags on nodes. Nodes could be selected based on a query, or call or method name.
+
+    Tags could be a list of string or dictionary of key, value pairs
+    """
     if not query and call:
         query = f"""cpg.call.name("{call}")"""
     elif not query and method:

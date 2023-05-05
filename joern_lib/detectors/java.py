@@ -11,7 +11,7 @@ def expand_annotations(rows):
     ret_rows = []
     for r in rows:
         m = {}
-        if not r:
+        if not r or not isinstance(r, dict):
             continue
         if r.get("_1"):
             method_data = r.get("_1")

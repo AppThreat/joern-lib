@@ -6,7 +6,13 @@ Functions
 
     
 `create_tags(connection, query=None, call=None, method=None, tags=[])`
-:   
+:   Method to create custom tags on nodes. Nodes could be selected based on a query, or call or method name.
+    
+    Tags could be a list of string or dictionary of key, value pairs
+
+    
+`expand_search_str(search_descriptor)`
+:   Given a descriptor string or dict, this method converts into equivalent cpgql method
 
     
 `get_call_tree(connection, method_name, n=3)`
@@ -85,7 +91,7 @@ Functions
 :   
 
     
-`list_calls(connection)`
+`list_calls(connection, search_descriptor=None)`
 :   
 
     
@@ -117,7 +123,7 @@ Functions
 :   
 
     
-`list_files(connection)`
+`list_files(connection, search_descriptor=None)`
 :   
 
     
@@ -157,7 +163,7 @@ Functions
 :   
 
     
-`list_methods(connection)`
+`list_methods(connection, search_descriptor=None, skip_operators=True)`
 :   
 
     
