@@ -182,6 +182,7 @@ def print_flows(
                     .decode("unicode_escape")
                     .strip()
                 )
+                methodShortName = loc.get("methodShortName", "").replace("<init>", "")
                 node_name = loc.get("node", {}).get("name")
                 # Highlight potential check methods
                 if node_name and node_name in code and check_highlight_color:
@@ -215,10 +216,11 @@ def print_flows(
                             if floc == nextfloc and len(floc_key) < len(nextfloc_key):
                                 continue
                     if loc.get("filename") == "<empty>":
+                        class_method_sep = "" if not methodShortName else "."
                         if symbol_highlight_color:
-                            floc = f"{loc.get('className')}.{loc.get('methodShortName')}( [{symbol_highlight_color}]{code}[/{symbol_highlight_color}] )"
+                            floc = f"{loc.get('className')}{class_method_sep}{methodShortName}( [{symbol_highlight_color}]{code}[/{symbol_highlight_color}] )"
                         else:
-                            floc = f"{loc.get('className')}.{loc.get('methodShortName')}( {code} )"
+                            floc = f"{loc.get('className')}{class_method_sep}{methodShortName}( {code} )"
                     if floc_key not in floc_list:
                         if symbol == code and last_symbol and last_symbol != code:
                             symbol = last_symbol
