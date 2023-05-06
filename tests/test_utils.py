@@ -2008,6 +2008,13 @@ def test_reach_data():
     )
 
 
+@pytest.fixture
+def test_pyreach_data():
+    return os.path.join(
+        os.path.dirname(os.path.realpath(__file__)), "data", "py-reach.json"
+    )
+
+
 def test_java_http_routes():
     assert not print_table(TEST_JAVA_HTTP_JSON)
 
@@ -2018,4 +2025,9 @@ def test_java_methods():
 
 def test_reach_parsing(test_reach_data):
     with open(test_reach_data) as fp:
+        assert not print_flows(json.load(fp))
+
+
+def test_pyreach_parsing(test_pyreach_data):
+    with open(test_pyreach_data) as fp:
         assert not print_flows(json.load(fp))
