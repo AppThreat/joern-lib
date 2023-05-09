@@ -332,16 +332,20 @@ def fix_json(sout):
             sout = sout.replace("defined function sink\n", "")
         else:
             sout = sout.replace(r'"\"', '"').replace(r'\""', '"')
-        if ': String = "[' in sout:
-            if source_sink_mode:
+        if ': String = "[' in sout or ": String = [" in sout:
+            if ": String = [" in sout:
+                sout = sout.split(": String = ")[-1]
+            elif source_sink_mode:
                 sout = (
                     sout.replace(r"\"", '"')
                     .replace('}]}]"', "}]}]")
                     .replace('\\"', '"')
                 )
-                sout = sout.split(': String = "')[-1]
+                if ': String = "[' in sout:
+                    sout = sout.split(': String = "')[-1]
             else:
                 sout = sout.split(': String = "')[-1][-1]
+
         elif "tree: ListBuffer" in sout:
             sout = sout.split(": String = ")[-1]
             if '"""' in sout:

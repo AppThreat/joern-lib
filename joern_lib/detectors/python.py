@@ -12,7 +12,7 @@ async def list_decorator_location(connection, decorator, is_method_ref=True):
     method_ref_filter = ".isMethodRef" if is_method_ref else ""
     return await client.q(
         connection,
-        f'cpg.call.code(".*{decorator}.*").call.assignment.argument{method_ref_filter}.location',
+        f'cpg.call.code(".*{decorator}.*").inCall.assignment.argument{method_ref_filter}.location',
     )
 
 
@@ -24,7 +24,7 @@ async def list_dict_assignment_location(connection, key=None, is_literal=True):
     literal_filter = ".isLiteral" if is_literal else ""
     return await client.q(
         connection,
-        f"cpg.call(Operators.indexAccess){code_filter}.call.assignment.argument{literal_filter}.location",
+        f"cpg.call(Operators.indexAccess){code_filter}.inCall.assignment.argument{literal_filter}.location",
     )
 
 
@@ -58,6 +58,6 @@ def expand_decorators(rows):
 async def list_http_routes(connection, decorators=ROUTE_DECORATORS):
     res = await client.q(
         connection,
-        f"""cpg.call.code(".*{decorators}.*").call.assignment.map(m => (m, m.method))""",
+        f"""cpg.call.code(".*{decorators}.*").inCall.assignment.map(m => (m, m.method))""",
     )
     return expand_decorators(res)
