@@ -2,7 +2,6 @@ import asyncio
 import os
 
 import httpx
-import orjson
 import uvloop
 
 asyncio.set_event_loop_policy(uvloop.EventLoopPolicy())
@@ -12,6 +11,9 @@ import websockets
 from joern_lib.utils import (
     check_labels_list,
     expand_search_str,
+    fix_json,
+    fix_query,
+    parse_error,
     print_flows,
     print_md,
     print_table,
@@ -86,62 +88,6 @@ async def send(connection, message):
 async def receive(connection):
     """Receive message from the joern server"""
     return await connection.websocket.recv()
-
-
-def fix_json(sout):
-    """Hacky method to convert the joern stdout string to json"""
-    source_sink_mode = False
-    try:
-        if "defined function source" in sout:
-            source_sink_mode = True
-            sout = sout.replace("defined function source\n", "")
-            sout = sout.replace("defined function sink\n", "")
-        else:
-            sout = sout.replace(r'"\"', '"').replace(r'\""', '"')
-        if ': String = "[' in sout:
-            if source_sink_mode:
-                sout = (
-                    sout.replace(r"\"", '"')
-                    .replace('}]}]"', "}]}]")
-                    .replace('\\"', '"')
-                )
-                sout = sout.split(': String = "')[-1]
-            else:
-                sout = sout.split(': String = "')[-1][-1]
-        elif "tree: ListBuffer" in sout:
-            sout = sout.split(": String = ")[-1]
-            if '"""' in sout:
-                sout = sout.replace('"""', "")
-            return sout
-        elif 'String = """[' in sout:
-            tmpA = sout.split("\n")[1:-2]
-            sout = "[ " + "\n".join(tmpA) + "]"
-        return orjson.loads(sout)
-    except Exception:
-        return {"response": sout}
-
-
-def fix_query(query_str):
-    """Utility method to convert CPGQL queries to become json friendly"""
-    if "\\." in query_str and "\\\\." not in query_str:
-        query_str = query_str.replace("\\.", "\\\\.")
-    if (query_str.startswith("cpg.") or query_str.startswith("({cpg.")) and (
-        ".toJson" not in query_str
-        and ".plotDot" not in query_str
-        and not query_str.endswith(".p")
-        and ".store" not in query_str
-        and "def" not in query_str
-        and "printCallTree" not in query_str
-    ):
-        query_str = f"{query_str}.toJsonPretty"
-    return query_str
-
-
-def parse_error(serr):
-    """Method to parse joern output and identify friendly error messages"""
-    if "No projects loaded" in serr:
-        return """ERROR: Import code using import_code api. Usage: await workspace.import_code(connection, directory_name, app_name)"""
-    return serr
 
 
 async def p(connection, query_str, title="", caption=""):
@@ -230,6 +176,10 @@ async def flows(connection, source, sink):
 
 async def flowsp(connection, source, sink, print_result=True):
     """Execute reachableByFlows query and optionally print the result table"""
+    if not source.startswith("def"):
+        source = f"def source = {source}"
+    if not sink.startswith("def"):
+        sink = f"def sink = {sink}"
     results = await bulk_query(
         connection,
         [
@@ -298,16 +248,18 @@ async def df(
                     filter_str = f"""{filter_str}.filter(m => m.elements.code(".*({'|'.join(check_labels)}).*").size == 0)"""
                 else:
                     filter_str = f"""{filter_str}.filter({k})"""
-    results = await query(
+    results = await bulk_query(
         connection,
-        f"""
-        {source}
-        {sink}
-        sink.reachableByFlows(source){filter_str}.map(m => (m, m.elements.location.l)).toJson
-        """,
+        [
+            source,
+            sink,
+            f"""sink.reachableByFlows(source){filter_str}.map(m => (m, m.elements.location.l)).toJsonPretty""",
+        ],
     )
-    if print_result:
-        print_flows(results)
+    if len(results):
+        if print_result:
+            print_flows(results[-1])
+        return results[-1]
     return results
 
 

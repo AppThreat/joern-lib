@@ -30,11 +30,6 @@ async def create_cpg(
             if not project_name and first_app.get("app"):
                 project_name = first_app.get("app")
             cpg_path = first_app.get("cpg")
-            res = await dir_exists(connection, cpg_path)
-            if not res:
-                raise ValueError(
-                    f"CPG {cpg_path} doesn't exist for import into Joern. Check if the directory containing this CPG is mounted and accessible from the server."
-                )
             return await import_cpg(connection, cpg_path, project_name)
     return False
 

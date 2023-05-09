@@ -20,14 +20,6 @@ Functions
     skip_checks: When used with check_labels parameter, this could filter flows containing known validation and sanitization code in the flow. Has a default list.
 
     
-`fix_json(sout)`
-:   Hacky method to convert the joern stdout string to json
-
-    
-`fix_query(query_str)`
-:   Utility method to convert CPGQL queries to become json friendly
-
-    
 `flows(connection, source, sink)`
 :   Execute reachableByFlows query
 
@@ -42,10 +34,6 @@ Functions
     
 `p(connection, query_str, title='', caption='')`
 :   Method to print the result as a table
-
-    
-`parse_error(serr)`
-:   Method to parse joern output and identify friendly error messages
 
     
 `q(connection, query_str)`

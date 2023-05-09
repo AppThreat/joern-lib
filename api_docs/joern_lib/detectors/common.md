@@ -171,6 +171,10 @@ Functions
 :   
 
     
+`list_sensitive_literals(connection, pattern='(secret|password|token|key|admin|root)')`
+:   Method to list sensitive literals
+
+    
 `list_tags(connection, name=None, value=None, is_call=False, is_method=False, is_parameter=False)`
 :   
 

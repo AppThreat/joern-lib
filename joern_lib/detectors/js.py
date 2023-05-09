@@ -39,7 +39,7 @@ async def get_koa_appvar(connection):
 async def get_framework_appvar(connection, framework):
     return await client.q(
         connection,
-        f"""cpg.call.name(Operators.assignment).code(".*{framework}\\\\(.*").argument.order(1)""",
+        f"""cpg.call.assignment.code(".*{framework}\\\\(.*").argument.order(1)""",
     )
 
 
@@ -50,14 +50,14 @@ async def get_framework_config(connection, app_var="app"):
 async def list_requires(connection, require_var="require"):
     return await client.q(
         connection,
-        f'cpg.call.name(Operators.assignment).code(".*{require_var}\\\\(.*").argument.order(1)',
+        f'cpg.call.assignment.code(".*{require_var}\\\\(.*").argument.order(1)',
     )
 
 
 async def list_requires_location(connection, require_var="require"):
     return await client.q(
         connection,
-        f'cpg.call.name(Operators.assignment).code(".*{require_var}\\\\(.*").argument.order(1).map(t => (t, t.location)).filter(_._1.isIdentifier).dedup',
+        f'cpg.call.assignment.code(".*{require_var}\\\\(.*").argument.order(1).map(t => (t, t.location)).filter(_._1.isIdentifier).dedup',
     )
 
 
@@ -83,7 +83,7 @@ async def list_koa_modules(connection):
 async def list_sdk_modules(connection, sdk):
     return await client.q(
         connection,
-        f'cpg.call.name(Operators.assignment).code(".*require\\\\(.*").argument.isIdentifier.filter(_.typeFullName.contains("{sdk}")).map(t => (t, t.location)).filter(_._1.isIdentifier).dedup',
+        f'cpg.call.assignment.code(".*require\\\\(.*").argument.isIdentifier.filter(_.typeFullName.contains("{sdk}")).map(t => (t, t.location)).filter(_._1.isIdentifier).dedup',
     )
 
 

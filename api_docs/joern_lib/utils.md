@@ -13,6 +13,18 @@ Functions
 :   Given a descriptor string or dict, this method converts into equivalent cpgql method
 
     
+`fix_json(sout)`
+:   Hacky method to convert the joern stdout string to json
+
+    
+`fix_query(query_str)`
+:   Utility method to convert CPGQL queries to become json friendly
+
+    
+`parse_error(serr)`
+:   Method to parse joern output and identify friendly error messages
+
+    
 `print_flows(result, symbol_highlight_color='bold red', filelocation_highlight_color='grey54', check_highlight_color='dim green')`
 :   
 

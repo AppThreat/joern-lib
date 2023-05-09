@@ -2,8 +2,10 @@ import os
 import re
 from hashlib import blake2b
 
+import orjson
 from rich.console import Console
 from rich.json import JSON
+from rich.panel import Panel
 from rich.syntax import Syntax
 from rich.table import Table
 from rich.tree import Tree
@@ -164,14 +166,19 @@ def print_flows(
         ftree = None
         floc_list = []
         flow_fingerprint_list = []
+        symbol = ""
+        last_symbol = ""
+        node_name = ""
+        code = ""
         if isinstance(res, dict) and res.get("_2"):
             location_list = res.get("_2")
-            last_symbol = ""
             for idx, loc in enumerate(location_list):
                 # Allow empty sink
-                if loc.get("filename") == "<empty>" and idx < len(location_list) - 2:
+                filename = loc.get("filename", "")
+                if filename == "<empty>" and idx < len(location_list) - 2:
                     continue
                 symbol = loc.get("symbol", "").encode().decode("unicode_escape")
+                node_name = loc.get("node", {}).get("name")
                 if symbol.startswith("<operator"):
                     continue
                 # Add the various computed fingerprints
@@ -191,7 +198,6 @@ def print_flows(
                     class_name = methodFullName.split(":")[0]
                     if class_name.endswith("." + methodShortName):
                         class_name = re.sub(f".{methodShortName}$", "", class_name)
-                node_name = loc.get("node", {}).get("name")
                 # Highlight potential check methods
                 if node_name and node_name in code and check_highlight_color:
                     for check_label in check_labels_list:
@@ -208,7 +214,11 @@ def print_flows(
                 if code:
                     loc["fingerprints"]["code"] = calculate_hash(code)
                 nodeLabel = loc.get("nodeLabel")
-                if nodeLabel in ("METHOD_PARAMETER_IN", "CALL"):
+                if nodeLabel in ("METHOD_PARAMETER_IN", "CALL") or (
+                    filename.endswith(".py")
+                    and nodeLabel == "IDENTIFIER"
+                    and (idx == 0 or idx == len(location_list) - 1)
+                ):
                     floc = f"{loc.get('filename')}:{loc.get('lineNumber')}"
                     floc_key = f"{floc}|{symbol}"
                     # If the next entry in the flow is identical to this
@@ -216,7 +226,11 @@ def print_flows(
                     if idx < len(location_list) - 1:
                         nextloc = location_list[idx + 1]
                         nextNodeLabel = nextloc.get("nodeLabel")
-                        if nextNodeLabel in ("METHOD_PARAMETER_IN", "CALL"):
+                        if nextNodeLabel in (
+                            "METHOD_PARAMETER_IN",
+                            "CALL",
+                            "IDENTIFIER",
+                        ):
                             nextfloc = (
                                 f"{nextloc.get('filename')}:{nextloc.get('lineNumber')}"
                             )
@@ -238,9 +252,23 @@ def print_flows(
                             and symbol in code
                             and symbol != code
                         ):
-                            code = code.replace(
-                                symbol,
-                                f"[{symbol_highlight_color}]{symbol}[/{symbol_highlight_color}]",
+                            code = (
+                                code.replace(
+                                    f'"{symbol}',
+                                    f'"[{symbol_highlight_color}]{symbol}[/{symbol_highlight_color}]',
+                                )
+                                .replace(
+                                    f"({symbol},",
+                                    f"( [{symbol_highlight_color}]{symbol} [/{symbol_highlight_color}],",
+                                )
+                                .replace(
+                                    f"{symbol})",
+                                    f"[{symbol_highlight_color}]{symbol}[/{symbol_highlight_color}] )",
+                                )
+                                .replace(
+                                    f"{symbol},",
+                                    f"[{symbol_highlight_color}]{symbol}[/{symbol_highlight_color}] ,",
+                                )
                             )
                             last_symbol = symbol
                         if loc.get("filename") == "<empty>":
@@ -292,3 +320,69 @@ def expand_search_str(search_descriptor):
         for k, v in search_descriptor.items():
             search_str = f'{search_str}.{k}("{v}")'
     return search_str
+
+
+def fix_json(sout):
+    """Hacky method to convert the joern stdout string to json"""
+    source_sink_mode = False
+    try:
+        if "defined function source" in sout:
+            source_sink_mode = True
+            sout = sout.replace("defined function source\n", "")
+            sout = sout.replace("defined function sink\n", "")
+        else:
+            sout = sout.replace(r'"\"', '"').replace(r'\""', '"')
+        if ': String = "[' in sout or ": String = [" in sout:
+            if ": String = [" in sout:
+                sout = sout.split(": String = ")[-1]
+            elif source_sink_mode:
+                sout = (
+                    sout.replace(r"\"", '"')
+                    .replace('}]}]"', "}]}]")
+                    .replace('\\"', '"')
+                )
+                if ': String = "[' in sout:
+                    sout = sout.split(': String = "')[-1]
+            else:
+                sout = sout.split(': String = "')[-1][-1]
+
+        elif "tree: ListBuffer" in sout:
+            sout = sout.split(": String = ")[-1]
+            if '"""' in sout:
+                sout = sout.replace('"""', "")
+            return sout
+        elif 'String = """[' in sout:
+            tmpA = sout.split("\n")[1:-2]
+            sout = "[ " + "\n".join(tmpA) + "]"
+        return orjson.loads(sout)
+    except Exception:
+        return {"response": sout}
+
+
+def fix_query(query_str):
+    """Utility method to convert CPGQL queries to become json friendly"""
+    if "\\." in query_str and "\\\\." not in query_str:
+        query_str = query_str.replace("\\.", "\\\\.")
+    if (query_str.startswith("cpg.") or query_str.startswith("({cpg.")) and (
+        ".toJson" not in query_str
+        and ".plotDot" not in query_str
+        and not query_str.endswith(".p")
+        and ".store" not in query_str
+        and "def" not in query_str
+        and "printCallTree" not in query_str
+    ):
+        query_str = f"{query_str}.toJsonPretty"
+    if os.getenv("POLYNOTE_VERSION") or os.getenv("AT_DEBUG_MODE") in ("true", "1"):
+        console.print(
+            Panel(Syntax(query_str, "scala"), expand=False, title="CPGQL Query")
+        )
+    return query_str
+
+
+def parse_error(serr):
+    """Method to parse joern output and identify friendly error messages"""
+    if "No projects loaded" in serr:
+        return """ERROR: Import code using import_code api. Usage: await workspace.import_code(connection, directory_name, app_name)"""
+    if "No CPG loaded" in serr:
+        return """ERROR: Import cpg using import_cpg or create_cpg api."""
+    return serr

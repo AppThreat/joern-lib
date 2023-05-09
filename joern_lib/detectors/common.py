@@ -59,6 +59,18 @@ async def list_literals(connection):
     return await client.q(connection, "cpg.literal")
 
 
+async def list_sensitive_literals(
+    connection, pattern="(secret|password|token|key|admin|root)"
+):
+    """
+    Method to list sensitive literals
+    """
+    return await client.q(
+        connection,
+        f'cpg.call.assignment.where(_.argument.order(1).code("(?i).*{pattern}.*")).argument.order(2).isLiteral.location',
+    )
+
+
 async def list_locals(connection):
     return await client.q(connection, "cpg.local")
 
@@ -185,7 +197,7 @@ async def get_method_callIn(connection, pattern):
 async def get_identifiers_in_file(connection, filename):
     return await client.q(
         connection,
-        f"""cpg.call.name(Operators.assignment).argument.order(1).map(t => (t, t.location.filename)).filter(_._2.equals("{filename}")).filter(_._1.isIdentifier).map(_._1.code).filterNot(_.contains("_tmp_")).dedup""",
+        f"""cpg.call.assignment.argument.order(1).map(t => (t, t.location.filename)).filter(_._2.equals("{filename}")).filter(_._1.isIdentifier).map(_._1.code).filterNot(_.contains("_tmp_")).dedup""",
     )
 
 

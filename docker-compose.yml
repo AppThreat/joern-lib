@@ -1,7 +1,7 @@
 version: "3.9"
 services:
   cpggen:
-    image: ghcr.io/appthreat/cpggen:main
+    image: ghcr.io/appthreat/cpggen-oss:main
     ports:
       - "7072:7072"
     volumes:
@@ -11,11 +11,9 @@ services:
     mem_reservation: 64000m
     command: cpggen --server --server-host 0.0.0.0 --server-port 7072
     environment:
-      - SL_CPG_OPTS="-J-Xms16g -J-Xmx64g"
-      - SHIFTLEFT_JAVA_OPTS="-Xms16g -Xmx64g"
       - AT_DEBUG_MODE=debug
   joern:
-    image: ghcr.io/appthreat/cpggen:main # change this to joern once it's live
+    image: ghcr.io/joernio/joern:master
     ports:
       - "9000:9000"
     volumes:
