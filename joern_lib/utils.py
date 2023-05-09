@@ -14,7 +14,7 @@ console = Console(
     log_time=False,
     log_path=False,
     color_system="auto",
-    width=int(os.getenv("COLUMNS", 280)),
+    width=int(os.getenv("COLUMNS", 180)),
 )
 
 check_labels_list = (
@@ -170,6 +170,7 @@ def print_flows(
         last_symbol = ""
         node_name = ""
         code = ""
+        last_code = ""
         if isinstance(res, dict) and res.get("_2"):
             location_list = res.get("_2")
             for idx, loc in enumerate(location_list):
@@ -184,12 +185,18 @@ def print_flows(
                 # Add the various computed fingerprints
                 loc["fingerprints"] = {}
                 code = (
-                    loc.get("node", {})
-                    .get("code", "")
-                    .encode()
-                    .decode("unicode_escape")
-                    .strip()
+                    (
+                        loc.get("node", {})
+                        .get("code", "")
+                        .encode()
+                        .decode("unicode_escape")
+                        .strip()
+                    )
+                    .replace("\t", "")
+                    .replace("\n", " ")
                 )
+                if code == last_code:
+                    continue
                 methodFullName = loc.get("methodFullName", "").replace("<init>", "")
                 methodShortName = loc.get("methodShortName", "").replace("<init>", "")
                 class_name = loc.get("className")
@@ -199,13 +206,19 @@ def print_flows(
                     if class_name.endswith("." + methodShortName):
                         class_name = re.sub(f".{methodShortName}$", "", class_name)
                 # Highlight potential check methods
-                if node_name and node_name in code and check_highlight_color:
+                if check_highlight_color:
                     for check_label in check_labels_list:
-                        if check_label in node_name.lower():
-                            code = code.replace(
-                                node_name,
-                                f"[{check_highlight_color}]{node_name}[/{check_highlight_color}]",
+                        if check_label in methodShortName:
+                            methodShortName = methodShortName.replace(
+                                methodShortName,
+                                f"[{check_highlight_color}]{methodShortName}[/{check_highlight_color}]",
                             )
+                        if node_name and node_name in code:
+                            if check_label in node_name.lower():
+                                code = code.replace(
+                                    node_name,
+                                    f"[{check_highlight_color}]{node_name}[/{check_highlight_color}]",
+                                )
                 if code == "<empty>":
                     code = ""
                 for lk in ("methodShortName", "methodFullName", "symbol", "filename"):
@@ -219,7 +232,7 @@ def print_flows(
                     and nodeLabel == "IDENTIFIER"
                     and (idx == 0 or idx == len(location_list) - 1)
                 ):
-                    floc = f"{loc.get('filename')}:{loc.get('lineNumber')}"
+                    floc = f"{loc.get('filename')}:{loc.get('lineNumber')} {methodShortName}()"
                     floc_key = f"{floc}|{symbol}"
                     # If the next entry in the flow is identical to this
                     # but better then ignore the current
@@ -235,7 +248,10 @@ def print_flows(
                                 f"{nextloc.get('filename')}:{nextloc.get('lineNumber')}"
                             )
                             nextfloc_key = f"""{nextfloc}|{nextloc.get("symbol")}"""
-                            if floc == nextfloc and len(floc_key) < len(nextfloc_key):
+                            if floc == nextfloc and (
+                                floc_key == nextfloc_key
+                                or len(floc_key) < len(nextfloc_key)
+                            ):
                                 continue
                     if loc.get("filename") == "<empty>":
                         class_method_sep = "" if not methodShortName else "."
@@ -249,9 +265,9 @@ def print_flows(
                         if (
                             symbol
                             and symbol_highlight_color
-                            and symbol in code
-                            and symbol != code
+                            and (symbol in code or symbol in identifiers_list)
                         ):
+                            last_code = code
                             code = (
                                 code.replace(
                                     f'"{symbol}',
@@ -268,6 +284,22 @@ def print_flows(
                                 .replace(
                                     f"{symbol},",
                                     f"[{symbol_highlight_color}]{symbol}[/{symbol_highlight_color}] ,",
+                                )
+                                .replace(
+                                    f"{symbol}[",
+                                    f"[{symbol_highlight_color}]{symbol}[/{symbol_highlight_color}][",
+                                )
+                                .replace(
+                                    f"&{symbol}",
+                                    f"[{symbol_highlight_color}]&{symbol}[/{symbol_highlight_color}]",
+                                )
+                                .replace(
+                                    f"*{symbol}",
+                                    f"[{symbol_highlight_color}]*{symbol}[/{symbol_highlight_color}]",
+                                )
+                                .replace(
+                                    f" {symbol} ",
+                                    f" [{symbol_highlight_color}]{symbol}[/{symbol_highlight_color}] ",
                                 )
                             )
                             last_symbol = symbol
@@ -292,13 +324,22 @@ def print_flows(
                     and symbol not in identifiers_list
                     and not symbol.startswith("$")
                     and not symbol.startswith("tmp")
+                    and symbol != "NULL"
                 ):
                     identifiers_list.append(symbol)
                     last_symbol = symbol
         if ftree:
             flow_fingerprint_key = "-".join(flow_fingerprint_list)
             if flow_fingerprint_key not in parsed_flows_list:
-                console.print(ftree)
+                if identifiers_list:
+                    console.print(
+                        Panel(
+                            "\n".join(identifiers_list),
+                            expand=False,
+                            title="Tainted Identifiers",
+                        )
+                    )
+                console.print(Panel(ftree, expand=False, title="Data Flow"))
                 console.print("")
                 parsed_flows_list.append(flow_fingerprint_key)
 

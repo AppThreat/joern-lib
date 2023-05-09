@@ -3,9 +3,6 @@ import os
 
 import httpx
 import uvloop
-
-asyncio.set_event_loop_policy(uvloop.EventLoopPolicy())
-
 import websockets
 
 from joern_lib.utils import (
@@ -18,6 +15,8 @@ from joern_lib.utils import (
     print_md,
     print_table,
 )
+
+asyncio.set_event_loop_policy(uvloop.EventLoopPolicy())
 
 headers = {"Content-Type": "application/json", "Accept-Encoding": "gzip"}
 CLIENT_TIMEOUT = os.getenv("HTTP_CLIENT_TIMEOUT")
