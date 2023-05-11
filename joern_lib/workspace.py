@@ -104,9 +104,14 @@ async def get_active_project(connection):
 
 
 async def set_active_project(connection, project_name):
-    return await client.q(
+    res = await client.q(
         connection, f"""workspace.setActiveProject("{project_name}")"""
     )
+    if isinstance(res, str):
+        return False
+    if "projectFile = ProjectFile(inputPath =" in res.get("response", ""):
+        return True
+    return False
 
 
 async def delete_project(connection, project_name):

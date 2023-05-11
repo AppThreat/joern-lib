@@ -3,7 +3,7 @@ import os
 
 import pytest
 
-from joern_lib.utils import print_flows, print_table
+from joern_lib.utils import colorize_dot_data, print_flows, print_table
 
 TEST_JAVA_HTTP_JSON = [
     {
@@ -2022,6 +2022,11 @@ def test_creach_data():
     )
 
 
+@pytest.fixture
+def test_pdg_data():
+    return os.path.join(os.path.dirname(os.path.realpath(__file__)), "data", "pdg.dot")
+
+
 def test_java_http_routes():
     assert not print_table(TEST_JAVA_HTTP_JSON)
 
@@ -2043,3 +2048,8 @@ def test_pyreach_parsing(test_pyreach_data):
 def test_creach_parsing(test_creach_data):
     with open(test_creach_data) as fp:
         assert not print_flows(json.load(fp))
+
+
+def test_colorize_dot_data(test_pdg_data):
+    with open(test_pdg_data) as fp:
+        assert colorize_dot_data(json.load(fp))

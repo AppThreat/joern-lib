@@ -1,6 +1,10 @@
+import base64
+
 import os
 import re
 from hashlib import blake2b
+
+import mimetypes
 
 import orjson
 from rich.console import Console
@@ -9,6 +13,8 @@ from rich.panel import Panel
 from rich.syntax import Syntax
 from rich.table import Table
 from rich.tree import Tree
+
+mimetypes.init()
 
 console = Console(
     log_time=False,
@@ -427,3 +433,76 @@ def parse_error(serr):
     if "No CPG loaded" in serr:
         return """ERROR: Import cpg using import_cpg or create_cpg api."""
     return serr
+
+
+def read_image(file_path):
+    """Method to read image file safely optionally converting binary formats to base64 string. Useful to render images in notebooks"""
+    if os.path.exists(file_path):
+        (mt, encoding) = mimetypes.guess_type(file_path, strict=True)
+        if mt.startswith("image/svg"):
+            with open(file_path, mode="r", encoding=encoding) as fp:
+                return fp.read()
+        if mt.startswith("image/"):
+            with open(file_path, mode="rb") as fp:
+                b = base64.b64encode(fp.read())
+                return b.decode("utf-8")
+    return None
+
+
+def colorize_dot_data(
+    dot_data,
+    scheme="paired9",
+    colors={
+        "method": "1",
+        "literal": "2",
+        "operator": "3",
+        "param": "4",
+        "identifier": "5",
+        "modifier": "6",
+        "unknown": "7",
+        "local": "7",
+        "type_ref": "8",
+        "return": "9",
+    },
+    shapes={
+        "method": "box3d",
+        "literal": "oval",
+        "operator": "box",
+        "param": "tab",
+        "identifier": "note",
+        "modifier": "rect",
+        "type_ref": "component",
+        "return": "cds",
+    },
+    style="filled",
+):
+    """
+    Method to colorize dot data with Brewer color schemes
+
+    This product includes color specifications and designs developed by Cynthia Brewer (http://colorbrewer.org/).
+    """
+    fdot_list = []
+    if dot_data and isinstance(dot_data, list):
+        for d in dot_data:
+            if "digraph" in d:
+                for k, v in colors.items():
+                    if k == "operator":
+                        d = d.replace(
+                            "label = <(&lt;operator&gt;",
+                            f"color = {v}, shape = {shapes.get('operator', 'box')}, style = {style}, label = <(&lt;operator&gt;",
+                        )
+                    else:
+                        d = d.replace(
+                            f"label = <({k.upper()},",
+                            f"color = {v}, shape = {shapes.get(k, 'ellipse')}, style = {style}, label = <({k.upper()},",
+                        )
+                # These two replacements make the string compatible with pygraphviz and pydot
+                # See https://github.com/joernio/joern/issues/2704
+                d = d.replace("label = <", "label=<")
+                afdot = d.split("\n")
+                afdot.insert(1, f"node [colorscheme={scheme}];")
+                fdot_list.append("\n".join(afdot))
+            else:
+                fdot_list.append(d)
+        return fdot_list[0] if fdot_list and len(fdot_list) == 1 else fdot_list
+    return dot_data

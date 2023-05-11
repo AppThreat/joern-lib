@@ -11,6 +11,10 @@ Functions
     Tags could be a list of string or dictionary of key, value pairs
 
     
+`export(connection, method=None, query=None, repr='pdg', colorize=True)`
+:   Method to export graph representations of a method or node
+
+    
 `get_call_tree(connection, method_name, n=3)`
 :   
 
@@ -40,6 +44,10 @@ Functions
 
     
 `get_long_methods(connection, n=1000)`
+:   
+
+    
+`get_method(connection, method, as_graph=False)`
 :   
 
     
@@ -159,7 +167,7 @@ Functions
 :   
 
     
-`list_methods(connection, search_descriptor=None, skip_operators=True)`
+`list_methods(connection, search_descriptor=None, skip_operators=True, as_graph=False)`
 :   
 
     

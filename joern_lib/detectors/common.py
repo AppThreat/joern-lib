@@ -1,5 +1,5 @@
-from joern_lib import client
-from joern_lib.utils import expand_search_str
+from joern_lib import client, graph
+from joern_lib.utils import colorize_dot_data, expand_search_str
 
 
 async def list_files(connection, search_descriptor=None):
@@ -83,13 +83,43 @@ async def list_metadatas(connection):
     return await client.q(connection, "cpg.metaData")
 
 
-async def list_methods(connection, search_descriptor=None, skip_operators=True):
-    search_str = expand_search_str(search_descriptor)
-    filter_str = ""
-    if skip_operators:
-        filter_str = '.whereNot(_.name(".*<operator>.*"))'
+async def nx(connection, method, graph_repr="cpg14"):
+    return await list_methods(
+        connection, search_descriptor=method, as_graph=True, graph_repr=graph_repr
+    )
 
-    return await client.q(connection, f"""cpg.method{search_str}{filter_str}""")
+
+async def get_method(connection, method, as_graph=False, graph_repr="pdg"):
+    return await list_methods(
+        connection, search_descriptor=method, as_graph=as_graph, graph_repr=graph_repr
+    )
+
+
+async def is_similar(connection, M1, M2, upper_bound=500, timeout=5):
+    """Convenient method to check if two methods are similar using graph edit distance"""
+    m1g = await get_method(connection, M1, as_graph=True)
+    m2g = await get_method(connection, M2, as_graph=True)
+    if not m1g or not m2g:
+        return False
+    return graph.is_similar(m1g, m2g, upper_bound=upper_bound, timeout=timeout)
+
+
+async def list_methods(
+    connection,
+    search_descriptor=None,
+    skip_operators=True,
+    as_graph=False,
+    graph_repr="pdg",
+):
+    if as_graph:
+        res = await export(connection, method=search_descriptor, repr=graph_repr)
+        return graph.convert_dot(res)
+    else:
+        search_str = expand_search_str(search_descriptor)
+        filter_str = ""
+        if skip_operators:
+            filter_str = '.whereNot(_.name(".*<operator>.*"))'
+        return await client.q(connection, f"""cpg.method{search_str}{filter_str}""")
 
 
 async def list_constructors(connection):
@@ -320,4 +350,19 @@ def printCallTree(callerFullName : String, tree: ListBuffer[String], depth: Int)
         tree.toList.mkString("\\n")
         """
         % dict(method_name=method_name, n=n),
+    )
+
+
+async def export(connection, method=None, query=None, repr="pdg", colorize=True):
+    """Method to export graph representations of a method or node"""
+    filter_str = "method"
+    if method:
+        filter_str = f"method{expand_search_str(method)}"
+    elif query:
+        filter_str = query.replace("cpg.", "")
+    res = await client.q(connection, f"""cpg.{filter_str}.dot{repr.capitalize()}""")
+    return (
+        colorize_dot_data(res)
+        if colorize
+        else (res[0] if res and len(res) == 1 else res)
     )
