@@ -38,6 +38,13 @@ check_labels_list = (
     "encrypt",
 )
 
+JOERN_DATAFLOW_TRACKED_WIDTH = os.getenv("JOERN_DATAFLOW_TRACKED_WIDTH", 128)
+if (
+    isinstance(JOERN_DATAFLOW_TRACKED_WIDTH, str)
+    and JOERN_DATAFLOW_TRACKED_WIDTH.isdigit()
+):
+    JOERN_DATAFLOW_TRACKED_WIDTH = int(JOERN_DATAFLOW_TRACKED_WIDTH)
+
 
 def t(result, title="", caption="", language="javascript"):
     return print_table(result, title, caption, language)
@@ -198,9 +205,13 @@ def print_flows(
                         .decode("unicode_escape")
                         .strip()
                     )
+                    .replace("    ", " ")
                     .replace("\t", "")
                     .replace("\n", " ")
+                    .replace("    ", "")
                 )
+                if len(code) > JOERN_DATAFLOW_TRACKED_WIDTH:
+                    code = code[:JOERN_DATAFLOW_TRACKED_WIDTH] + " ..."
                 if code == last_code:
                     continue
                 methodFullName = loc.get("methodFullName", "").replace("<init>", "")

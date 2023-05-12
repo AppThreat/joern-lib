@@ -14,6 +14,8 @@ LABEL maintainer="appthreat" \
 ARG POLYNOTE_VERSION="0.5.1"
 ARG SCALA_VERSION="2.12"
 ARG DIST_TAR="polynote-dist.tar.gz"
+ARG TARGETPLATFORM
+
 ENV JAVA_HOME=/usr/lib/jvm/java-17-openjdk \
     PATH=${PATH}:/root/.local/bin:
 WORKDIR /opt
@@ -26,7 +28,7 @@ RUN microdnf update -y && microdnf install -y gcc git-core python3 python3-devel
     && python -m pip install --upgrade pip \
     && pip install -r ./polynote/requirements.txt \
     && curl -LO https://repo.almalinux.org/almalinux/9/CRB/x86_64/os/Packages/graphviz-devel-2.44.0-25.el9.x86_64.rpm \
-    && rpm -ivh graphviz-devel-2.44.0-25.el9.x86_64.rpm \
+    && if [ "$TARGETPLATFORM" = "linux/amd64" ]; then rpm -ivh graphviz-devel-2.44.0-25.el9.x86_64.rpm; fi \
     && rm graphviz-devel-2.44.0-25.el9.x86_64.rpm \
     && pip install poetry GitPython pandas matplotlib graphviz pydotplus networkx[default,extra] \
     && pip install torch --index-url https://download.pytorch.org/whl/cpu \

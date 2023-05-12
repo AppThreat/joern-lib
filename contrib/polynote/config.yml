@@ -3,3 +3,15 @@ listen:
 
 storage:
   dir: /opt/notebooks
+
+dependencies:
+  python:
+    - GitPython
+    - pandas
+    - matplotlib
+    - graphviz
+    - pydotplus
+    - networkx[default,extra]
+
+env:
+  AT_DEBUG_MODE: debug

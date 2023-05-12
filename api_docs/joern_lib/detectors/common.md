@@ -47,7 +47,7 @@ Functions
 :   
 
     
-`get_method(connection, method, as_graph=False)`
+`get_method(connection, method, as_graph=False, graph_repr='pdg')`
 :   
 
     
@@ -81,6 +81,10 @@ Functions
     
 `get_too_nested_methods(connection, n=4)`
 :   
+
+    
+`is_similar(connection, M1, M2, upper_bound=500, timeout=5)`
+:   Convenient method to check if two methods are similar using graph edit distance
 
     
 `list_annotations(connection)`
@@ -167,7 +171,7 @@ Functions
 :   
 
     
-`list_methods(connection, search_descriptor=None, skip_operators=True, as_graph=False)`
+`list_methods(connection, search_descriptor=None, skip_operators=True, as_graph=False, graph_repr='pdg')`
 :   
 
     
@@ -188,4 +192,8 @@ Functions
 
     
 `list_types(connection)`
+:   
+
+    
+`nx(connection, method, graph_repr='cpg14')`
 :

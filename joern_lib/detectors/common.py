@@ -118,7 +118,7 @@ async def list_methods(
         search_str = expand_search_str(search_descriptor)
         filter_str = ""
         if skip_operators:
-            filter_str = '.whereNot(_.name(".*<operator>.*"))'
+            filter_str = '.whereNot(_.name(".*<(operator|init)>.*"))'
         return await client.q(connection, f"""cpg.method{search_str}{filter_str}""")
 
 
@@ -128,7 +128,8 @@ async def list_constructors(connection):
 
 async def list_external_methods(connection):
     return await client.q(
-        connection, """cpg.method.isExternal(true).whereNot(_.name(".*<operator>.*"))"""
+        connection,
+        """cpg.method.isExternal(true).whereNot(_.name(".*<operator|init>.*"))""",
     )
 
 

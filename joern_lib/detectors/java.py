@@ -64,18 +64,32 @@ async def list_http_filters(connection, annotations=FILTER_ANNOTATIONS):
     return expand_annotations(res)
 
 
+async def list_unresolved_external_methods(connection):
+    return await client.q(
+        connection,
+        """cpg.method.isExternal(true).where(_.fullName(".*<unresolved.*")).whereNot(_.name(".*<(operator|init)>.*"))""",
+    )
+
+
 async def list_methods(
-    connection, modifier="public ", include_annotations=True, external=False
+    connection,
+    modifier="public ",
+    include_annotations=True,
+    external=False,
+    unresolved=True,
 ):
     external_bool_str = "true" if external else "false"
+    filter_str = '.whereNot(_.name(".*<(operator|init)>.*"))'
+    if not unresolved:
+        filter_str = f'{filter_str}.whereNot(_.fullName(".*<unresolved.*"))'
     if include_annotations:
         res = await client.q(
             connection,
-            f"""cpg.method.isExternal({external_bool_str}).code("{modifier}.*").map(m => (m, m.annotation.l))""",
+            f"""cpg.method.isExternal({external_bool_str}){filter_str}.code("{modifier}.*").map(m => (m, m.annotation.l))""",
         )
         return expand_annotations(res)
     else:
         return await client.q(
             connection,
-            f"""cpg.method.isExternal({external_bool_str}).code("{modifier}.*")""",
+            f"""cpg.method.isExternal({external_bool_str}){filter_str}.code("{modifier}.*")""",
         )

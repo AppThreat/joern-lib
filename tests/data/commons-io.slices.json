@@ -1,0 +1,5587 @@
+{
+  "objectSlices" : {
+    
+  },
+  "userDefinedTypes" : [
+    {
+      "name" : "org.apache.commons.io.CopyUtils",
+      "fields" : [
+        {
+          "name" : "DEFAULT_BUFFER_SIZE",
+          "typeFullName" : "int",
+          "literal" : false
+        }
+      ],
+      "procedures" : [
+        {
+          "callName" : "copy",
+          "paramTypes" : [
+            "byte[]",
+            "java.io.OutputStream"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "copy",
+          "paramTypes" : [
+            "byte[]",
+            "java.io.Writer"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "copy",
+          "paramTypes" : [
+            "byte[]",
+            "java.io.Writer",
+            "java.lang.String"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "copy",
+          "paramTypes" : [
+            "java.io.InputStream",
+            "java.io.OutputStream"
+          ],
+          "returnType" : "int"
+        },
+        {
+          "callName" : "copy",
+          "paramTypes" : [
+            "java.io.Reader",
+            "java.io.Writer"
+          ],
+          "returnType" : "int"
+        },
+        {
+          "callName" : "copy",
+          "paramTypes" : [
+            "java.io.InputStream",
+            "java.io.Writer"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "copy",
+          "paramTypes" : [
+            "java.io.InputStream",
+            "java.io.Writer",
+            "java.lang.String"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "copy",
+          "paramTypes" : [
+            "java.io.Reader",
+            "java.io.OutputStream"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "copy",
+          "paramTypes" : [
+            "java.lang.String",
+            "java.io.OutputStream"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "copy",
+          "paramTypes" : [
+            "java.lang.String",
+            "java.io.Writer"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "<init>",
+          "paramTypes" : [
+            "org.apache.commons.io.CopyUtils"
+          ],
+          "returnType" : "void"
+        }
+      ]
+    },
+    {
+      "name" : "org.apache.commons.io.DirectoryWalker$CancelException",
+      "fields" : [
+        {
+          "name" : "serialVersionUID",
+          "typeFullName" : "long",
+          "literal" : false
+        },
+        {
+          "name" : "file",
+          "typeFullName" : "java.io.File",
+          "literal" : false
+        },
+        {
+          "name" : "depth",
+          "typeFullName" : "int",
+          "literal" : false
+        }
+      ],
+      "procedures" : [
+        {
+          "callName" : "getFile",
+          "paramTypes" : [
+            "org.apache.commons.io.DirectoryWalker$CancelException"
+          ],
+          "returnType" : "java.io.File"
+        },
+        {
+          "callName" : "getDepth",
+          "paramTypes" : [
+            "org.apache.commons.io.DirectoryWalker$CancelException"
+          ],
+          "returnType" : "int"
+        },
+        {
+          "callName" : "<init>",
+          "paramTypes" : [
+            "org.apache.commons.io.DirectoryWalker$CancelException",
+            "java.io.File",
+            "int"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "<init>",
+          "paramTypes" : [
+            "org.apache.commons.io.DirectoryWalker$CancelException",
+            "java.lang.String",
+            "java.io.File",
+            "int"
+          ],
+          "returnType" : "void"
+        }
+      ]
+    },
+    {
+      "name" : "org.apache.commons.io.DirectoryWalker",
+      "fields" : [
+        {
+          "name" : "filter",
+          "typeFullName" : "java.io.FileFilter",
+          "literal" : false
+        },
+        {
+          "name" : "depthLimit",
+          "typeFullName" : "int",
+          "literal" : false
+        }
+      ],
+      "procedures" : [
+        {
+          "callName" : "walk",
+          "paramTypes" : [
+            "org.apache.commons.io.DirectoryWalker",
+            "java.io.File",
+            "java.util.Collection"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "walk",
+          "paramTypes" : [
+            "org.apache.commons.io.DirectoryWalker",
+            "java.io.File",
+            "int",
+            "java.util.Collection"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "handleStart",
+          "paramTypes" : [
+            "org.apache.commons.io.DirectoryWalker",
+            "java.io.File",
+            "java.util.Collection"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "handleRestricted",
+          "paramTypes" : [
+            "org.apache.commons.io.DirectoryWalker",
+            "java.io.File",
+            "int",
+            "java.util.Collection"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "handleIsCancelled",
+          "paramTypes" : [
+            "org.apache.commons.io.DirectoryWalker",
+            "java.io.File",
+            "int",
+            "java.util.Collection"
+          ],
+          "returnType" : "boolean"
+        },
+        {
+          "callName" : "handleFile",
+          "paramTypes" : [
+            "org.apache.commons.io.DirectoryWalker",
+            "java.io.File",
+            "int",
+            "java.util.Collection"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "handleEnd",
+          "paramTypes" : [
+            "org.apache.commons.io.DirectoryWalker",
+            "java.util.Collection"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "handleDirectoryStart",
+          "paramTypes" : [
+            "org.apache.commons.io.DirectoryWalker",
+            "java.io.File",
+            "int",
+            "java.util.Collection"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "handleDirectoryEnd",
+          "paramTypes" : [
+            "org.apache.commons.io.DirectoryWalker",
+            "java.io.File",
+            "int",
+            "java.util.Collection"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "handleDirectory",
+          "paramTypes" : [
+            "org.apache.commons.io.DirectoryWalker",
+            "java.io.File",
+            "int",
+            "java.util.Collection"
+          ],
+          "returnType" : "boolean"
+        },
+        {
+          "callName" : "handleCancelled",
+          "paramTypes" : [
+            "org.apache.commons.io.DirectoryWalker",
+            "java.io.File",
+            "java.util.Collection",
+            "org.apache.commons.io.DirectoryWalker$CancelException"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "checkIfCancelled",
+          "paramTypes" : [
+            "org.apache.commons.io.DirectoryWalker",
+            "java.io.File",
+            "int",
+            "java.util.Collection"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "<init>",
+          "paramTypes" : [
+            "org.apache.commons.io.DirectoryWalker"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "<init>",
+          "paramTypes" : [
+            "org.apache.commons.io.DirectoryWalker",
+            "java.io.FileFilter",
+            "int"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "<init>",
+          "paramTypes" : [
+            "org.apache.commons.io.DirectoryWalker",
+            "org.apache.commons.io.filefilter.IOFileFilter",
+            "org.apache.commons.io.filefilter.IOFileFilter",
+            "int"
+          ],
+          "returnType" : "void"
+        }
+      ]
+    },
+    {
+      "name" : "org.apache.commons.io.EndianUtils",
+      "fields" : [
+      ],
+      "procedures" : [
+        {
+          "callName" : "writeSwappedShort",
+          "paramTypes" : [
+            "byte[]",
+            "int",
+            "short"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "writeSwappedShort",
+          "paramTypes" : [
+            "java.io.OutputStream",
+            "short"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "writeSwappedLong",
+          "paramTypes" : [
+            "byte[]",
+            "int",
+            "long"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "writeSwappedLong",
+          "paramTypes" : [
+            "java.io.OutputStream",
+            "long"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "writeSwappedInteger",
+          "paramTypes" : [
+            "byte[]",
+            "int",
+            "int"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "writeSwappedInteger",
+          "paramTypes" : [
+            "java.io.OutputStream",
+            "int"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "writeSwappedFloat",
+          "paramTypes" : [
+            "byte[]",
+            "int",
+            "float"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "writeSwappedFloat",
+          "paramTypes" : [
+            "java.io.OutputStream",
+            "float"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "writeSwappedDouble",
+          "paramTypes" : [
+            "byte[]",
+            "int",
+            "double"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "writeSwappedDouble",
+          "paramTypes" : [
+            "java.io.OutputStream",
+            "double"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "swapShort",
+          "paramTypes" : [
+            "short"
+          ],
+          "returnType" : "short"
+        },
+        {
+          "callName" : "swapLong",
+          "paramTypes" : [
+            "long"
+          ],
+          "returnType" : "long"
+        },
+        {
+          "callName" : "swapInteger",
+          "paramTypes" : [
+            "int"
+          ],
+          "returnType" : "int"
+        },
+        {
+          "callName" : "swapFloat",
+          "paramTypes" : [
+            "float"
+          ],
+          "returnType" : "float"
+        },
+        {
+          "callName" : "swapDouble",
+          "paramTypes" : [
+            "double"
+          ],
+          "returnType" : "double"
+        },
+        {
+          "callName" : "readSwappedUnsignedShort",
+          "paramTypes" : [
+            "byte[]",
+            "int"
+          ],
+          "returnType" : "int"
+        },
+        {
+          "callName" : "readSwappedUnsignedShort",
+          "paramTypes" : [
+            "java.io.InputStream"
+          ],
+          "returnType" : "int"
+        },
+        {
+          "callName" : "readSwappedUnsignedInteger",
+          "paramTypes" : [
+            "byte[]",
+            "int"
+          ],
+          "returnType" : "long"
+        },
+        {
+          "callName" : "readSwappedUnsignedInteger",
+          "paramTypes" : [
+            "java.io.InputStream"
+          ],
+          "returnType" : "long"
+        },
+        {
+          "callName" : "readSwappedShort",
+          "paramTypes" : [
+            "byte[]",
+            "int"
+          ],
+          "returnType" : "short"
+        },
+        {
+          "callName" : "readSwappedShort",
+          "paramTypes" : [
+            "java.io.InputStream"
+          ],
+          "returnType" : "short"
+        },
+        {
+          "callName" : "readSwappedLong",
+          "paramTypes" : [
+            "byte[]",
+            "int"
+          ],
+          "returnType" : "long"
+        },
+        {
+          "callName" : "readSwappedLong",
+          "paramTypes" : [
+            "java.io.InputStream"
+          ],
+          "returnType" : "long"
+        },
+        {
+          "callName" : "readSwappedInteger",
+          "paramTypes" : [
+            "byte[]",
+            "int"
+          ],
+          "returnType" : "int"
+        },
+        {
+          "callName" : "readSwappedInteger",
+          "paramTypes" : [
+            "java.io.InputStream"
+          ],
+          "returnType" : "int"
+        },
+        {
+          "callName" : "readSwappedFloat",
+          "paramTypes" : [
+            "byte[]",
+            "int"
+          ],
+          "returnType" : "float"
+        },
+        {
+          "callName" : "readSwappedFloat",
+          "paramTypes" : [
+            "java.io.InputStream"
+          ],
+          "returnType" : "float"
+        },
+        {
+          "callName" : "readSwappedDouble",
+          "paramTypes" : [
+            "byte[]",
+            "int"
+          ],
+          "returnType" : "double"
+        },
+        {
+          "callName" : "readSwappedDouble",
+          "paramTypes" : [
+            "java.io.InputStream"
+          ],
+          "returnType" : "double"
+        },
+        {
+          "callName" : "read",
+          "paramTypes" : [
+            "java.io.InputStream"
+          ],
+          "returnType" : "int"
+        },
+        {
+          "callName" : "<init>",
+          "paramTypes" : [
+            "org.apache.commons.io.EndianUtils"
+          ],
+          "returnType" : "void"
+        }
+      ]
+    },
+    {
+      "name" : "org.apache.commons.io.FileCleaner",
+      "fields" : [
+        {
+          "name" : "theInstance",
+          "typeFullName" : "org.apache.commons.io.FileCleaningTracker",
+          "literal" : false
+        }
+      ],
+      "procedures" : [
+        {
+          "callName" : "track",
+          "paramTypes" : [
+            "java.io.File",
+            "java.lang.Object"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "track",
+          "paramTypes" : [
+            "java.io.File",
+            "java.lang.Object",
+            "org.apache.commons.io.FileDeleteStrategy"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "track",
+          "paramTypes" : [
+            "java.lang.String",
+            "java.lang.Object"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "track",
+          "paramTypes" : [
+            "java.lang.String",
+            "java.lang.Object",
+            "org.apache.commons.io.FileDeleteStrategy"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "getTrackCount",
+          "paramTypes" : [
+          ],
+          "returnType" : "int"
+        },
+        {
+          "callName" : "getInstance",
+          "paramTypes" : [
+          ],
+          "returnType" : "org.apache.commons.io.FileCleaningTracker"
+        },
+        {
+          "callName" : "exitWhenFinished",
+          "paramTypes" : [
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "<init>",
+          "paramTypes" : [
+            "org.apache.commons.io.FileCleaner"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "<clinit>",
+          "paramTypes" : [
+          ],
+          "returnType" : "void"
+        }
+      ]
+    },
+    {
+      "name" : "org.apache.commons.io.FileCleaningTracker$Reaper",
+      "fields" : [
+        {
+          "name" : "this$0",
+          "typeFullName" : "org.apache.commons.io.FileCleaningTracker",
+          "literal" : false
+        }
+      ],
+      "procedures" : [
+        {
+          "callName" : "run",
+          "paramTypes" : [
+            "org.apache.commons.io.FileCleaningTracker$Reaper"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "<init>",
+          "paramTypes" : [
+            "org.apache.commons.io.FileCleaningTracker$Reaper",
+            "org.apache.commons.io.FileCleaningTracker"
+          ],
+          "returnType" : "void"
+        }
+      ]
+    },
+    {
+      "name" : "org.apache.commons.io.FileCleaningTracker$Tracker",
+      "fields" : [
+        {
+          "name" : "path",
+          "typeFullName" : "java.lang.String",
+          "literal" : false
+        },
+        {
+          "name" : "deleteStrategy",
+          "typeFullName" : "org.apache.commons.io.FileDeleteStrategy",
+          "literal" : false
+        }
+      ],
+      "procedures" : [
+        {
+          "callName" : "delete",
+          "paramTypes" : [
+            "org.apache.commons.io.FileCleaningTracker$Tracker"
+          ],
+          "returnType" : "boolean"
+        },
+        {
+          "callName" : "<init>",
+          "paramTypes" : [
+            "org.apache.commons.io.FileCleaningTracker$Tracker",
+            "java.lang.String",
+            "org.apache.commons.io.FileDeleteStrategy",
+            "java.lang.Object",
+            "java.lang.ref.ReferenceQueue"
+          ],
+          "returnType" : "void"
+        }
+      ]
+    },
+    {
+      "name" : "org.apache.commons.io.FileCleaningTracker",
+      "fields" : [
+        {
+          "name" : "q",
+          "typeFullName" : "java.lang.ref.ReferenceQueue",
+          "literal" : false
+        },
+        {
+          "name" : "trackers",
+          "typeFullName" : "java.util.Collection",
+          "literal" : false
+        },
+        {
+          "name" : "exitWhenFinished",
+          "typeFullName" : "boolean",
+          "literal" : false
+        },
+        {
+          "name" : "reaper",
+          "typeFullName" : "java.lang.Thread",
+          "literal" : false
+        }
+      ],
+      "procedures" : [
+        {
+          "callName" : "track",
+          "paramTypes" : [
+            "org.apache.commons.io.FileCleaningTracker",
+            "java.io.File",
+            "java.lang.Object"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "track",
+          "paramTypes" : [
+            "org.apache.commons.io.FileCleaningTracker",
+            "java.io.File",
+            "java.lang.Object",
+            "org.apache.commons.io.FileDeleteStrategy"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "track",
+          "paramTypes" : [
+            "org.apache.commons.io.FileCleaningTracker",
+            "java.lang.String",
+            "java.lang.Object"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "track",
+          "paramTypes" : [
+            "org.apache.commons.io.FileCleaningTracker",
+            "java.lang.String",
+            "java.lang.Object",
+            "org.apache.commons.io.FileDeleteStrategy"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "getTrackCount",
+          "paramTypes" : [
+            "org.apache.commons.io.FileCleaningTracker"
+          ],
+          "returnType" : "int"
+        },
+        {
+          "callName" : "exitWhenFinished",
+          "paramTypes" : [
+            "org.apache.commons.io.FileCleaningTracker"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "addTracker",
+          "paramTypes" : [
+            "org.apache.commons.io.FileCleaningTracker",
+            "java.lang.String",
+            "java.lang.Object",
+            "org.apache.commons.io.FileDeleteStrategy"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "<init>",
+          "paramTypes" : [
+            "org.apache.commons.io.FileCleaningTracker"
+          ],
+          "returnType" : "void"
+        }
+      ]
+    },
+    {
+      "name" : "org.apache.commons.io.FileDeleteStrategy$ForceFileDeleteStrategy",
+      "fields" : [
+      ],
+      "procedures" : [
+        {
+          "callName" : "doDelete",
+          "paramTypes" : [
+            "org.apache.commons.io.FileDeleteStrategy$ForceFileDeleteStrategy",
+            "java.io.File"
+          ],
+          "returnType" : "boolean"
+        },
+        {
+          "callName" : "<init>",
+          "paramTypes" : [
+            "org.apache.commons.io.FileDeleteStrategy$ForceFileDeleteStrategy"
+          ],
+          "returnType" : "void"
+        }
+      ]
+    },
+    {
+      "name" : "org.apache.commons.io.FileDeleteStrategy",
+      "fields" : [
+        {
+          "name" : "NORMAL",
+          "typeFullName" : "org.apache.commons.io.FileDeleteStrategy",
+          "literal" : false
+        },
+        {
+          "name" : "FORCE",
+          "typeFullName" : "org.apache.commons.io.FileDeleteStrategy",
+          "literal" : false
+        },
+        {
+          "name" : "name",
+          "typeFullName" : "java.lang.String",
+          "literal" : false
+        }
+      ],
+      "procedures" : [
+        {
+          "callName" : "toString",
+          "paramTypes" : [
+            "org.apache.commons.io.FileDeleteStrategy"
+          ],
+          "returnType" : "java.lang.String"
+        },
+        {
+          "callName" : "doDelete",
+          "paramTypes" : [
+            "org.apache.commons.io.FileDeleteStrategy",
+            "java.io.File"
+          ],
+          "returnType" : "boolean"
+        },
+        {
+          "callName" : "deleteQuietly",
+          "paramTypes" : [
+            "org.apache.commons.io.FileDeleteStrategy",
+            "java.io.File"
+          ],
+          "returnType" : "boolean"
+        },
+        {
+          "callName" : "delete",
+          "paramTypes" : [
+            "org.apache.commons.io.FileDeleteStrategy",
+            "java.io.File"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "<init>",
+          "paramTypes" : [
+            "org.apache.commons.io.FileDeleteStrategy",
+            "java.lang.String"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "<clinit>",
+          "paramTypes" : [
+          ],
+          "returnType" : "void"
+        }
+      ]
+    },
+    {
+      "name" : "org.apache.commons.io.filefilter.AbstractFileFilter",
+      "fields" : [
+      ],
+      "procedures" : [
+        {
+          "callName" : "accept",
+          "paramTypes" : [
+            "org.apache.commons.io.filefilter.AbstractFileFilter",
+            "java.io.File"
+          ],
+          "returnType" : "boolean"
+        },
+        {
+          "callName" : "accept",
+          "paramTypes" : [
+            "org.apache.commons.io.filefilter.AbstractFileFilter",
+            "java.io.File",
+            "java.lang.String"
+          ],
+          "returnType" : "boolean"
+        },
+        {
+          "callName" : "<init>",
+          "paramTypes" : [
+            "org.apache.commons.io.filefilter.AbstractFileFilter"
+          ],
+          "returnType" : "void"
+        }
+      ]
+    },
+    {
+      "name" : "org.apache.commons.io.filefilter.AgeFileFilter",
+      "fields" : [
+        {
+          "name" : "cutoff",
+          "typeFullName" : "long",
+          "literal" : false
+        },
+        {
+          "name" : "acceptOlder",
+          "typeFullName" : "boolean",
+          "literal" : false
+        }
+      ],
+      "procedures" : [
+        {
+          "callName" : "accept",
+          "paramTypes" : [
+            "org.apache.commons.io.filefilter.AgeFileFilter",
+            "java.io.File"
+          ],
+          "returnType" : "boolean"
+        },
+        {
+          "callName" : "<init>",
+          "paramTypes" : [
+            "org.apache.commons.io.filefilter.AgeFileFilter",
+            "long"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "<init>",
+          "paramTypes" : [
+            "org.apache.commons.io.filefilter.AgeFileFilter",
+            "long",
+            "boolean"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "<init>",
+          "paramTypes" : [
+            "org.apache.commons.io.filefilter.AgeFileFilter",
+            "java.util.Date"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "<init>",
+          "paramTypes" : [
+            "org.apache.commons.io.filefilter.AgeFileFilter",
+            "java.util.Date",
+            "boolean"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "<init>",
+          "paramTypes" : [
+            "org.apache.commons.io.filefilter.AgeFileFilter",
+            "java.io.File"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "<init>",
+          "paramTypes" : [
+            "org.apache.commons.io.filefilter.AgeFileFilter",
+            "java.io.File",
+            "boolean"
+          ],
+          "returnType" : "void"
+        }
+      ]
+    },
+    {
+      "name" : "org.apache.commons.io.filefilter.AndFileFilter",
+      "fields" : [
+        {
+          "name" : "fileFilters",
+          "typeFullName" : "java.util.List",
+          "literal" : false
+        }
+      ],
+      "procedures" : [
+        {
+          "callName" : "setFileFilters",
+          "paramTypes" : [
+            "org.apache.commons.io.filefilter.AndFileFilter",
+            "java.util.List"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "removeFileFilter",
+          "paramTypes" : [
+            "org.apache.commons.io.filefilter.AndFileFilter",
+            "org.apache.commons.io.filefilter.IOFileFilter"
+          ],
+          "returnType" : "boolean"
+        },
+        {
+          "callName" : "getFileFilters",
+          "paramTypes" : [
+            "org.apache.commons.io.filefilter.AndFileFilter"
+          ],
+          "returnType" : "java.util.List"
+        },
+        {
+          "callName" : "addFileFilter",
+          "paramTypes" : [
+            "org.apache.commons.io.filefilter.AndFileFilter",
+            "org.apache.commons.io.filefilter.IOFileFilter"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "accept",
+          "paramTypes" : [
+            "org.apache.commons.io.filefilter.AndFileFilter",
+            "java.io.File"
+          ],
+          "returnType" : "boolean"
+        },
+        {
+          "callName" : "accept",
+          "paramTypes" : [
+            "org.apache.commons.io.filefilter.AndFileFilter",
+            "java.io.File",
+            "java.lang.String"
+          ],
+          "returnType" : "boolean"
+        },
+        {
+          "callName" : "<init>",
+          "paramTypes" : [
+            "org.apache.commons.io.filefilter.AndFileFilter"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "<init>",
+          "paramTypes" : [
+            "org.apache.commons.io.filefilter.AndFileFilter",
+            "java.util.List"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "<init>",
+          "paramTypes" : [
+            "org.apache.commons.io.filefilter.AndFileFilter",
+            "org.apache.commons.io.filefilter.IOFileFilter",
+            "org.apache.commons.io.filefilter.IOFileFilter"
+          ],
+          "returnType" : "void"
+        }
+      ]
+    },
+    {
+      "name" : "org.apache.commons.io.filefilter.CanReadFileFilter",
+      "fields" : [
+        {
+          "name" : "CAN_READ",
+          "typeFullName" : "org.apache.commons.io.filefilter.IOFileFilter",
+          "literal" : false
+        },
+        {
+          "name" : "CANNOT_READ",
+          "typeFullName" : "org.apache.commons.io.filefilter.IOFileFilter",
+          "literal" : false
+        },
+        {
+          "name" : "READ_ONLY",
+          "typeFullName" : "org.apache.commons.io.filefilter.IOFileFilter",
+          "literal" : false
+        }
+      ],
+      "procedures" : [
+        {
+          "callName" : "accept",
+          "paramTypes" : [
+            "org.apache.commons.io.filefilter.CanReadFileFilter",
+            "java.io.File"
+          ],
+          "returnType" : "boolean"
+        },
+        {
+          "callName" : "<init>",
+          "paramTypes" : [
+            "org.apache.commons.io.filefilter.CanReadFileFilter"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "<clinit>",
+          "paramTypes" : [
+          ],
+          "returnType" : "void"
+        }
+      ]
+    },
+    {
+      "name" : "org.apache.commons.io.filefilter.CanWriteFileFilter",
+      "fields" : [
+        {
+          "name" : "CAN_WRITE",
+          "typeFullName" : "org.apache.commons.io.filefilter.IOFileFilter",
+          "literal" : false
+        },
+        {
+          "name" : "CANNOT_WRITE",
+          "typeFullName" : "org.apache.commons.io.filefilter.IOFileFilter",
+          "literal" : false
+        }
+      ],
+      "procedures" : [
+        {
+          "callName" : "accept",
+          "paramTypes" : [
+            "org.apache.commons.io.filefilter.CanWriteFileFilter",
+            "java.io.File"
+          ],
+          "returnType" : "boolean"
+        },
+        {
+          "callName" : "<init>",
+          "paramTypes" : [
+            "org.apache.commons.io.filefilter.CanWriteFileFilter"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "<clinit>",
+          "paramTypes" : [
+          ],
+          "returnType" : "void"
+        }
+      ]
+    },
+    {
+      "name" : "org.apache.commons.io.filefilter.ConditionalFileFilter",
+      "fields" : [
+      ],
+      "procedures" : [
+        {
+          "callName" : "setFileFilters",
+          "paramTypes" : [
+            "org.apache.commons.io.filefilter.ConditionalFileFilter",
+            "java.util.List"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "removeFileFilter",
+          "paramTypes" : [
+            "org.apache.commons.io.filefilter.ConditionalFileFilter",
+            "org.apache.commons.io.filefilter.IOFileFilter"
+          ],
+          "returnType" : "boolean"
+        },
+        {
+          "callName" : "getFileFilters",
+          "paramTypes" : [
+            "org.apache.commons.io.filefilter.ConditionalFileFilter"
+          ],
+          "returnType" : "java.util.List"
+        },
+        {
+          "callName" : "addFileFilter",
+          "paramTypes" : [
+            "org.apache.commons.io.filefilter.ConditionalFileFilter",
+            "org.apache.commons.io.filefilter.IOFileFilter"
+          ],
+          "returnType" : "void"
+        }
+      ]
+    },
+    {
+      "name" : "org.apache.commons.io.filefilter.DelegateFileFilter",
+      "fields" : [
+        {
+          "name" : "filenameFilter",
+          "typeFullName" : "java.io.FilenameFilter",
+          "literal" : false
+        },
+        {
+          "name" : "fileFilter",
+          "typeFullName" : "java.io.FileFilter",
+          "literal" : false
+        }
+      ],
+      "procedures" : [
+        {
+          "callName" : "accept",
+          "paramTypes" : [
+            "org.apache.commons.io.filefilter.DelegateFileFilter",
+            "java.io.File"
+          ],
+          "returnType" : "boolean"
+        },
+        {
+          "callName" : "accept",
+          "paramTypes" : [
+            "org.apache.commons.io.filefilter.DelegateFileFilter",
+            "java.io.File",
+            "java.lang.String"
+          ],
+          "returnType" : "boolean"
+        },
+        {
+          "callName" : "<init>",
+          "paramTypes" : [
+            "org.apache.commons.io.filefilter.DelegateFileFilter",
+            "java.io.FilenameFilter"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "<init>",
+          "paramTypes" : [
+            "org.apache.commons.io.filefilter.DelegateFileFilter",
+            "java.io.FileFilter"
+          ],
+          "returnType" : "void"
+        }
+      ]
+    },
+    {
+      "name" : "org.apache.commons.io.filefilter.DirectoryFileFilter",
+      "fields" : [
+        {
+          "name" : "DIRECTORY",
+          "typeFullName" : "org.apache.commons.io.filefilter.IOFileFilter",
+          "literal" : false
+        },
+        {
+          "name" : "INSTANCE",
+          "typeFullName" : "org.apache.commons.io.filefilter.IOFileFilter",
+          "literal" : false
+        }
+      ],
+      "procedures" : [
+        {
+          "callName" : "accept",
+          "paramTypes" : [
+            "org.apache.commons.io.filefilter.DirectoryFileFilter",
+            "java.io.File"
+          ],
+          "returnType" : "boolean"
+        },
+        {
+          "callName" : "<init>",
+          "paramTypes" : [
+            "org.apache.commons.io.filefilter.DirectoryFileFilter"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "<clinit>",
+          "paramTypes" : [
+          ],
+          "returnType" : "void"
+        }
+      ]
+    },
+    {
+      "name" : "org.apache.commons.io.filefilter.EmptyFileFilter",
+      "fields" : [
+        {
+          "name" : "EMPTY",
+          "typeFullName" : "org.apache.commons.io.filefilter.IOFileFilter",
+          "literal" : false
+        },
+        {
+          "name" : "NOT_EMPTY",
+          "typeFullName" : "org.apache.commons.io.filefilter.IOFileFilter",
+          "literal" : false
+        }
+      ],
+      "procedures" : [
+        {
+          "callName" : "accept",
+          "paramTypes" : [
+            "org.apache.commons.io.filefilter.EmptyFileFilter",
+            "java.io.File"
+          ],
+          "returnType" : "boolean"
+        },
+        {
+          "callName" : "<init>",
+          "paramTypes" : [
+            "org.apache.commons.io.filefilter.EmptyFileFilter"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "<clinit>",
+          "paramTypes" : [
+          ],
+          "returnType" : "void"
+        }
+      ]
+    },
+    {
+      "name" : "org.apache.commons.io.filefilter.FalseFileFilter",
+      "fields" : [
+        {
+          "name" : "FALSE",
+          "typeFullName" : "org.apache.commons.io.filefilter.IOFileFilter",
+          "literal" : false
+        },
+        {
+          "name" : "INSTANCE",
+          "typeFullName" : "org.apache.commons.io.filefilter.IOFileFilter",
+          "literal" : false
+        }
+      ],
+      "procedures" : [
+        {
+          "callName" : "accept",
+          "paramTypes" : [
+            "org.apache.commons.io.filefilter.FalseFileFilter",
+            "java.io.File"
+          ],
+          "returnType" : "boolean"
+        },
+        {
+          "callName" : "accept",
+          "paramTypes" : [
+            "org.apache.commons.io.filefilter.FalseFileFilter",
+            "java.io.File",
+            "java.lang.String"
+          ],
+          "returnType" : "boolean"
+        },
+        {
+          "callName" : "<init>",
+          "paramTypes" : [
+            "org.apache.commons.io.filefilter.FalseFileFilter"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "<clinit>",
+          "paramTypes" : [
+          ],
+          "returnType" : "void"
+        }
+      ]
+    },
+    {
+      "name" : "org.apache.commons.io.filefilter.FileFileFilter",
+      "fields" : [
+        {
+          "name" : "FILE",
+          "typeFullName" : "org.apache.commons.io.filefilter.IOFileFilter",
+          "literal" : false
+        }
+      ],
+      "procedures" : [
+        {
+          "callName" : "accept",
+          "paramTypes" : [
+            "org.apache.commons.io.filefilter.FileFileFilter",
+            "java.io.File"
+          ],
+          "returnType" : "boolean"
+        },
+        {
+          "callName" : "<init>",
+          "paramTypes" : [
+            "org.apache.commons.io.filefilter.FileFileFilter"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "<clinit>",
+          "paramTypes" : [
+          ],
+          "returnType" : "void"
+        }
+      ]
+    },
+    {
+      "name" : "org.apache.commons.io.filefilter.FileFilterUtils",
+      "fields" : [
+        {
+          "name" : "cvsFilter",
+          "typeFullName" : "org.apache.commons.io.filefilter.IOFileFilter",
+          "literal" : false
+        },
+        {
+          "name" : "svnFilter",
+          "typeFullName" : "org.apache.commons.io.filefilter.IOFileFilter",
+          "literal" : false
+        }
+      ],
+      "procedures" : [
+        {
+          "callName" : "trueFileFilter",
+          "paramTypes" : [
+          ],
+          "returnType" : "org.apache.commons.io.filefilter.IOFileFilter"
+        },
+        {
+          "callName" : "suffixFileFilter",
+          "paramTypes" : [
+            "java.lang.String"
+          ],
+          "returnType" : "org.apache.commons.io.filefilter.IOFileFilter"
+        },
+        {
+          "callName" : "sizeRangeFileFilter",
+          "paramTypes" : [
+            "long",
+            "long"
+          ],
+          "returnType" : "org.apache.commons.io.filefilter.IOFileFilter"
+        },
+        {
+          "callName" : "sizeFileFilter",
+          "paramTypes" : [
+            "long"
+          ],
+          "returnType" : "org.apache.commons.io.filefilter.IOFileFilter"
+        },
+        {
+          "callName" : "sizeFileFilter",
+          "paramTypes" : [
+            "long",
+            "boolean"
+          ],
+          "returnType" : "org.apache.commons.io.filefilter.IOFileFilter"
+        },
+        {
+          "callName" : "prefixFileFilter",
+          "paramTypes" : [
+            "java.lang.String"
+          ],
+          "returnType" : "org.apache.commons.io.filefilter.IOFileFilter"
+        },
+        {
+          "callName" : "orFileFilter",
+          "paramTypes" : [
+            "org.apache.commons.io.filefilter.IOFileFilter",
+            "org.apache.commons.io.filefilter.IOFileFilter"
+          ],
+          "returnType" : "org.apache.commons.io.filefilter.IOFileFilter"
+        },
+        {
+          "callName" : "notFileFilter",
+          "paramTypes" : [
+            "org.apache.commons.io.filefilter.IOFileFilter"
+          ],
+          "returnType" : "org.apache.commons.io.filefilter.IOFileFilter"
+        },
+        {
+          "callName" : "nameFileFilter",
+          "paramTypes" : [
+            "java.lang.String"
+          ],
+          "returnType" : "org.apache.commons.io.filefilter.IOFileFilter"
+        },
+        {
+          "callName" : "makeSVNAware",
+          "paramTypes" : [
+            "org.apache.commons.io.filefilter.IOFileFilter"
+          ],
+          "returnType" : "org.apache.commons.io.filefilter.IOFileFilter"
+        },
+        {
+          "callName" : "makeFileOnly",
+          "paramTypes" : [
+            "org.apache.commons.io.filefilter.IOFileFilter"
+          ],
+          "returnType" : "org.apache.commons.io.filefilter.IOFileFilter"
+        },
+        {
+          "callName" : "makeDirectoryOnly",
+          "paramTypes" : [
+            "org.apache.commons.io.filefilter.IOFileFilter"
+          ],
+          "returnType" : "org.apache.commons.io.filefilter.IOFileFilter"
+        },
+        {
+          "callName" : "makeCVSAware",
+          "paramTypes" : [
+            "org.apache.commons.io.filefilter.IOFileFilter"
+          ],
+          "returnType" : "org.apache.commons.io.filefilter.IOFileFilter"
+        },
+        {
+          "callName" : "fileFileFilter",
+          "paramTypes" : [
+          ],
+          "returnType" : "org.apache.commons.io.filefilter.IOFileFilter"
+        },
+        {
+          "callName" : "falseFileFilter",
+          "paramTypes" : [
+          ],
+          "returnType" : "org.apache.commons.io.filefilter.IOFileFilter"
+        },
+        {
+          "callName" : "directoryFileFilter",
+          "paramTypes" : [
+          ],
+          "returnType" : "org.apache.commons.io.filefilter.IOFileFilter"
+        },
+        {
+          "callName" : "asFileFilter",
+          "paramTypes" : [
+            "java.io.FileFilter"
+          ],
+          "returnType" : "org.apache.commons.io.filefilter.IOFileFilter"
+        },
+        {
+          "callName" : "asFileFilter",
+          "paramTypes" : [
+            "java.io.FilenameFilter"
+          ],
+          "returnType" : "org.apache.commons.io.filefilter.IOFileFilter"
+        },
+        {
+          "callName" : "andFileFilter",
+          "paramTypes" : [
+            "org.apache.commons.io.filefilter.IOFileFilter",
+            "org.apache.commons.io.filefilter.IOFileFilter"
+          ],
+          "returnType" : "org.apache.commons.io.filefilter.IOFileFilter"
+        },
+        {
+          "callName" : "ageFileFilter",
+          "paramTypes" : [
+            "long"
+          ],
+          "returnType" : "org.apache.commons.io.filefilter.IOFileFilter"
+        },
+        {
+          "callName" : "ageFileFilter",
+          "paramTypes" : [
+            "long",
+            "boolean"
+          ],
+          "returnType" : "org.apache.commons.io.filefilter.IOFileFilter"
+        },
+        {
+          "callName" : "ageFileFilter",
+          "paramTypes" : [
+            "java.util.Date"
+          ],
+          "returnType" : "org.apache.commons.io.filefilter.IOFileFilter"
+        },
+        {
+          "callName" : "ageFileFilter",
+          "paramTypes" : [
+            "java.util.Date",
+            "boolean"
+          ],
+          "returnType" : "org.apache.commons.io.filefilter.IOFileFilter"
+        },
+        {
+          "callName" : "ageFileFilter",
+          "paramTypes" : [
+            "java.io.File"
+          ],
+          "returnType" : "org.apache.commons.io.filefilter.IOFileFilter"
+        },
+        {
+          "callName" : "ageFileFilter",
+          "paramTypes" : [
+            "java.io.File",
+            "boolean"
+          ],
+          "returnType" : "org.apache.commons.io.filefilter.IOFileFilter"
+        },
+        {
+          "callName" : "<init>",
+          "paramTypes" : [
+            "org.apache.commons.io.filefilter.FileFilterUtils"
+          ],
+          "returnType" : "void"
+        }
+      ]
+    },
+    {
+      "name" : "org.apache.commons.io.filefilter.HiddenFileFilter",
+      "fields" : [
+        {
+          "name" : "HIDDEN",
+          "typeFullName" : "org.apache.commons.io.filefilter.IOFileFilter",
+          "literal" : false
+        },
+        {
+          "name" : "VISIBLE",
+          "typeFullName" : "org.apache.commons.io.filefilter.IOFileFilter",
+          "literal" : false
+        }
+      ],
+      "procedures" : [
+        {
+          "callName" : "accept",
+          "paramTypes" : [
+            "org.apache.commons.io.filefilter.HiddenFileFilter",
+            "java.io.File"
+          ],
+          "returnType" : "boolean"
+        },
+        {
+          "callName" : "<init>",
+          "paramTypes" : [
+            "org.apache.commons.io.filefilter.HiddenFileFilter"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "<clinit>",
+          "paramTypes" : [
+          ],
+          "returnType" : "void"
+        }
+      ]
+    },
+    {
+      "name" : "org.apache.commons.io.filefilter.IOFileFilter",
+      "fields" : [
+      ],
+      "procedures" : [
+        {
+          "callName" : "accept",
+          "paramTypes" : [
+            "org.apache.commons.io.filefilter.IOFileFilter",
+            "java.io.File"
+          ],
+          "returnType" : "boolean"
+        },
+        {
+          "callName" : "accept",
+          "paramTypes" : [
+            "org.apache.commons.io.filefilter.IOFileFilter",
+            "java.io.File",
+            "java.lang.String"
+          ],
+          "returnType" : "boolean"
+        }
+      ]
+    },
+    {
+      "name" : "org.apache.commons.io.filefilter.NameFileFilter",
+      "fields" : [
+        {
+          "name" : "names",
+          "typeFullName" : "java.lang.String[]",
+          "literal" : false
+        },
+        {
+          "name" : "caseSensitivity",
+          "typeFullName" : "org.apache.commons.io.IOCase",
+          "literal" : false
+        }
+      ],
+      "procedures" : [
+        {
+          "callName" : "accept",
+          "paramTypes" : [
+            "org.apache.commons.io.filefilter.NameFileFilter",
+            "java.io.File"
+          ],
+          "returnType" : "boolean"
+        },
+        {
+          "callName" : "accept",
+          "paramTypes" : [
+            "org.apache.commons.io.filefilter.NameFileFilter",
+            "java.io.File",
+            "java.lang.String"
+          ],
+          "returnType" : "boolean"
+        },
+        {
+          "callName" : "<init>",
+          "paramTypes" : [
+            "org.apache.commons.io.filefilter.NameFileFilter",
+            "java.lang.String"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "<init>",
+          "paramTypes" : [
+            "org.apache.commons.io.filefilter.NameFileFilter",
+            "java.lang.String",
+            "org.apache.commons.io.IOCase"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "<init>",
+          "paramTypes" : [
+            "org.apache.commons.io.filefilter.NameFileFilter",
+            "java.lang.String[]"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "<init>",
+          "paramTypes" : [
+            "org.apache.commons.io.filefilter.NameFileFilter",
+            "java.lang.String[]",
+            "org.apache.commons.io.IOCase"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "<init>",
+          "paramTypes" : [
+            "org.apache.commons.io.filefilter.NameFileFilter",
+            "java.util.List"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "<init>",
+          "paramTypes" : [
+            "org.apache.commons.io.filefilter.NameFileFilter",
+            "java.util.List",
+            "org.apache.commons.io.IOCase"
+          ],
+          "returnType" : "void"
+        }
+      ]
+    },
+    {
+      "name" : "org.apache.commons.io.filefilter.NotFileFilter",
+      "fields" : [
+        {
+          "name" : "filter",
+          "typeFullName" : "org.apache.commons.io.filefilter.IOFileFilter",
+          "literal" : false
+        }
+      ],
+      "procedures" : [
+        {
+          "callName" : "accept",
+          "paramTypes" : [
+            "org.apache.commons.io.filefilter.NotFileFilter",
+            "java.io.File"
+          ],
+          "returnType" : "boolean"
+        },
+        {
+          "callName" : "accept",
+          "paramTypes" : [
+            "org.apache.commons.io.filefilter.NotFileFilter",
+            "java.io.File",
+            "java.lang.String"
+          ],
+          "returnType" : "boolean"
+        },
+        {
+          "callName" : "<init>",
+          "paramTypes" : [
+            "org.apache.commons.io.filefilter.NotFileFilter",
+            "org.apache.commons.io.filefilter.IOFileFilter"
+          ],
+          "returnType" : "void"
+        }
+      ]
+    },
+    {
+      "name" : "org.apache.commons.io.filefilter.OrFileFilter",
+      "fields" : [
+        {
+          "name" : "fileFilters",
+          "typeFullName" : "java.util.List",
+          "literal" : false
+        }
+      ],
+      "procedures" : [
+        {
+          "callName" : "setFileFilters",
+          "paramTypes" : [
+            "org.apache.commons.io.filefilter.OrFileFilter",
+            "java.util.List"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "removeFileFilter",
+          "paramTypes" : [
+            "org.apache.commons.io.filefilter.OrFileFilter",
+            "org.apache.commons.io.filefilter.IOFileFilter"
+          ],
+          "returnType" : "boolean"
+        },
+        {
+          "callName" : "getFileFilters",
+          "paramTypes" : [
+            "org.apache.commons.io.filefilter.OrFileFilter"
+          ],
+          "returnType" : "java.util.List"
+        },
+        {
+          "callName" : "addFileFilter",
+          "paramTypes" : [
+            "org.apache.commons.io.filefilter.OrFileFilter",
+            "org.apache.commons.io.filefilter.IOFileFilter"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "accept",
+          "paramTypes" : [
+            "org.apache.commons.io.filefilter.OrFileFilter",
+            "java.io.File"
+          ],
+          "returnType" : "boolean"
+        },
+        {
+          "callName" : "accept",
+          "paramTypes" : [
+            "org.apache.commons.io.filefilter.OrFileFilter",
+            "java.io.File",
+            "java.lang.String"
+          ],
+          "returnType" : "boolean"
+        },
+        {
+          "callName" : "<init>",
+          "paramTypes" : [
+            "org.apache.commons.io.filefilter.OrFileFilter"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "<init>",
+          "paramTypes" : [
+            "org.apache.commons.io.filefilter.OrFileFilter",
+            "java.util.List"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "<init>",
+          "paramTypes" : [
+            "org.apache.commons.io.filefilter.OrFileFilter",
+            "org.apache.commons.io.filefilter.IOFileFilter",
+            "org.apache.commons.io.filefilter.IOFileFilter"
+          ],
+          "returnType" : "void"
+        }
+      ]
+    },
+    {
+      "name" : "org.apache.commons.io.filefilter.PrefixFileFilter",
+      "fields" : [
+        {
+          "name" : "prefixes",
+          "typeFullName" : "java.lang.String[]",
+          "literal" : false
+        }
+      ],
+      "procedures" : [
+        {
+          "callName" : "accept",
+          "paramTypes" : [
+            "org.apache.commons.io.filefilter.PrefixFileFilter",
+            "java.io.File"
+          ],
+          "returnType" : "boolean"
+        },
+        {
+          "callName" : "accept",
+          "paramTypes" : [
+            "org.apache.commons.io.filefilter.PrefixFileFilter",
+            "java.io.File",
+            "java.lang.String"
+          ],
+          "returnType" : "boolean"
+        },
+        {
+          "callName" : "<init>",
+          "paramTypes" : [
+            "org.apache.commons.io.filefilter.PrefixFileFilter",
+            "java.lang.String"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "<init>",
+          "paramTypes" : [
+            "org.apache.commons.io.filefilter.PrefixFileFilter",
+            "java.lang.String[]"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "<init>",
+          "paramTypes" : [
+            "org.apache.commons.io.filefilter.PrefixFileFilter",
+            "java.util.List"
+          ],
+          "returnType" : "void"
+        }
+      ]
+    },
+    {
+      "name" : "org.apache.commons.io.filefilter.SizeFileFilter",
+      "fields" : [
+        {
+          "name" : "size",
+          "typeFullName" : "long",
+          "literal" : false
+        },
+        {
+          "name" : "acceptLarger",
+          "typeFullName" : "boolean",
+          "literal" : false
+        }
+      ],
+      "procedures" : [
+        {
+          "callName" : "accept",
+          "paramTypes" : [
+            "org.apache.commons.io.filefilter.SizeFileFilter",
+            "java.io.File"
+          ],
+          "returnType" : "boolean"
+        },
+        {
+          "callName" : "<init>",
+          "paramTypes" : [
+            "org.apache.commons.io.filefilter.SizeFileFilter",
+            "long"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "<init>",
+          "paramTypes" : [
+            "org.apache.commons.io.filefilter.SizeFileFilter",
+            "long",
+            "boolean"
+          ],
+          "returnType" : "void"
+        }
+      ]
+    },
+    {
+      "name" : "org.apache.commons.io.filefilter.SuffixFileFilter",
+      "fields" : [
+        {
+          "name" : "suffixes",
+          "typeFullName" : "java.lang.String[]",
+          "literal" : false
+        }
+      ],
+      "procedures" : [
+        {
+          "callName" : "accept",
+          "paramTypes" : [
+            "org.apache.commons.io.filefilter.SuffixFileFilter",
+            "java.io.File"
+          ],
+          "returnType" : "boolean"
+        },
+        {
+          "callName" : "accept",
+          "paramTypes" : [
+            "org.apache.commons.io.filefilter.SuffixFileFilter",
+            "java.io.File",
+            "java.lang.String"
+          ],
+          "returnType" : "boolean"
+        },
+        {
+          "callName" : "<init>",
+          "paramTypes" : [
+            "org.apache.commons.io.filefilter.SuffixFileFilter",
+            "java.lang.String"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "<init>",
+          "paramTypes" : [
+            "org.apache.commons.io.filefilter.SuffixFileFilter",
+            "java.lang.String[]"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "<init>",
+          "paramTypes" : [
+            "org.apache.commons.io.filefilter.SuffixFileFilter",
+            "java.util.List"
+          ],
+          "returnType" : "void"
+        }
+      ]
+    },
+    {
+      "name" : "org.apache.commons.io.filefilter.TrueFileFilter",
+      "fields" : [
+        {
+          "name" : "TRUE",
+          "typeFullName" : "org.apache.commons.io.filefilter.IOFileFilter",
+          "literal" : false
+        },
+        {
+          "name" : "INSTANCE",
+          "typeFullName" : "org.apache.commons.io.filefilter.IOFileFilter",
+          "literal" : false
+        }
+      ],
+      "procedures" : [
+        {
+          "callName" : "accept",
+          "paramTypes" : [
+            "org.apache.commons.io.filefilter.TrueFileFilter",
+            "java.io.File"
+          ],
+          "returnType" : "boolean"
+        },
+        {
+          "callName" : "accept",
+          "paramTypes" : [
+            "org.apache.commons.io.filefilter.TrueFileFilter",
+            "java.io.File",
+            "java.lang.String"
+          ],
+          "returnType" : "boolean"
+        },
+        {
+          "callName" : "<init>",
+          "paramTypes" : [
+            "org.apache.commons.io.filefilter.TrueFileFilter"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "<clinit>",
+          "paramTypes" : [
+          ],
+          "returnType" : "void"
+        }
+      ]
+    },
+    {
+      "name" : "org.apache.commons.io.filefilter.WildcardFileFilter",
+      "fields" : [
+        {
+          "name" : "wildcards",
+          "typeFullName" : "java.lang.String[]",
+          "literal" : false
+        },
+        {
+          "name" : "caseSensitivity",
+          "typeFullName" : "org.apache.commons.io.IOCase",
+          "literal" : false
+        }
+      ],
+      "procedures" : [
+        {
+          "callName" : "accept",
+          "paramTypes" : [
+            "org.apache.commons.io.filefilter.WildcardFileFilter",
+            "java.io.File",
+            "java.lang.String"
+          ],
+          "returnType" : "boolean"
+        },
+        {
+          "callName" : "accept",
+          "paramTypes" : [
+            "org.apache.commons.io.filefilter.WildcardFileFilter",
+            "java.io.File"
+          ],
+          "returnType" : "boolean"
+        },
+        {
+          "callName" : "<init>",
+          "paramTypes" : [
+            "org.apache.commons.io.filefilter.WildcardFileFilter",
+            "java.lang.String"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "<init>",
+          "paramTypes" : [
+            "org.apache.commons.io.filefilter.WildcardFileFilter",
+            "java.lang.String",
+            "org.apache.commons.io.IOCase"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "<init>",
+          "paramTypes" : [
+            "org.apache.commons.io.filefilter.WildcardFileFilter",
+            "java.lang.String[]"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "<init>",
+          "paramTypes" : [
+            "org.apache.commons.io.filefilter.WildcardFileFilter",
+            "java.lang.String[]",
+            "org.apache.commons.io.IOCase"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "<init>",
+          "paramTypes" : [
+            "org.apache.commons.io.filefilter.WildcardFileFilter",
+            "java.util.List"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "<init>",
+          "paramTypes" : [
+            "org.apache.commons.io.filefilter.WildcardFileFilter",
+            "java.util.List",
+            "org.apache.commons.io.IOCase"
+          ],
+          "returnType" : "void"
+        }
+      ]
+    },
+    {
+      "name" : "org.apache.commons.io.filefilter.WildcardFilter",
+      "fields" : [
+        {
+          "name" : "wildcards",
+          "typeFullName" : "java.lang.String[]",
+          "literal" : false
+        }
+      ],
+      "procedures" : [
+        {
+          "callName" : "accept",
+          "paramTypes" : [
+            "org.apache.commons.io.filefilter.WildcardFilter",
+            "java.io.File",
+            "java.lang.String"
+          ],
+          "returnType" : "boolean"
+        },
+        {
+          "callName" : "accept",
+          "paramTypes" : [
+            "org.apache.commons.io.filefilter.WildcardFilter",
+            "java.io.File"
+          ],
+          "returnType" : "boolean"
+        },
+        {
+          "callName" : "<init>",
+          "paramTypes" : [
+            "org.apache.commons.io.filefilter.WildcardFilter",
+            "java.lang.String"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "<init>",
+          "paramTypes" : [
+            "org.apache.commons.io.filefilter.WildcardFilter",
+            "java.lang.String[]"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "<init>",
+          "paramTypes" : [
+            "org.apache.commons.io.filefilter.WildcardFilter",
+            "java.util.List"
+          ],
+          "returnType" : "void"
+        }
+      ]
+    },
+    {
+      "name" : "org.apache.commons.io.FilenameUtils",
+      "fields" : [
+        {
+          "name" : "EXTENSION_SEPARATOR",
+          "typeFullName" : "char",
+          "literal" : false
+        },
+        {
+          "name" : "UNIX_SEPARATOR",
+          "typeFullName" : "char",
+          "literal" : false
+        },
+        {
+          "name" : "WINDOWS_SEPARATOR",
+          "typeFullName" : "char",
+          "literal" : false
+        },
+        {
+          "name" : "SYSTEM_SEPARATOR",
+          "typeFullName" : "char",
+          "literal" : false
+        },
+        {
+          "name" : "OTHER_SEPARATOR",
+          "typeFullName" : "char",
+          "literal" : false
+        }
+      ],
+      "procedures" : [
+        {
+          "callName" : "wildcardMatchOnSystem",
+          "paramTypes" : [
+            "java.lang.String",
+            "java.lang.String"
+          ],
+          "returnType" : "boolean"
+        },
+        {
+          "callName" : "wildcardMatch",
+          "paramTypes" : [
+            "java.lang.String",
+            "java.lang.String"
+          ],
+          "returnType" : "boolean"
+        },
+        {
+          "callName" : "wildcardMatch",
+          "paramTypes" : [
+            "java.lang.String",
+            "java.lang.String",
+            "org.apache.commons.io.IOCase"
+          ],
+          "returnType" : "boolean"
+        },
+        {
+          "callName" : "splitOnTokens",
+          "paramTypes" : [
+            "java.lang.String"
+          ],
+          "returnType" : "java.lang.String[]"
+        },
+        {
+          "callName" : "separatorsToWindows",
+          "paramTypes" : [
+            "java.lang.String"
+          ],
+          "returnType" : "java.lang.String"
+        },
+        {
+          "callName" : "separatorsToUnix",
+          "paramTypes" : [
+            "java.lang.String"
+          ],
+          "returnType" : "java.lang.String"
+        },
+        {
+          "callName" : "separatorsToSystem",
+          "paramTypes" : [
+            "java.lang.String"
+          ],
+          "returnType" : "java.lang.String"
+        },
+        {
+          "callName" : "removeExtension",
+          "paramTypes" : [
+            "java.lang.String"
+          ],
+          "returnType" : "java.lang.String"
+        },
+        {
+          "callName" : "normalizeNoEndSeparator",
+          "paramTypes" : [
+            "java.lang.String"
+          ],
+          "returnType" : "java.lang.String"
+        },
+        {
+          "callName" : "normalize",
+          "paramTypes" : [
+            "java.lang.String"
+          ],
+          "returnType" : "java.lang.String"
+        },
+        {
+          "callName" : "isSystemWindows",
+          "paramTypes" : [
+          ],
+          "returnType" : "boolean"
+        },
+        {
+          "callName" : "isSeparator",
+          "paramTypes" : [
+            "char"
+          ],
+          "returnType" : "boolean"
+        },
+        {
+          "callName" : "isExtension",
+          "paramTypes" : [
+            "java.lang.String",
+            "java.lang.String"
+          ],
+          "returnType" : "boolean"
+        },
+        {
+          "callName" : "isExtension",
+          "paramTypes" : [
+            "java.lang.String",
+            "java.lang.String[]"
+          ],
+          "returnType" : "boolean"
+        },
+        {
+          "callName" : "isExtension",
+          "paramTypes" : [
+            "java.lang.String",
+            "java.util.Collection"
+          ],
+          "returnType" : "boolean"
+        },
+        {
+          "callName" : "indexOfLastSeparator",
+          "paramTypes" : [
+            "java.lang.String"
+          ],
+          "returnType" : "int"
+        },
+        {
+          "callName" : "indexOfExtension",
+          "paramTypes" : [
+            "java.lang.String"
+          ],
+          "returnType" : "int"
+        },
+        {
+          "callName" : "getPrefixLength",
+          "paramTypes" : [
+            "java.lang.String"
+          ],
+          "returnType" : "int"
+        },
+        {
+          "callName" : "getPrefix",
+          "paramTypes" : [
+            "java.lang.String"
+          ],
+          "returnType" : "java.lang.String"
+        },
+        {
+          "callName" : "getPathNoEndSeparator",
+          "paramTypes" : [
+            "java.lang.String"
+          ],
+          "returnType" : "java.lang.String"
+        },
+        {
+          "callName" : "getPath",
+          "paramTypes" : [
+            "java.lang.String"
+          ],
+          "returnType" : "java.lang.String"
+        },
+        {
+          "callName" : "getName",
+          "paramTypes" : [
+            "java.lang.String"
+          ],
+          "returnType" : "java.lang.String"
+        },
+        {
+          "callName" : "getFullPathNoEndSeparator",
+          "paramTypes" : [
+            "java.lang.String"
+          ],
+          "returnType" : "java.lang.String"
+        },
+        {
+          "callName" : "getFullPath",
+          "paramTypes" : [
+            "java.lang.String"
+          ],
+          "returnType" : "java.lang.String"
+        },
+        {
+          "callName" : "getExtension",
+          "paramTypes" : [
+            "java.lang.String"
+          ],
+          "returnType" : "java.lang.String"
+        },
+        {
+          "callName" : "getBaseName",
+          "paramTypes" : [
+            "java.lang.String"
+          ],
+          "returnType" : "java.lang.String"
+        },
+        {
+          "callName" : "equalsOnSystem",
+          "paramTypes" : [
+            "java.lang.String",
+            "java.lang.String"
+          ],
+          "returnType" : "boolean"
+        },
+        {
+          "callName" : "equalsNormalizedOnSystem",
+          "paramTypes" : [
+            "java.lang.String",
+            "java.lang.String"
+          ],
+          "returnType" : "boolean"
+        },
+        {
+          "callName" : "equalsNormalized",
+          "paramTypes" : [
+            "java.lang.String",
+            "java.lang.String"
+          ],
+          "returnType" : "boolean"
+        },
+        {
+          "callName" : "equals",
+          "paramTypes" : [
+            "java.lang.String",
+            "java.lang.String"
+          ],
+          "returnType" : "boolean"
+        },
+        {
+          "callName" : "equals",
+          "paramTypes" : [
+            "java.lang.String",
+            "java.lang.String",
+            "boolean",
+            "org.apache.commons.io.IOCase"
+          ],
+          "returnType" : "boolean"
+        },
+        {
+          "callName" : "doNormalize",
+          "paramTypes" : [
+            "java.lang.String",
+            "boolean"
+          ],
+          "returnType" : "java.lang.String"
+        },
+        {
+          "callName" : "doGetPath",
+          "paramTypes" : [
+            "java.lang.String",
+            "int"
+          ],
+          "returnType" : "java.lang.String"
+        },
+        {
+          "callName" : "doGetFullPath",
+          "paramTypes" : [
+            "java.lang.String",
+            "boolean"
+          ],
+          "returnType" : "java.lang.String"
+        },
+        {
+          "callName" : "concat",
+          "paramTypes" : [
+            "java.lang.String",
+            "java.lang.String"
+          ],
+          "returnType" : "java.lang.String"
+        },
+        {
+          "callName" : "<init>",
+          "paramTypes" : [
+            "org.apache.commons.io.FilenameUtils"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "<clinit>",
+          "paramTypes" : [
+          ],
+          "returnType" : "void"
+        }
+      ]
+    },
+    {
+      "name" : "org.apache.commons.io.FileSystemUtils",
+      "fields" : [
+        {
+          "name" : "INSTANCE",
+          "typeFullName" : "org.apache.commons.io.FileSystemUtils",
+          "literal" : false
+        },
+        {
+          "name" : "INIT_PROBLEM",
+          "typeFullName" : "int",
+          "literal" : false
+        },
+        {
+          "name" : "OTHER",
+          "typeFullName" : "int",
+          "literal" : false
+        },
+        {
+          "name" : "WINDOWS",
+          "typeFullName" : "int",
+          "literal" : false
+        },
+        {
+          "name" : "UNIX",
+          "typeFullName" : "int",
+          "literal" : false
+        },
+        {
+          "name" : "POSIX_UNIX",
+          "typeFullName" : "int",
+          "literal" : false
+        },
+        {
+          "name" : "OS",
+          "typeFullName" : "int",
+          "literal" : false
+        }
+      ],
+      "procedures" : [
+        {
+          "callName" : "performCommand",
+          "paramTypes" : [
+            "org.apache.commons.io.FileSystemUtils",
+            "java.lang.String[]",
+            "int"
+          ],
+          "returnType" : "java.util.List"
+        },
+        {
+          "callName" : "parseDir",
+          "paramTypes" : [
+            "org.apache.commons.io.FileSystemUtils",
+            "java.lang.String",
+            "java.lang.String"
+          ],
+          "returnType" : "long"
+        },
+        {
+          "callName" : "parseBytes",
+          "paramTypes" : [
+            "org.apache.commons.io.FileSystemUtils",
+            "java.lang.String",
+            "java.lang.String"
+          ],
+          "returnType" : "long"
+        },
+        {
+          "callName" : "openProcess",
+          "paramTypes" : [
+            "org.apache.commons.io.FileSystemUtils",
+            "java.lang.String[]"
+          ],
+          "returnType" : "java.lang.Process"
+        },
+        {
+          "callName" : "freeSpaceWindows",
+          "paramTypes" : [
+            "org.apache.commons.io.FileSystemUtils",
+            "java.lang.String"
+          ],
+          "returnType" : "long"
+        },
+        {
+          "callName" : "freeSpaceUnix",
+          "paramTypes" : [
+            "org.apache.commons.io.FileSystemUtils",
+            "java.lang.String",
+            "boolean",
+            "boolean"
+          ],
+          "returnType" : "long"
+        },
+        {
+          "callName" : "freeSpaceOS",
+          "paramTypes" : [
+            "org.apache.commons.io.FileSystemUtils",
+            "java.lang.String",
+            "int",
+            "boolean"
+          ],
+          "returnType" : "long"
+        },
+        {
+          "callName" : "freeSpaceKb",
+          "paramTypes" : [
+            "java.lang.String"
+          ],
+          "returnType" : "long"
+        },
+        {
+          "callName" : "freeSpace",
+          "paramTypes" : [
+            "java.lang.String"
+          ],
+          "returnType" : "long"
+        },
+        {
+          "callName" : "<init>",
+          "paramTypes" : [
+            "org.apache.commons.io.FileSystemUtils"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "<clinit>",
+          "paramTypes" : [
+          ],
+          "returnType" : "void"
+        }
+      ]
+    },
+    {
+      "name" : "org.apache.commons.io.FileUtils",
+      "fields" : [
+        {
+          "name" : "ONE_KB",
+          "typeFullName" : "long",
+          "literal" : false
+        },
+        {
+          "name" : "ONE_MB",
+          "typeFullName" : "long",
+          "literal" : false
+        },
+        {
+          "name" : "ONE_GB",
+          "typeFullName" : "long",
+          "literal" : false
+        },
+        {
+          "name" : "EMPTY_FILE_ARRAY",
+          "typeFullName" : "java.io.File[]",
+          "literal" : false
+        }
+      ],
+      "procedures" : [
+        {
+          "callName" : "writeStringToFile",
+          "paramTypes" : [
+            "java.io.File",
+            "java.lang.String",
+            "java.lang.String"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "writeStringToFile",
+          "paramTypes" : [
+            "java.io.File",
+            "java.lang.String"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "writeLines",
+          "paramTypes" : [
+            "java.io.File",
+            "java.lang.String",
+            "java.util.Collection"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "writeLines",
+          "paramTypes" : [
+            "java.io.File",
+            "java.util.Collection"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "writeLines",
+          "paramTypes" : [
+            "java.io.File",
+            "java.lang.String",
+            "java.util.Collection",
+            "java.lang.String"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "writeLines",
+          "paramTypes" : [
+            "java.io.File",
+            "java.util.Collection",
+            "java.lang.String"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "writeByteArrayToFile",
+          "paramTypes" : [
+            "java.io.File",
+            "byte[]"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "waitFor",
+          "paramTypes" : [
+            "java.io.File",
+            "int"
+          ],
+          "returnType" : "boolean"
+        },
+        {
+          "callName" : "touch",
+          "paramTypes" : [
+            "java.io.File"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "toURLs",
+          "paramTypes" : [
+            "java.io.File[]"
+          ],
+          "returnType" : "java.net.URL[]"
+        },
+        {
+          "callName" : "toSuffixes",
+          "paramTypes" : [
+            "java.lang.String[]"
+          ],
+          "returnType" : "java.lang.String[]"
+        },
+        {
+          "callName" : "toFiles",
+          "paramTypes" : [
+            "java.net.URL[]"
+          ],
+          "returnType" : "java.io.File[]"
+        },
+        {
+          "callName" : "toFile",
+          "paramTypes" : [
+            "java.net.URL"
+          ],
+          "returnType" : "java.io.File"
+        },
+        {
+          "callName" : "sizeOfDirectory",
+          "paramTypes" : [
+            "java.io.File"
+          ],
+          "returnType" : "long"
+        },
+        {
+          "callName" : "readLines",
+          "paramTypes" : [
+            "java.io.File",
+            "java.lang.String"
+          ],
+          "returnType" : "java.util.List"
+        },
+        {
+          "callName" : "readLines",
+          "paramTypes" : [
+            "java.io.File"
+          ],
+          "returnType" : "java.util.List"
+        },
+        {
+          "callName" : "readFileToString",
+          "paramTypes" : [
+            "java.io.File",
+            "java.lang.String"
+          ],
+          "returnType" : "java.lang.String"
+        },
+        {
+          "callName" : "readFileToString",
+          "paramTypes" : [
+            "java.io.File"
+          ],
+          "returnType" : "java.lang.String"
+        },
+        {
+          "callName" : "readFileToByteArray",
+          "paramTypes" : [
+            "java.io.File"
+          ],
+          "returnType" : "byte[]"
+        },
+        {
+          "callName" : "openOutputStream",
+          "paramTypes" : [
+            "java.io.File"
+          ],
+          "returnType" : "java.io.FileOutputStream"
+        },
+        {
+          "callName" : "openInputStream",
+          "paramTypes" : [
+            "java.io.File"
+          ],
+          "returnType" : "java.io.FileInputStream"
+        },
+        {
+          "callName" : "listFiles",
+          "paramTypes" : [
+            "java.io.File",
+            "org.apache.commons.io.filefilter.IOFileFilter",
+            "org.apache.commons.io.filefilter.IOFileFilter"
+          ],
+          "returnType" : "java.util.Collection"
+        },
+        {
+          "callName" : "listFiles",
+          "paramTypes" : [
+            "java.io.File",
+            "java.lang.String[]",
+            "boolean"
+          ],
+          "returnType" : "java.util.Collection"
+        },
+        {
+          "callName" : "lineIterator",
+          "paramTypes" : [
+            "java.io.File",
+            "java.lang.String"
+          ],
+          "returnType" : "org.apache.commons.io.LineIterator"
+        },
+        {
+          "callName" : "lineIterator",
+          "paramTypes" : [
+            "java.io.File"
+          ],
+          "returnType" : "org.apache.commons.io.LineIterator"
+        },
+        {
+          "callName" : "iterateFiles",
+          "paramTypes" : [
+            "java.io.File",
+            "org.apache.commons.io.filefilter.IOFileFilter",
+            "org.apache.commons.io.filefilter.IOFileFilter"
+          ],
+          "returnType" : "java.util.Iterator"
+        },
+        {
+          "callName" : "iterateFiles",
+          "paramTypes" : [
+            "java.io.File",
+            "java.lang.String[]",
+            "boolean"
+          ],
+          "returnType" : "java.util.Iterator"
+        },
+        {
+          "callName" : "isFileOlder",
+          "paramTypes" : [
+            "java.io.File",
+            "java.io.File"
+          ],
+          "returnType" : "boolean"
+        },
+        {
+          "callName" : "isFileOlder",
+          "paramTypes" : [
+            "java.io.File",
+            "java.util.Date"
+          ],
+          "returnType" : "boolean"
+        },
+        {
+          "callName" : "isFileOlder",
+          "paramTypes" : [
+            "java.io.File",
+            "long"
+          ],
+          "returnType" : "boolean"
+        },
+        {
+          "callName" : "isFileNewer",
+          "paramTypes" : [
+            "java.io.File",
+            "java.io.File"
+          ],
+          "returnType" : "boolean"
+        },
+        {
+          "callName" : "isFileNewer",
+          "paramTypes" : [
+            "java.io.File",
+            "java.util.Date"
+          ],
+          "returnType" : "boolean"
+        },
+        {
+          "callName" : "isFileNewer",
+          "paramTypes" : [
+            "java.io.File",
+            "long"
+          ],
+          "returnType" : "boolean"
+        },
+        {
+          "callName" : "innerListFiles",
+          "paramTypes" : [
+            "java.util.Collection",
+            "java.io.File",
+            "org.apache.commons.io.filefilter.IOFileFilter"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "forceMkdir",
+          "paramTypes" : [
+            "java.io.File"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "forceDeleteOnExit",
+          "paramTypes" : [
+            "java.io.File"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "forceDelete",
+          "paramTypes" : [
+            "java.io.File"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "doCopyFile",
+          "paramTypes" : [
+            "java.io.File",
+            "java.io.File",
+            "boolean"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "doCopyDirectory",
+          "paramTypes" : [
+            "java.io.File",
+            "java.io.File",
+            "boolean"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "deleteDirectoryOnExit",
+          "paramTypes" : [
+            "java.io.File"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "deleteDirectory",
+          "paramTypes" : [
+            "java.io.File"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "copyURLToFile",
+          "paramTypes" : [
+            "java.net.URL",
+            "java.io.File"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "copyFileToDirectory",
+          "paramTypes" : [
+            "java.io.File",
+            "java.io.File"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "copyFileToDirectory",
+          "paramTypes" : [
+            "java.io.File",
+            "java.io.File",
+            "boolean"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "copyFile",
+          "paramTypes" : [
+            "java.io.File",
+            "java.io.File"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "copyFile",
+          "paramTypes" : [
+            "java.io.File",
+            "java.io.File",
+            "boolean"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "copyDirectoryToDirectory",
+          "paramTypes" : [
+            "java.io.File",
+            "java.io.File"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "copyDirectory",
+          "paramTypes" : [
+            "java.io.File",
+            "java.io.File"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "copyDirectory",
+          "paramTypes" : [
+            "java.io.File",
+            "java.io.File",
+            "boolean"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "convertFileCollectionToFileArray",
+          "paramTypes" : [
+            "java.util.Collection"
+          ],
+          "returnType" : "java.io.File[]"
+        },
+        {
+          "callName" : "contentEquals",
+          "paramTypes" : [
+            "java.io.File",
+            "java.io.File"
+          ],
+          "returnType" : "boolean"
+        },
+        {
+          "callName" : "cleanDirectoryOnExit",
+          "paramTypes" : [
+            "java.io.File"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "cleanDirectory",
+          "paramTypes" : [
+            "java.io.File"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "checksumCRC32",
+          "paramTypes" : [
+            "java.io.File"
+          ],
+          "returnType" : "long"
+        },
+        {
+          "callName" : "checksum",
+          "paramTypes" : [
+            "java.io.File",
+            "java.util.zip.Checksum"
+          ],
+          "returnType" : "java.util.zip.Checksum"
+        },
+        {
+          "callName" : "byteCountToDisplaySize",
+          "paramTypes" : [
+            "long"
+          ],
+          "returnType" : "java.lang.String"
+        },
+        {
+          "callName" : "<init>",
+          "paramTypes" : [
+            "org.apache.commons.io.FileUtils"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "<clinit>",
+          "paramTypes" : [
+          ],
+          "returnType" : "void"
+        }
+      ]
+    },
+    {
+      "name" : "org.apache.commons.io.HexDump",
+      "fields" : [
+        {
+          "name" : "EOL",
+          "typeFullName" : "java.lang.String",
+          "literal" : false
+        },
+        {
+          "name" : "_lbuffer",
+          "typeFullName" : "java.lang.StringBuffer",
+          "literal" : false
+        },
+        {
+          "name" : "_cbuffer",
+          "typeFullName" : "java.lang.StringBuffer",
+          "literal" : false
+        },
+        {
+          "name" : "_hexcodes",
+          "typeFullName" : "char[]",
+          "literal" : false
+        },
+        {
+          "name" : "_shifts",
+          "typeFullName" : "int[]",
+          "literal" : false
+        }
+      ],
+      "procedures" : [
+        {
+          "callName" : "dump",
+          "paramTypes" : [
+            "byte[]",
+            "long",
+            "java.io.OutputStream",
+            "int"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "dump",
+          "paramTypes" : [
+            "long"
+          ],
+          "returnType" : "java.lang.StringBuffer"
+        },
+        {
+          "callName" : "dump",
+          "paramTypes" : [
+            "byte"
+          ],
+          "returnType" : "java.lang.StringBuffer"
+        },
+        {
+          "callName" : "<init>",
+          "paramTypes" : [
+            "org.apache.commons.io.HexDump"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "<clinit>",
+          "paramTypes" : [
+          ],
+          "returnType" : "void"
+        }
+      ]
+    },
+    {
+      "name" : "org.apache.commons.io.input.ClassLoaderObjectInputStream",
+      "fields" : [
+        {
+          "name" : "classLoader",
+          "typeFullName" : "java.lang.ClassLoader",
+          "literal" : false
+        }
+      ],
+      "procedures" : [
+        {
+          "callName" : "resolveClass",
+          "paramTypes" : [
+            "org.apache.commons.io.input.ClassLoaderObjectInputStream",
+            "java.io.ObjectStreamClass"
+          ],
+          "returnType" : "java.lang.Class"
+        },
+        {
+          "callName" : "<init>",
+          "paramTypes" : [
+            "org.apache.commons.io.input.ClassLoaderObjectInputStream",
+            "java.lang.ClassLoader",
+            "java.io.InputStream"
+          ],
+          "returnType" : "void"
+        }
+      ]
+    },
+    {
+      "name" : "org.apache.commons.io.input.CountingInputStream",
+      "fields" : [
+        {
+          "name" : "count",
+          "typeFullName" : "long",
+          "literal" : false
+        }
+      ],
+      "procedures" : [
+        {
+          "callName" : "skip",
+          "paramTypes" : [
+            "org.apache.commons.io.input.CountingInputStream",
+            "long"
+          ],
+          "returnType" : "long"
+        },
+        {
+          "callName" : "resetCount",
+          "paramTypes" : [
+            "org.apache.commons.io.input.CountingInputStream"
+          ],
+          "returnType" : "int"
+        },
+        {
+          "callName" : "resetByteCount",
+          "paramTypes" : [
+            "org.apache.commons.io.input.CountingInputStream"
+          ],
+          "returnType" : "long"
+        },
+        {
+          "callName" : "read",
+          "paramTypes" : [
+            "org.apache.commons.io.input.CountingInputStream",
+            "byte[]"
+          ],
+          "returnType" : "int"
+        },
+        {
+          "callName" : "read",
+          "paramTypes" : [
+            "org.apache.commons.io.input.CountingInputStream",
+            "byte[]",
+            "int",
+            "int"
+          ],
+          "returnType" : "int"
+        },
+        {
+          "callName" : "read",
+          "paramTypes" : [
+            "org.apache.commons.io.input.CountingInputStream"
+          ],
+          "returnType" : "int"
+        },
+        {
+          "callName" : "getCount",
+          "paramTypes" : [
+            "org.apache.commons.io.input.CountingInputStream"
+          ],
+          "returnType" : "int"
+        },
+        {
+          "callName" : "getByteCount",
+          "paramTypes" : [
+            "org.apache.commons.io.input.CountingInputStream"
+          ],
+          "returnType" : "long"
+        },
+        {
+          "callName" : "<init>",
+          "paramTypes" : [
+            "org.apache.commons.io.input.CountingInputStream",
+            "java.io.InputStream"
+          ],
+          "returnType" : "void"
+        }
+      ]
+    },
+    {
+      "name" : "org.apache.commons.io.input.DemuxInputStream",
+      "fields" : [
+        {
+          "name" : "m_streams",
+          "typeFullName" : "java.lang.InheritableThreadLocal",
+          "literal" : false
+        }
+      ],
+      "procedures" : [
+        {
+          "callName" : "read",
+          "paramTypes" : [
+            "org.apache.commons.io.input.DemuxInputStream"
+          ],
+          "returnType" : "int"
+        },
+        {
+          "callName" : "getStream",
+          "paramTypes" : [
+            "org.apache.commons.io.input.DemuxInputStream"
+          ],
+          "returnType" : "java.io.InputStream"
+        },
+        {
+          "callName" : "close",
+          "paramTypes" : [
+            "org.apache.commons.io.input.DemuxInputStream"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "bindStream",
+          "paramTypes" : [
+            "org.apache.commons.io.input.DemuxInputStream",
+            "java.io.InputStream"
+          ],
+          "returnType" : "java.io.InputStream"
+        },
+        {
+          "callName" : "<init>",
+          "paramTypes" : [
+            "org.apache.commons.io.input.DemuxInputStream"
+          ],
+          "returnType" : "void"
+        }
+      ]
+    },
+    {
+      "name" : "org.apache.commons.io.input.NullInputStream",
+      "fields" : [
+        {
+          "name" : "size",
+          "typeFullName" : "long",
+          "literal" : false
+        },
+        {
+          "name" : "position",
+          "typeFullName" : "long",
+          "literal" : false
+        },
+        {
+          "name" : "mark",
+          "typeFullName" : "long",
+          "literal" : false
+        },
+        {
+          "name" : "readlimit",
+          "typeFullName" : "long",
+          "literal" : false
+        },
+        {
+          "name" : "eof",
+          "typeFullName" : "boolean",
+          "literal" : false
+        },
+        {
+          "name" : "throwEofException",
+          "typeFullName" : "boolean",
+          "literal" : false
+        },
+        {
+          "name" : "markSupported",
+          "typeFullName" : "boolean",
+          "literal" : false
+        }
+      ],
+      "procedures" : [
+        {
+          "callName" : "skip",
+          "paramTypes" : [
+            "org.apache.commons.io.input.NullInputStream",
+            "long"
+          ],
+          "returnType" : "long"
+        },
+        {
+          "callName" : "reset",
+          "paramTypes" : [
+            "org.apache.commons.io.input.NullInputStream"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "read",
+          "paramTypes" : [
+            "org.apache.commons.io.input.NullInputStream"
+          ],
+          "returnType" : "int"
+        },
+        {
+          "callName" : "read",
+          "paramTypes" : [
+            "org.apache.commons.io.input.NullInputStream",
+            "byte[]"
+          ],
+          "returnType" : "int"
+        },
+        {
+          "callName" : "read",
+          "paramTypes" : [
+            "org.apache.commons.io.input.NullInputStream",
+            "byte[]",
+            "int",
+            "int"
+          ],
+          "returnType" : "int"
+        },
+        {
+          "callName" : "processBytes",
+          "paramTypes" : [
+            "org.apache.commons.io.input.NullInputStream",
+            "byte[]",
+            "int",
+            "int"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "processByte",
+          "paramTypes" : [
+            "org.apache.commons.io.input.NullInputStream"
+          ],
+          "returnType" : "int"
+        },
+        {
+          "callName" : "markSupported",
+          "paramTypes" : [
+            "org.apache.commons.io.input.NullInputStream"
+          ],
+          "returnType" : "boolean"
+        },
+        {
+          "callName" : "mark",
+          "paramTypes" : [
+            "org.apache.commons.io.input.NullInputStream",
+            "int"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "getSize",
+          "paramTypes" : [
+            "org.apache.commons.io.input.NullInputStream"
+          ],
+          "returnType" : "long"
+        },
+        {
+          "callName" : "getPosition",
+          "paramTypes" : [
+            "org.apache.commons.io.input.NullInputStream"
+          ],
+          "returnType" : "long"
+        },
+        {
+          "callName" : "doEndOfFile",
+          "paramTypes" : [
+            "org.apache.commons.io.input.NullInputStream"
+          ],
+          "returnType" : "int"
+        },
+        {
+          "callName" : "close",
+          "paramTypes" : [
+            "org.apache.commons.io.input.NullInputStream"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "available",
+          "paramTypes" : [
+            "org.apache.commons.io.input.NullInputStream"
+          ],
+          "returnType" : "int"
+        },
+        {
+          "callName" : "<init>",
+          "paramTypes" : [
+            "org.apache.commons.io.input.NullInputStream",
+            "long"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "<init>",
+          "paramTypes" : [
+            "org.apache.commons.io.input.NullInputStream",
+            "long",
+            "boolean",
+            "boolean"
+          ],
+          "returnType" : "void"
+        }
+      ]
+    },
+    {
+      "name" : "org.apache.commons.io.input.NullReader",
+      "fields" : [
+        {
+          "name" : "size",
+          "typeFullName" : "long",
+          "literal" : false
+        },
+        {
+          "name" : "position",
+          "typeFullName" : "long",
+          "literal" : false
+        },
+        {
+          "name" : "mark",
+          "typeFullName" : "long",
+          "literal" : false
+        },
+        {
+          "name" : "readlimit",
+          "typeFullName" : "long",
+          "literal" : false
+        },
+        {
+          "name" : "eof",
+          "typeFullName" : "boolean",
+          "literal" : false
+        },
+        {
+          "name" : "throwEofException",
+          "typeFullName" : "boolean",
+          "literal" : false
+        },
+        {
+          "name" : "markSupported",
+          "typeFullName" : "boolean",
+          "literal" : false
+        }
+      ],
+      "procedures" : [
+        {
+          "callName" : "skip",
+          "paramTypes" : [
+            "org.apache.commons.io.input.NullReader",
+            "long"
+          ],
+          "returnType" : "long"
+        },
+        {
+          "callName" : "reset",
+          "paramTypes" : [
+            "org.apache.commons.io.input.NullReader"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "read",
+          "paramTypes" : [
+            "org.apache.commons.io.input.NullReader"
+          ],
+          "returnType" : "int"
+        },
+        {
+          "callName" : "read",
+          "paramTypes" : [
+            "org.apache.commons.io.input.NullReader",
+            "char[]"
+          ],
+          "returnType" : "int"
+        },
+        {
+          "callName" : "read",
+          "paramTypes" : [
+            "org.apache.commons.io.input.NullReader",
+            "char[]",
+            "int",
+            "int"
+          ],
+          "returnType" : "int"
+        },
+        {
+          "callName" : "processChars",
+          "paramTypes" : [
+            "org.apache.commons.io.input.NullReader",
+            "char[]",
+            "int",
+            "int"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "processChar",
+          "paramTypes" : [
+            "org.apache.commons.io.input.NullReader"
+          ],
+          "returnType" : "int"
+        },
+        {
+          "callName" : "markSupported",
+          "paramTypes" : [
+            "org.apache.commons.io.input.NullReader"
+          ],
+          "returnType" : "boolean"
+        },
+        {
+          "callName" : "mark",
+          "paramTypes" : [
+            "org.apache.commons.io.input.NullReader",
+            "int"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "getSize",
+          "paramTypes" : [
+            "org.apache.commons.io.input.NullReader"
+          ],
+          "returnType" : "long"
+        },
+        {
+          "callName" : "getPosition",
+          "paramTypes" : [
+            "org.apache.commons.io.input.NullReader"
+          ],
+          "returnType" : "long"
+        },
+        {
+          "callName" : "doEndOfFile",
+          "paramTypes" : [
+            "org.apache.commons.io.input.NullReader"
+          ],
+          "returnType" : "int"
+        },
+        {
+          "callName" : "close",
+          "paramTypes" : [
+            "org.apache.commons.io.input.NullReader"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "<init>",
+          "paramTypes" : [
+            "org.apache.commons.io.input.NullReader",
+            "long"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "<init>",
+          "paramTypes" : [
+            "org.apache.commons.io.input.NullReader",
+            "long",
+            "boolean",
+            "boolean"
+          ],
+          "returnType" : "void"
+        }
+      ]
+    },
+    {
+      "name" : "org.apache.commons.io.input.ProxyInputStream",
+      "fields" : [
+      ],
+      "procedures" : [
+        {
+          "callName" : "skip",
+          "paramTypes" : [
+            "org.apache.commons.io.input.ProxyInputStream",
+            "long"
+          ],
+          "returnType" : "long"
+        },
+        {
+          "callName" : "reset",
+          "paramTypes" : [
+            "org.apache.commons.io.input.ProxyInputStream"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "read",
+          "paramTypes" : [
+            "org.apache.commons.io.input.ProxyInputStream"
+          ],
+          "returnType" : "int"
+        },
+        {
+          "callName" : "read",
+          "paramTypes" : [
+            "org.apache.commons.io.input.ProxyInputStream",
+            "byte[]"
+          ],
+          "returnType" : "int"
+        },
+        {
+          "callName" : "read",
+          "paramTypes" : [
+            "org.apache.commons.io.input.ProxyInputStream",
+            "byte[]",
+            "int",
+            "int"
+          ],
+          "returnType" : "int"
+        },
+        {
+          "callName" : "markSupported",
+          "paramTypes" : [
+            "org.apache.commons.io.input.ProxyInputStream"
+          ],
+          "returnType" : "boolean"
+        },
+        {
+          "callName" : "mark",
+          "paramTypes" : [
+            "org.apache.commons.io.input.ProxyInputStream",
+            "int"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "close",
+          "paramTypes" : [
+            "org.apache.commons.io.input.ProxyInputStream"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "available",
+          "paramTypes" : [
+            "org.apache.commons.io.input.ProxyInputStream"
+          ],
+          "returnType" : "int"
+        },
+        {
+          "callName" : "<init>",
+          "paramTypes" : [
+            "org.apache.commons.io.input.ProxyInputStream",
+            "java.io.InputStream"
+          ],
+          "returnType" : "void"
+        }
+      ]
+    },
+    {
+      "name" : "org.apache.commons.io.input.ProxyReader",
+      "fields" : [
+      ],
+      "procedures" : [
+        {
+          "callName" : "skip",
+          "paramTypes" : [
+            "org.apache.commons.io.input.ProxyReader",
+            "long"
+          ],
+          "returnType" : "long"
+        },
+        {
+          "callName" : "reset",
+          "paramTypes" : [
+            "org.apache.commons.io.input.ProxyReader"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "ready",
+          "paramTypes" : [
+            "org.apache.commons.io.input.ProxyReader"
+          ],
+          "returnType" : "boolean"
+        },
+        {
+          "callName" : "read",
+          "paramTypes" : [
+            "org.apache.commons.io.input.ProxyReader"
+          ],
+          "returnType" : "int"
+        },
+        {
+          "callName" : "read",
+          "paramTypes" : [
+            "org.apache.commons.io.input.ProxyReader",
+            "char[]"
+          ],
+          "returnType" : "int"
+        },
+        {
+          "callName" : "read",
+          "paramTypes" : [
+            "org.apache.commons.io.input.ProxyReader",
+            "char[]",
+            "int",
+            "int"
+          ],
+          "returnType" : "int"
+        },
+        {
+          "callName" : "markSupported",
+          "paramTypes" : [
+            "org.apache.commons.io.input.ProxyReader"
+          ],
+          "returnType" : "boolean"
+        },
+        {
+          "callName" : "mark",
+          "paramTypes" : [
+            "org.apache.commons.io.input.ProxyReader",
+            "int"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "close",
+          "paramTypes" : [
+            "org.apache.commons.io.input.ProxyReader"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "<init>",
+          "paramTypes" : [
+            "org.apache.commons.io.input.ProxyReader",
+            "java.io.Reader"
+          ],
+          "returnType" : "void"
+        }
+      ]
+    },
+    {
+      "name" : "org.apache.commons.io.input.SwappedDataInputStream",
+      "fields" : [
+      ],
+      "procedures" : [
+        {
+          "callName" : "skipBytes",
+          "paramTypes" : [
+            "org.apache.commons.io.input.SwappedDataInputStream",
+            "int"
+          ],
+          "returnType" : "int"
+        },
+        {
+          "callName" : "readUnsignedShort",
+          "paramTypes" : [
+            "org.apache.commons.io.input.SwappedDataInputStream"
+          ],
+          "returnType" : "int"
+        },
+        {
+          "callName" : "readUnsignedByte",
+          "paramTypes" : [
+            "org.apache.commons.io.input.SwappedDataInputStream"
+          ],
+          "returnType" : "int"
+        },
+        {
+          "callName" : "readUTF",
+          "paramTypes" : [
+            "org.apache.commons.io.input.SwappedDataInputStream"
+          ],
+          "returnType" : "java.lang.String"
+        },
+        {
+          "callName" : "readShort",
+          "paramTypes" : [
+            "org.apache.commons.io.input.SwappedDataInputStream"
+          ],
+          "returnType" : "short"
+        },
+        {
+          "callName" : "readLong",
+          "paramTypes" : [
+            "org.apache.commons.io.input.SwappedDataInputStream"
+          ],
+          "returnType" : "long"
+        },
+        {
+          "callName" : "readLine",
+          "paramTypes" : [
+            "org.apache.commons.io.input.SwappedDataInputStream"
+          ],
+          "returnType" : "java.lang.String"
+        },
+        {
+          "callName" : "readInt",
+          "paramTypes" : [
+            "org.apache.commons.io.input.SwappedDataInputStream"
+          ],
+          "returnType" : "int"
+        },
+        {
+          "callName" : "readFully",
+          "paramTypes" : [
+            "org.apache.commons.io.input.SwappedDataInputStream",
+            "byte[]"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "readFully",
+          "paramTypes" : [
+            "org.apache.commons.io.input.SwappedDataInputStream",
+            "byte[]",
+            "int",
+            "int"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "readFloat",
+          "paramTypes" : [
+            "org.apache.commons.io.input.SwappedDataInputStream"
+          ],
+          "returnType" : "float"
+        },
+        {
+          "callName" : "readDouble",
+          "paramTypes" : [
+            "org.apache.commons.io.input.SwappedDataInputStream"
+          ],
+          "returnType" : "double"
+        },
+        {
+          "callName" : "readChar",
+          "paramTypes" : [
+            "org.apache.commons.io.input.SwappedDataInputStream"
+          ],
+          "returnType" : "char"
+        },
+        {
+          "callName" : "readByte",
+          "paramTypes" : [
+            "org.apache.commons.io.input.SwappedDataInputStream"
+          ],
+          "returnType" : "byte"
+        },
+        {
+          "callName" : "readBoolean",
+          "paramTypes" : [
+            "org.apache.commons.io.input.SwappedDataInputStream"
+          ],
+          "returnType" : "boolean"
+        },
+        {
+          "callName" : "<init>",
+          "paramTypes" : [
+            "org.apache.commons.io.input.SwappedDataInputStream",
+            "java.io.InputStream"
+          ],
+          "returnType" : "void"
+        }
+      ]
+    },
+    {
+      "name" : "org.apache.commons.io.IOCase",
+      "fields" : [
+        {
+          "name" : "SENSITIVE",
+          "typeFullName" : "org.apache.commons.io.IOCase",
+          "literal" : false
+        },
+        {
+          "name" : "INSENSITIVE",
+          "typeFullName" : "org.apache.commons.io.IOCase",
+          "literal" : false
+        },
+        {
+          "name" : "SYSTEM",
+          "typeFullName" : "org.apache.commons.io.IOCase",
+          "literal" : false
+        },
+        {
+          "name" : "serialVersionUID",
+          "typeFullName" : "long",
+          "literal" : false
+        },
+        {
+          "name" : "name",
+          "typeFullName" : "java.lang.String",
+          "literal" : false
+        },
+        {
+          "name" : "sensitive",
+          "typeFullName" : "boolean",
+          "literal" : false
+        }
+      ],
+      "procedures" : [
+        {
+          "callName" : "toString",
+          "paramTypes" : [
+            "org.apache.commons.io.IOCase"
+          ],
+          "returnType" : "java.lang.String"
+        },
+        {
+          "callName" : "readResolve",
+          "paramTypes" : [
+            "org.apache.commons.io.IOCase"
+          ],
+          "returnType" : "java.lang.Object"
+        },
+        {
+          "callName" : "isCaseSensitive",
+          "paramTypes" : [
+            "org.apache.commons.io.IOCase"
+          ],
+          "returnType" : "boolean"
+        },
+        {
+          "callName" : "getName",
+          "paramTypes" : [
+            "org.apache.commons.io.IOCase"
+          ],
+          "returnType" : "java.lang.String"
+        },
+        {
+          "callName" : "forName",
+          "paramTypes" : [
+            "java.lang.String"
+          ],
+          "returnType" : "org.apache.commons.io.IOCase"
+        },
+        {
+          "callName" : "convertCase",
+          "paramTypes" : [
+            "org.apache.commons.io.IOCase",
+            "java.lang.String"
+          ],
+          "returnType" : "java.lang.String"
+        },
+        {
+          "callName" : "checkStartsWith",
+          "paramTypes" : [
+            "org.apache.commons.io.IOCase",
+            "java.lang.String",
+            "java.lang.String"
+          ],
+          "returnType" : "boolean"
+        },
+        {
+          "callName" : "checkRegionMatches",
+          "paramTypes" : [
+            "org.apache.commons.io.IOCase",
+            "java.lang.String",
+            "int",
+            "java.lang.String"
+          ],
+          "returnType" : "boolean"
+        },
+        {
+          "callName" : "checkEquals",
+          "paramTypes" : [
+            "org.apache.commons.io.IOCase",
+            "java.lang.String",
+            "java.lang.String"
+          ],
+          "returnType" : "boolean"
+        },
+        {
+          "callName" : "checkEndsWith",
+          "paramTypes" : [
+            "org.apache.commons.io.IOCase",
+            "java.lang.String",
+            "java.lang.String"
+          ],
+          "returnType" : "boolean"
+        },
+        {
+          "callName" : "<init>",
+          "paramTypes" : [
+            "org.apache.commons.io.IOCase",
+            "java.lang.String",
+            "boolean"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "<clinit>",
+          "paramTypes" : [
+          ],
+          "returnType" : "void"
+        }
+      ]
+    },
+    {
+      "name" : "org.apache.commons.io.IOUtils",
+      "fields" : [
+        {
+          "name" : "DIR_SEPARATOR_UNIX",
+          "typeFullName" : "char",
+          "literal" : false
+        },
+        {
+          "name" : "DIR_SEPARATOR_WINDOWS",
+          "typeFullName" : "char",
+          "literal" : false
+        },
+        {
+          "name" : "DIR_SEPARATOR",
+          "typeFullName" : "char",
+          "literal" : false
+        },
+        {
+          "name" : "LINE_SEPARATOR_UNIX",
+          "typeFullName" : "java.lang.String",
+          "literal" : false
+        },
+        {
+          "name" : "LINE_SEPARATOR_WINDOWS",
+          "typeFullName" : "java.lang.String",
+          "literal" : false
+        },
+        {
+          "name" : "LINE_SEPARATOR",
+          "typeFullName" : "java.lang.String",
+          "literal" : false
+        },
+        {
+          "name" : "DEFAULT_BUFFER_SIZE",
+          "typeFullName" : "int",
+          "literal" : false
+        }
+      ],
+      "procedures" : [
+        {
+          "callName" : "writeLines",
+          "paramTypes" : [
+            "java.util.Collection",
+            "java.lang.String",
+            "java.io.OutputStream"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "writeLines",
+          "paramTypes" : [
+            "java.util.Collection",
+            "java.lang.String",
+            "java.io.OutputStream",
+            "java.lang.String"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "writeLines",
+          "paramTypes" : [
+            "java.util.Collection",
+            "java.lang.String",
+            "java.io.Writer"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "write",
+          "paramTypes" : [
+            "byte[]",
+            "java.io.OutputStream"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "write",
+          "paramTypes" : [
+            "byte[]",
+            "java.io.Writer"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "write",
+          "paramTypes" : [
+            "byte[]",
+            "java.io.Writer",
+            "java.lang.String"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "write",
+          "paramTypes" : [
+            "char[]",
+            "java.io.Writer"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "write",
+          "paramTypes" : [
+            "char[]",
+            "java.io.OutputStream"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "write",
+          "paramTypes" : [
+            "char[]",
+            "java.io.OutputStream",
+            "java.lang.String"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "write",
+          "paramTypes" : [
+            "java.lang.String",
+            "java.io.Writer"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "write",
+          "paramTypes" : [
+            "java.lang.String",
+            "java.io.OutputStream"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "write",
+          "paramTypes" : [
+            "java.lang.String",
+            "java.io.OutputStream",
+            "java.lang.String"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "write",
+          "paramTypes" : [
+            "java.lang.StringBuffer",
+            "java.io.Writer"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "write",
+          "paramTypes" : [
+            "java.lang.StringBuffer",
+            "java.io.OutputStream"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "write",
+          "paramTypes" : [
+            "java.lang.StringBuffer",
+            "java.io.OutputStream",
+            "java.lang.String"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "toString",
+          "paramTypes" : [
+            "java.io.InputStream"
+          ],
+          "returnType" : "java.lang.String"
+        },
+        {
+          "callName" : "toString",
+          "paramTypes" : [
+            "java.io.InputStream",
+            "java.lang.String"
+          ],
+          "returnType" : "java.lang.String"
+        },
+        {
+          "callName" : "toString",
+          "paramTypes" : [
+            "java.io.Reader"
+          ],
+          "returnType" : "java.lang.String"
+        },
+        {
+          "callName" : "toString",
+          "paramTypes" : [
+            "byte[]"
+          ],
+          "returnType" : "java.lang.String"
+        },
+        {
+          "callName" : "toString",
+          "paramTypes" : [
+            "byte[]",
+            "java.lang.String"
+          ],
+          "returnType" : "java.lang.String"
+        },
+        {
+          "callName" : "toInputStream",
+          "paramTypes" : [
+            "java.lang.String"
+          ],
+          "returnType" : "java.io.InputStream"
+        },
+        {
+          "callName" : "toInputStream",
+          "paramTypes" : [
+            "java.lang.String",
+            "java.lang.String"
+          ],
+          "returnType" : "java.io.InputStream"
+        },
+        {
+          "callName" : "toCharArray",
+          "paramTypes" : [
+            "java.io.InputStream"
+          ],
+          "returnType" : "char[]"
+        },
+        {
+          "callName" : "toCharArray",
+          "paramTypes" : [
+            "java.io.InputStream",
+            "java.lang.String"
+          ],
+          "returnType" : "char[]"
+        },
+        {
+          "callName" : "toCharArray",
+          "paramTypes" : [
+            "java.io.Reader"
+          ],
+          "returnType" : "char[]"
+        },
+        {
+          "callName" : "toByteArray",
+          "paramTypes" : [
+            "java.io.InputStream"
+          ],
+          "returnType" : "byte[]"
+        },
+        {
+          "callName" : "toByteArray",
+          "paramTypes" : [
+            "java.io.Reader"
+          ],
+          "returnType" : "byte[]"
+        },
+        {
+          "callName" : "toByteArray",
+          "paramTypes" : [
+            "java.io.Reader",
+            "java.lang.String"
+          ],
+          "returnType" : "byte[]"
+        },
+        {
+          "callName" : "toByteArray",
+          "paramTypes" : [
+            "java.lang.String"
+          ],
+          "returnType" : "byte[]"
+        },
+        {
+          "callName" : "readLines",
+          "paramTypes" : [
+            "java.io.InputStream"
+          ],
+          "returnType" : "java.util.List"
+        },
+        {
+          "callName" : "readLines",
+          "paramTypes" : [
+            "java.io.InputStream",
+            "java.lang.String"
+          ],
+          "returnType" : "java.util.List"
+        },
+        {
+          "callName" : "readLines",
+          "paramTypes" : [
+            "java.io.Reader"
+          ],
+          "returnType" : "java.util.List"
+        },
+        {
+          "callName" : "lineIterator",
+          "paramTypes" : [
+            "java.io.Reader"
+          ],
+          "returnType" : "org.apache.commons.io.LineIterator"
+        },
+        {
+          "callName" : "lineIterator",
+          "paramTypes" : [
+            "java.io.InputStream",
+            "java.lang.String"
+          ],
+          "returnType" : "org.apache.commons.io.LineIterator"
+        },
+        {
+          "callName" : "copyLarge",
+          "paramTypes" : [
+            "java.io.InputStream",
+            "java.io.OutputStream"
+          ],
+          "returnType" : "long"
+        },
+        {
+          "callName" : "copyLarge",
+          "paramTypes" : [
+            "java.io.Reader",
+            "java.io.Writer"
+          ],
+          "returnType" : "long"
+        },
+        {
+          "callName" : "copy",
+          "paramTypes" : [
+            "java.io.InputStream",
+            "java.io.OutputStream"
+          ],
+          "returnType" : "int"
+        },
+        {
+          "callName" : "copy",
+          "paramTypes" : [
+            "java.io.InputStream",
+            "java.io.Writer"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "copy",
+          "paramTypes" : [
+            "java.io.InputStream",
+            "java.io.Writer",
+            "java.lang.String"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "copy",
+          "paramTypes" : [
+            "java.io.Reader",
+            "java.io.Writer"
+          ],
+          "returnType" : "int"
+        },
+        {
+          "callName" : "copy",
+          "paramTypes" : [
+            "java.io.Reader",
+            "java.io.OutputStream"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "copy",
+          "paramTypes" : [
+            "java.io.Reader",
+            "java.io.OutputStream",
+            "java.lang.String"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "contentEquals",
+          "paramTypes" : [
+            "java.io.InputStream",
+            "java.io.InputStream"
+          ],
+          "returnType" : "boolean"
+        },
+        {
+          "callName" : "contentEquals",
+          "paramTypes" : [
+            "java.io.Reader",
+            "java.io.Reader"
+          ],
+          "returnType" : "boolean"
+        },
+        {
+          "callName" : "closeQuietly",
+          "paramTypes" : [
+            "java.io.Reader"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "closeQuietly",
+          "paramTypes" : [
+            "java.io.Writer"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "closeQuietly",
+          "paramTypes" : [
+            "java.io.InputStream"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "closeQuietly",
+          "paramTypes" : [
+            "java.io.OutputStream"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "<init>",
+          "paramTypes" : [
+            "org.apache.commons.io.IOUtils"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "<clinit>",
+          "paramTypes" : [
+          ],
+          "returnType" : "void"
+        }
+      ]
+    },
+    {
+      "name" : "org.apache.commons.io.LineIterator",
+      "fields" : [
+        {
+          "name" : "bufferedReader",
+          "typeFullName" : "java.io.BufferedReader",
+          "literal" : false
+        },
+        {
+          "name" : "cachedLine",
+          "typeFullName" : "java.lang.String",
+          "literal" : false
+        },
+        {
+          "name" : "finished",
+          "typeFullName" : "boolean",
+          "literal" : false
+        }
+      ],
+      "procedures" : [
+        {
+          "callName" : "remove",
+          "paramTypes" : [
+            "org.apache.commons.io.LineIterator"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "nextLine",
+          "paramTypes" : [
+            "org.apache.commons.io.LineIterator"
+          ],
+          "returnType" : "java.lang.String"
+        },
+        {
+          "callName" : "next",
+          "paramTypes" : [
+            "org.apache.commons.io.LineIterator"
+          ],
+          "returnType" : "java.lang.Object"
+        },
+        {
+          "callName" : "isValidLine",
+          "paramTypes" : [
+            "org.apache.commons.io.LineIterator",
+            "java.lang.String"
+          ],
+          "returnType" : "boolean"
+        },
+        {
+          "callName" : "hasNext",
+          "paramTypes" : [
+            "org.apache.commons.io.LineIterator"
+          ],
+          "returnType" : "boolean"
+        },
+        {
+          "callName" : "closeQuietly",
+          "paramTypes" : [
+            "org.apache.commons.io.LineIterator"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "close",
+          "paramTypes" : [
+            "org.apache.commons.io.LineIterator"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "<init>",
+          "paramTypes" : [
+            "org.apache.commons.io.LineIterator",
+            "java.io.Reader"
+          ],
+          "returnType" : "void"
+        }
+      ]
+    },
+    {
+      "name" : "org.apache.commons.io.output.ByteArrayOutputStream",
+      "fields" : [
+        {
+          "name" : "EMPTY_BYTE_ARRAY",
+          "typeFullName" : "byte[]",
+          "literal" : false
+        },
+        {
+          "name" : "buffers",
+          "typeFullName" : "java.util.List",
+          "literal" : false
+        },
+        {
+          "name" : "currentBufferIndex",
+          "typeFullName" : "int",
+          "literal" : false
+        },
+        {
+          "name" : "filledBufferSum",
+          "typeFullName" : "int",
+          "literal" : false
+        },
+        {
+          "name" : "currentBuffer",
+          "typeFullName" : "byte[]",
+          "literal" : false
+        },
+        {
+          "name" : "count",
+          "typeFullName" : "int",
+          "literal" : false
+        }
+      ],
+      "procedures" : [
+        {
+          "callName" : "writeTo",
+          "paramTypes" : [
+            "org.apache.commons.io.output.ByteArrayOutputStream",
+            "java.io.OutputStream"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "write",
+          "paramTypes" : [
+            "org.apache.commons.io.output.ByteArrayOutputStream",
+            "byte[]",
+            "int",
+            "int"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "write",
+          "paramTypes" : [
+            "org.apache.commons.io.output.ByteArrayOutputStream",
+            "int"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "toString",
+          "paramTypes" : [
+            "org.apache.commons.io.output.ByteArrayOutputStream"
+          ],
+          "returnType" : "java.lang.String"
+        },
+        {
+          "callName" : "toString",
+          "paramTypes" : [
+            "org.apache.commons.io.output.ByteArrayOutputStream",
+            "java.lang.String"
+          ],
+          "returnType" : "java.lang.String"
+        },
+        {
+          "callName" : "toByteArray",
+          "paramTypes" : [
+            "org.apache.commons.io.output.ByteArrayOutputStream"
+          ],
+          "returnType" : "byte[]"
+        },
+        {
+          "callName" : "size",
+          "paramTypes" : [
+            "org.apache.commons.io.output.ByteArrayOutputStream"
+          ],
+          "returnType" : "int"
+        },
+        {
+          "callName" : "reset",
+          "paramTypes" : [
+            "org.apache.commons.io.output.ByteArrayOutputStream"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "needNewBuffer",
+          "paramTypes" : [
+            "org.apache.commons.io.output.ByteArrayOutputStream",
+            "int"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "getBuffer",
+          "paramTypes" : [
+            "org.apache.commons.io.output.ByteArrayOutputStream",
+            "int"
+          ],
+          "returnType" : "byte[]"
+        },
+        {
+          "callName" : "close",
+          "paramTypes" : [
+            "org.apache.commons.io.output.ByteArrayOutputStream"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "<init>",
+          "paramTypes" : [
+            "org.apache.commons.io.output.ByteArrayOutputStream"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "<init>",
+          "paramTypes" : [
+            "org.apache.commons.io.output.ByteArrayOutputStream",
+            "int"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "<clinit>",
+          "paramTypes" : [
+          ],
+          "returnType" : "void"
+        }
+      ]
+    },
+    {
+      "name" : "org.apache.commons.io.output.CountingOutputStream",
+      "fields" : [
+        {
+          "name" : "count",
+          "typeFullName" : "long",
+          "literal" : false
+        }
+      ],
+      "procedures" : [
+        {
+          "callName" : "write",
+          "paramTypes" : [
+            "org.apache.commons.io.output.CountingOutputStream",
+            "byte[]"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "write",
+          "paramTypes" : [
+            "org.apache.commons.io.output.CountingOutputStream",
+            "byte[]",
+            "int",
+            "int"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "write",
+          "paramTypes" : [
+            "org.apache.commons.io.output.CountingOutputStream",
+            "int"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "resetCount",
+          "paramTypes" : [
+            "org.apache.commons.io.output.CountingOutputStream"
+          ],
+          "returnType" : "int"
+        },
+        {
+          "callName" : "resetByteCount",
+          "paramTypes" : [
+            "org.apache.commons.io.output.CountingOutputStream"
+          ],
+          "returnType" : "long"
+        },
+        {
+          "callName" : "getCount",
+          "paramTypes" : [
+            "org.apache.commons.io.output.CountingOutputStream"
+          ],
+          "returnType" : "int"
+        },
+        {
+          "callName" : "getByteCount",
+          "paramTypes" : [
+            "org.apache.commons.io.output.CountingOutputStream"
+          ],
+          "returnType" : "long"
+        },
+        {
+          "callName" : "<init>",
+          "paramTypes" : [
+            "org.apache.commons.io.output.CountingOutputStream",
+            "java.io.OutputStream"
+          ],
+          "returnType" : "void"
+        }
+      ]
+    },
+    {
+      "name" : "org.apache.commons.io.output.DeferredFileOutputStream",
+      "fields" : [
+        {
+          "name" : "memoryOutputStream",
+          "typeFullName" : "org.apache.commons.io.output.ByteArrayOutputStream",
+          "literal" : false
+        },
+        {
+          "name" : "currentOutputStream",
+          "typeFullName" : "java.io.OutputStream",
+          "literal" : false
+        },
+        {
+          "name" : "outputFile",
+          "typeFullName" : "java.io.File",
+          "literal" : false
+        },
+        {
+          "name" : "closed",
+          "typeFullName" : "boolean",
+          "literal" : false
+        }
+      ],
+      "procedures" : [
+        {
+          "callName" : "writeTo",
+          "paramTypes" : [
+            "org.apache.commons.io.output.DeferredFileOutputStream",
+            "java.io.OutputStream"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "thresholdReached",
+          "paramTypes" : [
+            "org.apache.commons.io.output.DeferredFileOutputStream"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "isInMemory",
+          "paramTypes" : [
+            "org.apache.commons.io.output.DeferredFileOutputStream"
+          ],
+          "returnType" : "boolean"
+        },
+        {
+          "callName" : "getStream",
+          "paramTypes" : [
+            "org.apache.commons.io.output.DeferredFileOutputStream"
+          ],
+          "returnType" : "java.io.OutputStream"
+        },
+        {
+          "callName" : "getFile",
+          "paramTypes" : [
+            "org.apache.commons.io.output.DeferredFileOutputStream"
+          ],
+          "returnType" : "java.io.File"
+        },
+        {
+          "callName" : "getData",
+          "paramTypes" : [
+            "org.apache.commons.io.output.DeferredFileOutputStream"
+          ],
+          "returnType" : "byte[]"
+        },
+        {
+          "callName" : "close",
+          "paramTypes" : [
+            "org.apache.commons.io.output.DeferredFileOutputStream"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "<init>",
+          "paramTypes" : [
+            "org.apache.commons.io.output.DeferredFileOutputStream",
+            "int",
+            "java.io.File"
+          ],
+          "returnType" : "void"
+        }
+      ]
+    },
+    {
+      "name" : "org.apache.commons.io.output.DemuxOutputStream",
+      "fields" : [
+        {
+          "name" : "m_streams",
+          "typeFullName" : "java.lang.InheritableThreadLocal",
+          "literal" : false
+        }
+      ],
+      "procedures" : [
+        {
+          "callName" : "write",
+          "paramTypes" : [
+            "org.apache.commons.io.output.DemuxOutputStream",
+            "int"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "getStream",
+          "paramTypes" : [
+            "org.apache.commons.io.output.DemuxOutputStream"
+          ],
+          "returnType" : "java.io.OutputStream"
+        },
+        {
+          "callName" : "flush",
+          "paramTypes" : [
+            "org.apache.commons.io.output.DemuxOutputStream"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "close",
+          "paramTypes" : [
+            "org.apache.commons.io.output.DemuxOutputStream"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "bindStream",
+          "paramTypes" : [
+            "org.apache.commons.io.output.DemuxOutputStream",
+            "java.io.OutputStream"
+          ],
+          "returnType" : "java.io.OutputStream"
+        },
+        {
+          "callName" : "<init>",
+          "paramTypes" : [
+            "org.apache.commons.io.output.DemuxOutputStream"
+          ],
+          "returnType" : "void"
+        }
+      ]
+    },
+    {
+      "name" : "org.apache.commons.io.output.LockableFileWriter",
+      "fields" : [
+        {
+          "name" : "LCK",
+          "typeFullName" : "java.lang.String",
+          "literal" : false
+        },
+        {
+          "name" : "out",
+          "typeFullName" : "java.io.Writer",
+          "literal" : false
+        },
+        {
+          "name" : "lockFile",
+          "typeFullName" : "java.io.File",
+          "literal" : false
+        },
+        {
+          "name" : "class$org$apache$commons$io$output$LockableFileWriter",
+          "typeFullName" : "java.lang.Class",
+          "literal" : false
+        }
+      ],
+      "procedures" : [
+        {
+          "callName" : "write",
+          "paramTypes" : [
+            "org.apache.commons.io.output.LockableFileWriter",
+            "int"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "write",
+          "paramTypes" : [
+            "org.apache.commons.io.output.LockableFileWriter",
+            "char[]"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "write",
+          "paramTypes" : [
+            "org.apache.commons.io.output.LockableFileWriter",
+            "char[]",
+            "int",
+            "int"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "write",
+          "paramTypes" : [
+            "org.apache.commons.io.output.LockableFileWriter",
+            "java.lang.String"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "write",
+          "paramTypes" : [
+            "org.apache.commons.io.output.LockableFileWriter",
+            "java.lang.String",
+            "int",
+            "int"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "testLockDir",
+          "paramTypes" : [
+            "org.apache.commons.io.output.LockableFileWriter",
+            "java.io.File"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "initWriter",
+          "paramTypes" : [
+            "org.apache.commons.io.output.LockableFileWriter",
+            "java.io.File",
+            "java.lang.String",
+            "boolean"
+          ],
+          "returnType" : "java.io.Writer"
+        },
+        {
+          "callName" : "flush",
+          "paramTypes" : [
+            "org.apache.commons.io.output.LockableFileWriter"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "createLock",
+          "paramTypes" : [
+            "org.apache.commons.io.output.LockableFileWriter"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "close",
+          "paramTypes" : [
+            "org.apache.commons.io.output.LockableFileWriter"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "class$",
+          "paramTypes" : [
+            "java.lang.String"
+          ],
+          "returnType" : "java.lang.Class"
+        },
+        {
+          "callName" : "<init>",
+          "paramTypes" : [
+            "org.apache.commons.io.output.LockableFileWriter",
+            "java.lang.String"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "<init>",
+          "paramTypes" : [
+            "org.apache.commons.io.output.LockableFileWriter",
+            "java.lang.String",
+            "boolean"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "<init>",
+          "paramTypes" : [
+            "org.apache.commons.io.output.LockableFileWriter",
+            "java.lang.String",
+            "boolean",
+            "java.lang.String"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "<init>",
+          "paramTypes" : [
+            "org.apache.commons.io.output.LockableFileWriter",
+            "java.io.File"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "<init>",
+          "paramTypes" : [
+            "org.apache.commons.io.output.LockableFileWriter",
+            "java.io.File",
+            "boolean"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "<init>",
+          "paramTypes" : [
+            "org.apache.commons.io.output.LockableFileWriter",
+            "java.io.File",
+            "boolean",
+            "java.lang.String"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "<init>",
+          "paramTypes" : [
+            "org.apache.commons.io.output.LockableFileWriter",
+            "java.io.File",
+            "java.lang.String"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "<init>",
+          "paramTypes" : [
+            "org.apache.commons.io.output.LockableFileWriter",
+            "java.io.File",
+            "java.lang.String",
+            "boolean",
+            "java.lang.String"
+          ],
+          "returnType" : "void"
+        }
+      ]
+    },
+    {
+      "name" : "org.apache.commons.io.output.NullOutputStream",
+      "fields" : [
+      ],
+      "procedures" : [
+        {
+          "callName" : "write",
+          "paramTypes" : [
+            "org.apache.commons.io.output.NullOutputStream",
+            "byte[]",
+            "int",
+            "int"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "write",
+          "paramTypes" : [
+            "org.apache.commons.io.output.NullOutputStream",
+            "int"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "write",
+          "paramTypes" : [
+            "org.apache.commons.io.output.NullOutputStream",
+            "byte[]"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "<init>",
+          "paramTypes" : [
+            "org.apache.commons.io.output.NullOutputStream"
+          ],
+          "returnType" : "void"
+        }
+      ]
+    },
+    {
+      "name" : "org.apache.commons.io.output.NullWriter",
+      "fields" : [
+      ],
+      "procedures" : [
+        {
+          "callName" : "write",
+          "paramTypes" : [
+            "org.apache.commons.io.output.NullWriter",
+            "int"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "write",
+          "paramTypes" : [
+            "org.apache.commons.io.output.NullWriter",
+            "char[]"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "write",
+          "paramTypes" : [
+            "org.apache.commons.io.output.NullWriter",
+            "char[]",
+            "int",
+            "int"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "write",
+          "paramTypes" : [
+            "org.apache.commons.io.output.NullWriter",
+            "java.lang.String"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "write",
+          "paramTypes" : [
+            "org.apache.commons.io.output.NullWriter",
+            "java.lang.String",
+            "int",
+            "int"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "flush",
+          "paramTypes" : [
+            "org.apache.commons.io.output.NullWriter"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "close",
+          "paramTypes" : [
+            "org.apache.commons.io.output.NullWriter"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "<init>",
+          "paramTypes" : [
+            "org.apache.commons.io.output.NullWriter"
+          ],
+          "returnType" : "void"
+        }
+      ]
+    },
+    {
+      "name" : "org.apache.commons.io.output.ProxyOutputStream",
+      "fields" : [
+      ],
+      "procedures" : [
+        {
+          "callName" : "write",
+          "paramTypes" : [
+            "org.apache.commons.io.output.ProxyOutputStream",
+            "int"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "write",
+          "paramTypes" : [
+            "org.apache.commons.io.output.ProxyOutputStream",
+            "byte[]"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "write",
+          "paramTypes" : [
+            "org.apache.commons.io.output.ProxyOutputStream",
+            "byte[]",
+            "int",
+            "int"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "flush",
+          "paramTypes" : [
+            "org.apache.commons.io.output.ProxyOutputStream"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "close",
+          "paramTypes" : [
+            "org.apache.commons.io.output.ProxyOutputStream"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "<init>",
+          "paramTypes" : [
+            "org.apache.commons.io.output.ProxyOutputStream",
+            "java.io.OutputStream"
+          ],
+          "returnType" : "void"
+        }
+      ]
+    },
+    {
+      "name" : "org.apache.commons.io.output.ProxyWriter",
+      "fields" : [
+      ],
+      "procedures" : [
+        {
+          "callName" : "write",
+          "paramTypes" : [
+            "org.apache.commons.io.output.ProxyWriter",
+            "int"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "write",
+          "paramTypes" : [
+            "org.apache.commons.io.output.ProxyWriter",
+            "char[]"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "write",
+          "paramTypes" : [
+            "org.apache.commons.io.output.ProxyWriter",
+            "char[]",
+            "int",
+            "int"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "write",
+          "paramTypes" : [
+            "org.apache.commons.io.output.ProxyWriter",
+            "java.lang.String"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "write",
+          "paramTypes" : [
+            "org.apache.commons.io.output.ProxyWriter",
+            "java.lang.String",
+            "int",
+            "int"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "flush",
+          "paramTypes" : [
+            "org.apache.commons.io.output.ProxyWriter"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "close",
+          "paramTypes" : [
+            "org.apache.commons.io.output.ProxyWriter"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "<init>",
+          "paramTypes" : [
+            "org.apache.commons.io.output.ProxyWriter",
+            "java.io.Writer"
+          ],
+          "returnType" : "void"
+        }
+      ]
+    },
+    {
+      "name" : "org.apache.commons.io.output.TeeOutputStream",
+      "fields" : [
+        {
+          "name" : "branch",
+          "typeFullName" : "java.io.OutputStream",
+          "literal" : false
+        }
+      ],
+      "procedures" : [
+        {
+          "callName" : "write",
+          "paramTypes" : [
+            "org.apache.commons.io.output.TeeOutputStream",
+            "byte[]"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "write",
+          "paramTypes" : [
+            "org.apache.commons.io.output.TeeOutputStream",
+            "byte[]",
+            "int",
+            "int"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "write",
+          "paramTypes" : [
+            "org.apache.commons.io.output.TeeOutputStream",
+            "int"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "flush",
+          "paramTypes" : [
+            "org.apache.commons.io.output.TeeOutputStream"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "close",
+          "paramTypes" : [
+            "org.apache.commons.io.output.TeeOutputStream"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "<init>",
+          "paramTypes" : [
+            "org.apache.commons.io.output.TeeOutputStream",
+            "java.io.OutputStream",
+            "java.io.OutputStream"
+          ],
+          "returnType" : "void"
+        }
+      ]
+    },
+    {
+      "name" : "org.apache.commons.io.output.ThresholdingOutputStream",
+      "fields" : [
+        {
+          "name" : "threshold",
+          "typeFullName" : "int",
+          "literal" : false
+        },
+        {
+          "name" : "written",
+          "typeFullName" : "long",
+          "literal" : false
+        },
+        {
+          "name" : "thresholdExceeded",
+          "typeFullName" : "boolean",
+          "literal" : false
+        }
+      ],
+      "procedures" : [
+        {
+          "callName" : "write",
+          "paramTypes" : [
+            "org.apache.commons.io.output.ThresholdingOutputStream",
+            "int"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "write",
+          "paramTypes" : [
+            "org.apache.commons.io.output.ThresholdingOutputStream",
+            "byte[]"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "write",
+          "paramTypes" : [
+            "org.apache.commons.io.output.ThresholdingOutputStream",
+            "byte[]",
+            "int",
+            "int"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "thresholdReached",
+          "paramTypes" : [
+            "org.apache.commons.io.output.ThresholdingOutputStream"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "isThresholdExceeded",
+          "paramTypes" : [
+            "org.apache.commons.io.output.ThresholdingOutputStream"
+          ],
+          "returnType" : "boolean"
+        },
+        {
+          "callName" : "getThreshold",
+          "paramTypes" : [
+            "org.apache.commons.io.output.ThresholdingOutputStream"
+          ],
+          "returnType" : "int"
+        },
+        {
+          "callName" : "getStream",
+          "paramTypes" : [
+            "org.apache.commons.io.output.ThresholdingOutputStream"
+          ],
+          "returnType" : "java.io.OutputStream"
+        },
+        {
+          "callName" : "getByteCount",
+          "paramTypes" : [
+            "org.apache.commons.io.output.ThresholdingOutputStream"
+          ],
+          "returnType" : "long"
+        },
+        {
+          "callName" : "flush",
+          "paramTypes" : [
+            "org.apache.commons.io.output.ThresholdingOutputStream"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "close",
+          "paramTypes" : [
+            "org.apache.commons.io.output.ThresholdingOutputStream"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "checkThreshold",
+          "paramTypes" : [
+            "org.apache.commons.io.output.ThresholdingOutputStream",
+            "int"
+          ],
+          "returnType" : "void"
+        },
+        {
+          "callName" : "<init>",
+          "paramTypes" : [
+            "org.apache.commons.io.output.ThresholdingOutputStream",
+            "int"
+          ],
+          "returnType" : "void"
+        }
+      ]
+    }
+  ]
+}
