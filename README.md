@@ -1,6 +1,6 @@
 # Introduction
 
-This project offers a high level python library to interact with a Joern [server](https://docs.joern.io/server). Several API methods are offered to perform code analysis on complex code bases without knowing [CPGQL](https://docs.joern.io/c-syntaxtree).
+This project offers a high level python library to interact with a Joern [server](https://docs.joern.io/server). Several API methods including integration with [NetworkX](https://networkx.org/documentation/stable/index.html) are offered to perform code analysis and research on complex code bases in a pythonic manner from cli and from notebooks.
 
 ```
 pip install joern-lib
@@ -21,6 +21,8 @@ The repository includes docker compose configuration to interactively query the 
 ![polynote interface](docs/repl.jpg)
 
 ![polynote interface](docs/call-tree.jpg)
+
+![polynote interface](docs/pdg-dot.jpg)
 
 ## Usage
 
@@ -202,3 +204,15 @@ Adding asyncio.sleep(0) seems to fix such errors.
 # Workaround to fix websockets.exceptions.ConnectionClosedError
 await asyncio.sleep(0)
 ```
+
+### pygraphviz refuses to install
+
+```
+pygraphviz/graphviz_wrap.c:2711:10: fatal error: graphviz/cgraph.h: No such file or directory
+   2711 | #include "graphviz/cgraph.h"
+        |          ^~~~~~~~~~~~~~~~~~~
+  compilation terminated.
+  error: command '/usr/bin/gcc' failed with exit code 1
+```
+
+Install `graphviz-devel` or `graphviz-dev` package for your OS. See [here](https://github.com/pygraphviz/pygraphviz/issues/155)

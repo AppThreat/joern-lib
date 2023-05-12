@@ -6,5 +6,6 @@ Sub-modules
 -----------
 * joern_lib.client
 * joern_lib.detectors
+* joern_lib.graph
 * joern_lib.utils
 * joern_lib.workspace
