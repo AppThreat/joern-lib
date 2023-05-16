@@ -267,7 +267,9 @@ async def reachableByFlows(connection, source, sink, print_result=False):
     return await df(connection, source, sink, print_result)
 
 
-async def create_cpg(connection, src, out_dir, lang):
+async def create_cpg(
+    connection, src, out_dir=None, lang=None, slice=None, slice_mode="Usages"
+):
     """Create CPG using cpggen server"""
     client = connection.cpggenclient
     if not client:
@@ -277,12 +279,20 @@ async def create_cpg(connection, src, out_dir, lang):
         }, 500
     # Suppor for url
     url = ""
-    if src.startswith("http") or src.startswith("git"):
+    if src.startswith("http") or src.startswith("git://") or src.startswith("pkg:"):
         url = src
         src = ""
+    data = {
+        "src": src,
+        "url": url,
+        "out_dir": out_dir,
+        "lang": lang,
+        "slice": "true" if slice else "false",
+        "slice_mode": slice_mode,
+    }
     response = await client.post(
         url="/cpg",
         headers=headers,
-        json={"src": src, "url": url, "out_dir": out_dir, "lang": lang},
+        json=data,
     )
     return response.json()

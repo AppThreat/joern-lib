@@ -9,7 +9,7 @@ Functions
 :   
 
     
-`create_cpg(connection, src, out_dir=None, languages='autodetect', project_name=None)`
+`create_cpg(connection, src, out_dir=None, languages='autodetect', project_name=None, slice=None, slice_mode='Usages')`
 :   
 
     
@@ -58,4 +58,8 @@ Functions
 
     
 `set_active_project(connection, project_name)`
+:   
+
+    
+`slice_cpg(connection, src, out_dir=None, languages='autodetect', project_name=None)`
 :

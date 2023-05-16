@@ -71,7 +71,7 @@ res = await client.bulk_query(connection, ["val a=1", "val b=2", "val c=a+b"]);
 List workspaces
 
 ```
-res = await workspace.list(connection)
+res = await workspace.ls(connection)
 ```
 
 Get workspace path

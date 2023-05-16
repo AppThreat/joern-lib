@@ -9,7 +9,7 @@ Functions
 :   Bulk query joern server
 
     
-`create_cpg(connection, src, out_dir, lang)`
+`create_cpg(connection, src, out_dir=None, lang=None, slice=None, slice_mode='Usages')`
 :   Create CPG using cpggen server
 
     
