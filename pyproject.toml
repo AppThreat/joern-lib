@@ -30,7 +30,7 @@ websockets = "^11.0.2"
 uvloop = "^0.17.0"
 orjson = "^3.8.11"
 rich = "^13.3.5"
-networkx = {extras = ["default"], version = "^3.1", optional = true}
+networkx = {extras = ["default"], version = "^3.1"}
 pydotplus = {version = "^2.0.2", optional = true}
 pygraphviz = {version = "^1.10", optional = true}
 
