@@ -1,10 +1,8 @@
 import base64
-
+import mimetypes
 import os
 import re
 from hashlib import blake2b
-
-import mimetypes
 
 import orjson
 from rich.console import Console

@@ -1,6 +1,11 @@
 import tempfile
+
 import networkx as nx
-import pydotplus
+
+try:
+    import pydotplus
+except Exception:
+    pass
 
 
 def convert_dot(data):

@@ -1,3 +1,5 @@
+import pytest
+
 from joern_lib import graph
 
 dot_data = """
@@ -587,5 +589,6 @@ node [colorscheme=paired9];
 """
 
 
+@pytest.mark.skip(reason="This requires optional components to be installed")
 def test_convert_dot():
     assert graph.convert_dot(dot_data)
