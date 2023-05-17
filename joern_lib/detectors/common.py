@@ -129,7 +129,7 @@ async def list_constructors(connection):
 async def list_external_methods(connection):
     return await client.q(
         connection,
-        """cpg.method.isExternal(true).whereNot(_.name(".*<operator|init>.*"))""",
+        """cpg.method.external.whereNot(_.name(".*<operator|init>.*"))""",
     )
 
 
@@ -171,12 +171,14 @@ async def list_tags(
     return await client.q(connection, "cpg.tag{suffix}")
 
 
-async def create_tags(connection, query=None, call=None, method=None, tags=[]):
+async def create_tags(connection, query=None, call=None, method=None, tags=None):
     """
     Method to create custom tags on nodes. Nodes could be selected based on a query, or call or method name.
 
     Tags could be a list of string or dictionary of key, value pairs
     """
+    if tags is None:
+        tags = []
     if not query and call:
         query = f"""cpg.call.name("{call}")"""
     elif not query and method:

@@ -4,7 +4,7 @@ import networkx as nx
 
 try:
     import pydotplus
-except Exception:
+except ImportError:
     pass
 
 

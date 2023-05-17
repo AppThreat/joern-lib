@@ -2,6 +2,10 @@
 
 This project offers a high level python library to interact with a Joern [server](https://docs.joern.io/server). Several API methods including integration with [NetworkX](https://networkx.org/documentation/stable/index.html) are offered to perform code analysis and research on complex code bases in a pythonic manner from cli and from notebooks.
 
+[![release](https://github.com/appthreat/joern-lib/actions/workflows/pythonpublish.yml/badge.svg)](https://github.com/appthreat/joern-lib/actions/workflows/pythonpublish.yml)
+[![Downloads](https://static.pepy.tech/badge/joern-lib)](https://pepy.tech/project/joern-lib)
+[![Discord](https://img.shields.io/badge/-Discord-lime?style=for-the-badge&logo=discord&logoColor=white&color=black)](https://discord.gg/tmmtjCEHNV)
+
 ```
 pip install joern-lib
 ```

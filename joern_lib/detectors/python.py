@@ -40,9 +40,9 @@ def expand_decorators(rows):
             for k, v in decorator_data.items():
                 ann[k] = v
                 if k == "code":
-                    routeMatches = re.search(r'"(\/?.[^,\s()])+"', v)
-                    if routeMatches.group():
-                        ann["routePattern"] = routeMatches.group().replace('"', "")
+                    route_matches = re.search(r'"(/?.[^,\s()])+"', v)
+                    if route_matches.group():
+                        ann["routePattern"] = route_matches.group().replace('"', "")
                         for hm in ("GET", "DELETE", "PUT", "POST", "PATCH", "OPTION"):
                             if hm in v:
                                 ann["httpMethod"] = hm

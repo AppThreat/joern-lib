@@ -381,6 +381,7 @@ def expand_search_str(search_descriptor):
 def fix_json(sout):
     """Hacky method to convert the joern stdout string to json"""
     source_sink_mode = False
+    original_sout = sout
     try:
         if "defined function source" in sout:
             source_sink_mode = True
@@ -388,7 +389,7 @@ def fix_json(sout):
             sout = sout.replace("defined function sink\n", "")
         else:
             sout = sout.replace(r'"\"', '"').replace(r'\""', '"')
-        if ': String = "[' in sout or ": String = [" in sout:
+        if ': String = "[' in sout or ": String = [" in sout or source_sink_mode:
             if ": String = [" in sout:
                 sout = sout.split(": String = ")[-1]
             elif source_sink_mode:
@@ -410,9 +411,10 @@ def fix_json(sout):
         elif 'String = """[' in sout:
             tmpA = sout.split("\n")[1:-2]
             sout = "[ " + "\n".join(tmpA) + "]"
+        sout = sout.replace('"}]"', '"}]')
         return orjson.loads(sout)
     except Exception:
-        return {"response": sout}
+        return {"response": original_sout}
 
 
 def fix_query(query_str):
@@ -461,28 +463,8 @@ def read_image(file_path):
 def colorize_dot_data(
     dot_data,
     scheme="paired9",
-    colors={
-        "method": "1",
-        "literal": "2",
-        "operator": "3",
-        "param": "4",
-        "identifier": "5",
-        "modifier": "6",
-        "unknown": "7",
-        "local": "7",
-        "type_ref": "8",
-        "return": "9",
-    },
-    shapes={
-        "method": "box3d",
-        "literal": "oval",
-        "operator": "box",
-        "param": "tab",
-        "identifier": "note",
-        "modifier": "rect",
-        "type_ref": "component",
-        "return": "cds",
-    },
+    colors=None,
+    shapes=None,
     style="filled",
 ):
     """
@@ -490,6 +472,30 @@ def colorize_dot_data(
 
     This product includes color specifications and designs developed by Cynthia Brewer (http://colorbrewer.org/).
     """
+    if shapes is None:
+        shapes = {
+            "method": "box3d",
+            "literal": "oval",
+            "operator": "box",
+            "param": "tab",
+            "identifier": "note",
+            "modifier": "rect",
+            "type_ref": "component",
+            "return": "cds",
+        }
+    if colors is None:
+        colors = {
+            "method": "1",
+            "literal": "2",
+            "operator": "3",
+            "param": "4",
+            "identifier": "5",
+            "modifier": "6",
+            "unknown": "7",
+            "local": "7",
+            "type_ref": "8",
+            "return": "9",
+        }
     fdot_list = []
     if dot_data and isinstance(dot_data, list):
         for d in dot_data:
