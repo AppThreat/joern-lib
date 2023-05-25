@@ -6,6 +6,10 @@ HTTP_ANNOTATIONS = "org\\.springframework\\.web\\.bind\\.annotation\\..*"
 
 FILTER_ANNOTATIONS = "javax\\.servlet\\.annotation\\.WebFilter"
 
+SOURCE_TYPE_PATTERN = "(?i).*(cloud|framework|data|http|net|socket|io|security|text|xml|json|proto|rpc|java).*"
+SOURCE_FILE_PATTERN = "(?i).*(controller|service).*"
+SINK_TYPE_PATTERN = "(?i).*(cloud|framework|data|http|net|socket|io|security|text|xml|json|proto|rpc|java).*"
+
 
 def expand_annotations(rows):
     ret_rows = []
@@ -32,9 +36,9 @@ def expand_annotations(rows):
                         )
                         annotation_data["httpMethod"] = http_method
                     code = annotation_data.get("code")
-                    routeMatches = re.search(r'"(\/?.)+"', code)
-                    if routeMatches:
-                        annotation_data["routePattern"] = routeMatches.group().replace(
+                    route_matches = re.search(r'"(/?.)+"', code)
+                    if route_matches:
+                        annotation_data["routePattern"] = route_matches.group().replace(
                             '"', ""
                         )
                 mannotation_list.append(annotation_data)
@@ -67,7 +71,7 @@ async def list_http_filters(connection, annotations=FILTER_ANNOTATIONS):
 async def list_unresolved_external_methods(connection):
     return await client.q(
         connection,
-        """cpg.method.isExternal(true).where(_.fullName(".*<unresolved.*")).whereNot(_.name(".*<(operator|init)>.*"))""",
+        """cpg.method.external.where(_.fullName(".*<unresolved.*")).whereNot(_.name(".*<(operator|init)>.*"))""",
     )
 
 
@@ -78,18 +82,66 @@ async def list_methods(
     external=False,
     unresolved=True,
 ):
-    external_bool_str = "true" if external else "false"
+    external_bool_str = "external" if external else "internal"
     filter_str = '.whereNot(_.name(".*<(operator|init)>.*"))'
     if not unresolved:
         filter_str = f'{filter_str}.whereNot(_.fullName(".*<unresolved.*"))'
     if include_annotations:
         res = await client.q(
             connection,
-            f"""cpg.method.isExternal({external_bool_str}){filter_str}.code("{modifier}.*").map(m => (m, m.annotation.l))""",
+            f"""cpg.method.{external_bool_str}{filter_str}.code("{modifier}.*").map(m => (m, m.annotation.l))""",
         )
         return expand_annotations(res)
     else:
         return await client.q(
             connection,
-            f"""cpg.method.isExternal({external_bool_str}){filter_str}.code("{modifier}.*")""",
+            f"""cpg.method.{external_bool_str}{filter_str}.code("{modifier}.*")""",
         )
+
+
+def get_sources_query(
+    pattern=SOURCE_TYPE_PATTERN,
+    file_pattern=SOURCE_FILE_PATTERN,
+    parameter_filter='typeFullName("java.lang.String")',
+):
+    if parameter_filter and not parameter_filter.startswith("."):
+        parameter_filter = f".{parameter_filter}"
+    return f"""
+        (cpg.method.internal.where(_.annotation.fullName("{pattern}")).whereNot(_.fullName(".*<unresolved.*")).whereNot(_.name(".*<(operator|init)>.*")).parameter{parameter_filter} ++ cpg.method.internal.where(_.filename("{file_pattern}")).whereNot(_.fullName(".*<unresolved.*")).whereNot(_.name(".*<(operator|init)>.*")).parameter{parameter_filter}).location.toJson
+        """
+
+
+async def list_sources(
+    connection,
+    pattern=SOURCE_TYPE_PATTERN,
+    file_pattern=SOURCE_FILE_PATTERN,
+    parameter_filter='typeFullName("java.lang.String")',
+):
+    if parameter_filter and not parameter_filter.startswith("."):
+        parameter_filter = f".{parameter_filter}"
+    return await client.q(
+        connection,
+        get_sources_query(
+            pattern=pattern,
+            file_pattern=file_pattern,
+            parameter_filter=parameter_filter,
+        ),
+    )
+
+
+def get_sinks_query(pattern=SINK_TYPE_PATTERN):
+    return f'cpg.method.external.where(_.fullName("{pattern}")).whereNot(_.fullName(".*<unresolved.*")).whereNot(_.name(".*<(operator|init)>.*")).whereNot(_.signature("boolean.*")).parameter.location'
+
+
+async def list_sinks(connection, pattern=SINK_TYPE_PATTERN):
+    return await client.q(connection, get_sinks_query(pattern=pattern))
+
+
+async def suggest_flows(
+    connection,
+):
+    return await client.df(
+        connection,
+        get_sources_query().replace(".location.toJson", ""),
+        get_sinks_query().replace(".location", ""),
+    )

@@ -1,5 +1,7 @@
 import asyncio
+import json
 import os
+import tempfile
 
 import httpx
 import uvloop
@@ -247,22 +249,27 @@ async def df(
                     filter_str = f"""{filter_str}.filter(m => m.elements.code(".*({'|'.join(check_labels)}).*").size == 0)"""
                 else:
                     filter_str = f"""{filter_str}.filter({k})"""
-    results = await bulk_query(
-        connection,
-        [
-            source,
-            sink,
-            f"""sink.reachableByFlows(source){filter_str}.map(m => (m, m.elements.location.l)).toJsonPretty""",
-        ],
-    )
-    if len(results):
-        if print_result:
-            print_flows(results[-1])
-        return results[-1]
+    with tempfile.NamedTemporaryFile(
+        prefix="reachable_flows_", suffix=".json", delete=False
+    ) as fp:
+        res = await bulk_query(
+            connection,
+            [
+                source,
+                sink,
+                f'sink.reachableByFlows(source){filter_str}.map(m => (m, m.elements.location.l)).toJson |> "{fp.name}"',
+            ],
+        )
+        try:
+            results = json.load(fp)
+            if print_result:
+                print_flows(results)
+        except Exception:
+            return res[-1] if len(res) else res
     return results
 
 
-async def reachableByFlows(connection, source, sink, print_result=False):
+async def reachable_by_flows(connection, source, sink, print_result=False):
     """Execute reachableByFlows query"""
     return await df(connection, source, sink, print_result)
 

@@ -38,7 +38,6 @@ RUN microdnf update -y && microdnf install -y gcc git-core python3 python3-devel
     && rm -rf /var/cache/yum \
     && microdnf clean all
 
-USER polly
 EXPOSE 8192
 ENV POLYNOTE_SCALA_VERSION=${SCALA_VERSION} \
     POLYNOTE_VERSION=${POLYNOTE_VERSION} \
