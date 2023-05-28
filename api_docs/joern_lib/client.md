@@ -44,7 +44,7 @@ Functions
 :   Query joern server
 
     
-`reachableByFlows(connection, source, sink, print_result=False)`
+`reachable_by_flows(connection, source, sink, print_result=False)`
 :   Execute reachableByFlows query
 
     

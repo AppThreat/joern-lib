@@ -9,7 +9,7 @@ Functions
 :   
 
     
-`colorize_dot_data(dot_data, scheme='paired9', colors={'method': '1', 'literal': '2', 'operator': '3', 'param': '4', 'identifier': '5', 'modifier': '6', 'unknown': '7', 'local': '7', 'type_ref': '8', 'return': '9'}, shapes={'method': 'box3d', 'literal': 'oval', 'operator': 'box', 'param': 'tab', 'identifier': 'note', 'modifier': 'rect', 'type_ref': 'component', 'return': 'cds'}, style='filled')`
+`colorize_dot_data(dot_data, scheme='paired9', colors=None, shapes=None, style='filled')`
 :   Method to colorize dot data with Brewer color schemes
     
     This product includes color specifications and designs developed by Cynthia Brewer (http://colorbrewer.org/).

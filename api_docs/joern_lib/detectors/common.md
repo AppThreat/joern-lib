@@ -5,7 +5,7 @@ Functions
 ---------
 
     
-`create_tags(connection, query=None, call=None, method=None, tags=[])`
+`create_tags(connection, query=None, call=None, method=None, tags=None)`
 :   Method to create custom tags on nodes. Nodes could be selected based on a query, or call or method name.
     
     Tags could be a list of string or dictionary of key, value pairs

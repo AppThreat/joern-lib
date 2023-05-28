@@ -49,7 +49,7 @@ Functions
 :   
 
     
-`list(connection)`
+`ls(connection)`
 :   
 
     
