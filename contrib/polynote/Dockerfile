@@ -1,4 +1,4 @@
-FROM almalinux/9-minimal:latest
+FROM almalinux:9.2-minimal
 
 LABEL maintainer="appthreat" \
       org.opencontainers.image.authors="Team AppThreat <cloud@appthreat.com>" \
