@@ -10,7 +10,7 @@ except ImportError:
 
 def convert_dot(data):
     """
-    Method to convert dot data into graph
+    Function to convert dot data into graph
     """
     if not data:
         return None
@@ -27,6 +27,7 @@ def convert_dot(data):
 
 
 def diff(first_graph, second_graph, include_common=False, as_dict=False, as_dot=False):
+    """Function to compute the difference between two graphs"""
     return diff_graph(
         first_graph,
         second_graph,
@@ -39,6 +40,7 @@ def diff(first_graph, second_graph, include_common=False, as_dict=False, as_dot=
 def diff_graph(
     first_graph, second_graph, include_common=False, as_dict=False, as_dot=False
 ):
+    """Function to compute the difference between two graphs and optionally convert the result to dict or dot format"""
     first_graph_nodes = [r[1]["label"] for r in first_graph.nodes(data=True)]
     second_graph_nodes = [r[1]["label"] for r in second_graph.nodes(data=True)]
     removed_nodes = set(first_graph_nodes) - set(second_graph_nodes)
@@ -103,6 +105,7 @@ def node_match_fn(n1, n2):
 
 
 def gep(first_graph, second_graph, upper_bound=500):
+    """Function to compute the difference based on optimal edit path algorithm"""
     return nx.optimal_edit_paths(
         first_graph,
         second_graph,
@@ -113,6 +116,7 @@ def gep(first_graph, second_graph, upper_bound=500):
 
 
 def ged(first_graph, second_graph, timeout=5, upper_bound=500):
+    """Function to compute the difference based on graph edit distance algorithm"""
     return nx.graph_edit_distance(
         first_graph,
         second_graph,
@@ -124,6 +128,7 @@ def ged(first_graph, second_graph, timeout=5, upper_bound=500):
 
 
 def write_dot(G, path):
+    """Function to export graph as dot"""
     nx.nx_agraph.write_dot(G, path)
 
 
@@ -135,6 +140,7 @@ def hash(
     iterations=3,
     digest_size=16,
 ):
+    """Function to compute the hashes for a graph using Weisfeiler Lehman hashing algorithm"""
     if subgraph:
         return nx.weisfeiler_lehman_subgraph_hashes(
             G,
@@ -153,6 +159,7 @@ def hash(
 
 
 def summarize(G, as_dict=False, as_dot=False):
+    """Function to summarize the graph based on node labels"""
     summary_graph = nx.snap_aggregation(
         G, node_attributes=("label",), edge_attributes=("label",)
     )
@@ -169,7 +176,7 @@ def summarize(G, as_dict=False, as_dot=False):
 
 
 def is_similar(M1, M2, upper_bound=500, timeout=5):
-    """Method to check if two graphs are similar. To simplify the problem, first the raw graph difference is computed to check if the graphs are the same.
+    """Function to check if two graphs are similar. To simplify the problem, first the raw graph difference is computed to check if the graphs are the same.
     If not graph edit distance is computed with a fixed timeout to help answer the question
     """
     if not diff_graph(M1, M2, as_dict=True):

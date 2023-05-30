@@ -1,3 +1,6 @@
+"""
+Functions to perform workspace related operations
+"""
 import json
 import os
 
@@ -5,6 +8,7 @@ from joern_lib import client
 
 
 def extract_dir(res):
+    """Extract the directory name from the CPGQL response"""
     if res.get("response"):
         dir_name = res.get("response").split('String = "')[-1].split('"')[0]
         return dir_name
@@ -12,6 +16,7 @@ def extract_dir(res):
 
 
 async def ls(connection):
+    """Retrieves the list of CPGs in the workspace"""
     res = await client.q(connection, "workspace")
     if "[io.joern.joerncli.console.JoernProject] = empty" in res.get("response", ""):
         return None
@@ -24,7 +29,9 @@ async def slice_cpg(
     out_dir=None,
     languages="autodetect",
     project_name=None,
+    slice_mode="Usages",
 ):
+    """Function to slice the CPG based on a slice mode"""
     app_manifests = await create_cpg(
         connection,
         src,
@@ -32,7 +39,7 @@ async def slice_cpg(
         languages=languages,
         project_name=project_name,
         slice=True,
-        slice_mode="Usages",
+        slice_mode=slice_mode,
     )
     if not app_manifests:
         return None
@@ -58,6 +65,7 @@ async def create_cpg(
     slice=None,
     slice_mode="Usages",
 ):
+    """Function to create CPG using cpggen server"""
     app_manifests = []
     res = await client.create_cpg(
         connection,
@@ -83,6 +91,7 @@ async def create_cpg(
 
 
 async def import_cpg(connection, cpg_path, project_name=None):
+    """Function to import CPG"""
     if cpg_path:
         res = await dir_exists(connection, cpg_path)
         if not res:
@@ -105,6 +114,7 @@ async def import_cpg(connection, cpg_path, project_name=None):
 
 
 async def import_code(connection, directory, project_name=None):
+    """Function to import code to joern"""
     if directory:
         res = await dir_exists(connection, directory)
         if not res:
@@ -127,6 +137,7 @@ async def import_code(connection, directory, project_name=None):
 
 
 async def from_string(connection, code_snippet, language="jssrc"):
+    """Function to import string"""
     res = await client.q(
         connection, f'importCode.{language}.fromString("""{code_snippet}""")'
     )
@@ -138,20 +149,24 @@ async def from_string(connection, code_snippet, language="jssrc"):
 
 
 async def reset(connection):
+    """Function to reset workspace"""
     await client.q(connection, "workspace.reset")
     return True
 
 
 async def get_path(connection):
+    """Function to retrieve the path to a workspace"""
     res = await client.q(connection, "workspace.getPath")
     return extract_dir(res)
 
 
 async def get_active_project(connection):
+    """Function to retrieve active project"""
     return await client.q(connection, "workspace.getActiveProject")
 
 
 async def set_active_project(connection, project_name):
+    """Function to set active project"""
     res = await client.q(
         connection, f"""workspace.setActiveProject("{project_name}")"""
     )
@@ -163,10 +178,12 @@ async def set_active_project(connection, project_name):
 
 
 async def delete_project(connection, project_name):
+    """Function to delete a project"""
     return await client.q(connection, f"""workspace.deleteProject("{project_name}")""")
 
 
 async def cpg_exists(connection, project_name):
+    """Function to check if a CPG exists in the workspace"""
     if project_name:
         res = await client.q(connection, f"""workspace.cpgExists("{project_name}")""")
         if res and "Boolean = true" in res.get("response", ""):
@@ -175,6 +192,7 @@ async def cpg_exists(connection, project_name):
 
 
 async def get_overlay_dir(connection, project_name):
+    """Function to retrieve the overlays of a project"""
     res = await client.q(
         connection, f"""workspace.overlayDirByProjectName("{project_name}")"""
     )
@@ -182,6 +200,7 @@ async def get_overlay_dir(connection, project_name):
 
 
 async def dir_exists(connection, dir_name):
+    """Function to check if a directory exists and is accessible from the joern server"""
     res = await client.q(connection, f"""os.exists(os.Path("{dir_name}"))""")
     if res and "Boolean = true" in res.get("response", ""):
         return True

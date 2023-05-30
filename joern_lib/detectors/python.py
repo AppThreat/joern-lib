@@ -1,3 +1,6 @@
+"""
+Module to detect common functions used in python applications
+"""
 import re
 
 from joern_lib import client
@@ -7,7 +10,7 @@ ROUTE_DECORATORS = "route"
 
 async def list_decorator_location(connection, decorator, is_method_ref=True):
     """
-    Method to list the methods and their location for a given decorator
+    Function to list the methods and their location for a given decorator
     """
     method_ref_filter = ".isMethodRef" if is_method_ref else ""
     return await client.q(
@@ -18,7 +21,7 @@ async def list_decorator_location(connection, decorator, is_method_ref=True):
 
 async def list_dict_assignment_location(connection, key=None, is_literal=True):
     """
-    Method to list locations where a dictionary key is assigned a hardcoded value
+    Function to list locations where a dictionary key is assigned a hardcoded value
     """
     code_filter = f'.code(".*{key}.*")' if key else ""
     literal_filter = ".isLiteral" if is_literal else ""
@@ -29,6 +32,7 @@ async def list_dict_assignment_location(connection, key=None, is_literal=True):
 
 
 def expand_decorators(rows):
+    """Function to expand decorators to identify http methods and routes"""
     ret_rows = []
     for row in rows:
         m = {}
@@ -56,6 +60,7 @@ def expand_decorators(rows):
 
 
 async def list_http_routes(connection, decorators=ROUTE_DECORATORS):
+    """Function to list http routes in the application"""
     res = await client.q(
         connection,
         f"""cpg.call.code(".*{decorators}.*").inCall.assignment.map(m => (m, m.method))""",

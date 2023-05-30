@@ -9,7 +9,7 @@ Functions
 :   Bulk query joern server
 
     
-`create_cpg(connection, src, out_dir=None, lang=None, slice=None, slice_mode='Usages')`
+`create_cpg(connection, src, out_dir=None, lang=None, slice=None, slice_mode='Usages', auto_build=True, skip_sbom=False)`
 :   Create CPG using cpggen server
 
     
@@ -29,11 +29,11 @@ Functions
 
     
 `get(base_url='http://localhost:9000', cpggen_url='http://localhost:7072', username=None, password=None)`
-:   Method to create a connection to joern and cpggen server
+:   Function to create a connection to joern and cpggen server
 
     
 `p(connection, query_str, title='', caption='')`
-:   Method to print the result as a table
+:   Function to print the result as a table
 
     
 `q(connection, query_str)`

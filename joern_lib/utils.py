@@ -1,3 +1,4 @@
+"""Common utilities"""
 import base64
 import mimetypes
 import os
@@ -45,10 +46,12 @@ if (
 
 
 def t(result, title="", caption="", language="javascript"):
+    """Function to print the result as a table"""
     return print_table(result, title, caption, language)
 
 
 def print_table(result, title="", caption="", language="javascript"):
+    """Function to print the result as a table"""
     table = Table(
         title=title,
         caption=caption,
@@ -124,6 +127,7 @@ def print_table(result, title="", caption="", language="javascript"):
 
 
 def print_md(result):
+    """Function to print the result as a markdown"""
     if isinstance(result, dict) and result.get("response"):
         console.print(result.get("response"))
     else:
@@ -131,6 +135,7 @@ def print_md(result):
 
 
 def walk_tree(paths, tree, level_branches):
+    """Utility function to walk call tree"""
     for path in paths:
         if not path:
             continue
@@ -145,6 +150,7 @@ def walk_tree(paths, tree, level_branches):
 
 
 def print_tree(result, guide_style="bold bright_blue"):
+    """Function to print call trees"""
     result = result.split("\n")
     if result:
         tree = Tree(result[0].replace("+--- ", ""), guide_style=guide_style)
@@ -157,6 +163,7 @@ def print_tree(result, guide_style="bold bright_blue"):
 
 
 def calculate_hash(content, digest_size=16):
+    """Function to calculate has using blake2b algorithm"""
     h = blake2b(digest_size=digest_size)
     h.update(content.encode())
     return h.hexdigest()
@@ -168,6 +175,7 @@ def print_flows(
     filelocation_highlight_color="grey54",
     check_highlight_color="dim green",
 ):
+    """Function to print the data flows using a rich tree"""
     if not result:
         return
     parsed_flows_list = []
@@ -438,7 +446,7 @@ def fix_query(query_str):
 
 
 def parse_error(serr):
-    """Method to parse joern output and identify friendly error messages"""
+    """Function to parse joern output and identify friendly error messages"""
     if "No projects loaded" in serr:
         return """ERROR: Import code using import_code api. Usage: await workspace.import_code(connection, directory_name, app_name)"""
     if "No CPG loaded" in serr:
@@ -447,7 +455,7 @@ def parse_error(serr):
 
 
 def read_image(file_path):
-    """Method to read image file safely optionally converting binary formats to base64 string. Useful to render images in notebooks"""
+    """Function to read image file safely optionally converting binary formats to base64 string. Useful to render images in notebooks"""
     if os.path.exists(file_path):
         (mt, encoding) = mimetypes.guess_type(file_path, strict=True)
         if mt.startswith("image/svg"):
@@ -468,7 +476,7 @@ def colorize_dot_data(
     style="filled",
 ):
     """
-    Method to colorize dot data with Brewer color schemes
+    Function to colorize dot data with Brewer color schemes
 
     This product includes color specifications and designs developed by Cynthia Brewer (http://colorbrewer.org/).
     """

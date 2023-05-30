@@ -20,16 +20,19 @@ ENV JAVA_HOME=/usr/lib/jvm/java-17-openjdk \
     PATH=${PATH}:/root/.local/bin:
 WORKDIR /opt
 
-RUN microdnf update -y && microdnf install -y gcc git-core python3 python3-devel which wget tar zip unzip sudo graphviz graphviz-gd graphviz-python3 java-17-openjdk-devel \
+RUN set -e; \
+    ARCH_NAME="$(rpm --eval '%{_arch}')"; \
+    microdnf update -y && microdnf install -y gcc git-core python3 python3-devel python3-pip which wget tar zip \
+        unzip sudo graphviz graphviz-gd graphviz-python3 java-17-openjdk-devel \
     && wget -q https://github.com/polynote/polynote/releases/download/$POLYNOTE_VERSION/$DIST_TAR \
     && tar xfzp $DIST_TAR \
     && echo "DIST_TAR=$DIST_TAR" \
     && rm $DIST_TAR \
-    && python -m pip install --upgrade pip \
+    && python3 -m pip install --upgrade pip \
     && pip install -r ./polynote/requirements.txt \
-    && curl -LO https://repo.almalinux.org/almalinux/9/CRB/x86_64/os/Packages/graphviz-devel-2.44.0-25.el9.x86_64.rpm \
-    && if [ "$TARGETPLATFORM" = "linux/amd64" ]; then rpm -ivh graphviz-devel-2.44.0-25.el9.x86_64.rpm; fi \
-    && rm graphviz-devel-2.44.0-25.el9.x86_64.rpm \
+    && curl -LO https://repo.almalinux.org/almalinux/9/CRB/${ARCH_NAME}/os/Packages/graphviz-devel-2.44.0-25.el9.${ARCH_NAME}.rpm \
+    && rpm -ivh graphviz-devel-2.44.0-25.el9.${ARCH_NAME}.rpm \
+    && rm graphviz-devel-2.44.0-25.el9.${ARCH_NAME}.rpm \
     && pip install poetry GitPython pandas matplotlib graphviz pydotplus networkx[default,extra] \
     && pip install torch --index-url https://download.pytorch.org/whl/cpu \
     && useradd -ms /bin/bash polly \

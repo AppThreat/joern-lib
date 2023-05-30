@@ -60,7 +60,7 @@ async def get(
     username=None,
     password=None,
 ):
-    """Method to create a connection to joern and cpggen server"""
+    """Function to create a connection to joern and cpggen server"""
     auth = None
     if username and password:
         auth = httpx.BasicAuth(username, password)
@@ -92,7 +92,7 @@ async def receive(connection):
 
 
 async def p(connection, query_str, title="", caption=""):
-    """Method to print the result as a table"""
+    """Function to print the result as a table"""
     result = await query(connection, query_str)
     print_table(result, title, caption)
     return result
@@ -275,7 +275,14 @@ async def reachable_by_flows(connection, source, sink, print_result=False):
 
 
 async def create_cpg(
-    connection, src, out_dir=None, lang=None, slice=None, slice_mode="Usages"
+    connection,
+    src,
+    out_dir=None,
+    lang=None,
+    slice=None,
+    slice_mode="Usages",
+    auto_build=True,
+    skip_sbom=False,
 ):
     """Create CPG using cpggen server"""
     client = connection.cpggenclient
@@ -296,6 +303,8 @@ async def create_cpg(
         "lang": lang,
         "slice": "true" if slice else "false",
         "slice_mode": slice_mode,
+        "auto_build": "true" if auto_build else "false",
+        "skip_sbom": "true" if skip_sbom else "false",
     }
     response = await client.post(
         url="/cpg",

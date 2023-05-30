@@ -1,7 +1,7 @@
 version: "3.9"
 services:
   cpggen:
-    image: ghcr.io/appthreat/cpggen-slim:main
+    image: ghcr.io/appthreat/cpggen-oss:main
     ports:
       - "7072:7072"
     volumes:

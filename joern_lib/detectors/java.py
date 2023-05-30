@@ -1,3 +1,6 @@
+"""
+Module to detect common functions used in java applications
+"""
 import re
 
 from joern_lib import client
@@ -12,6 +15,7 @@ SINK_TYPE_PATTERN = "(?i).*(cloud|framework|data|http|net|socket|io|security|tex
 
 
 def expand_annotations(rows):
+    """Function to expand annotation nodes by identifying http methods and routes used"""
     ret_rows = []
     for r in rows:
         m = {}
@@ -53,6 +57,7 @@ def expand_annotations(rows):
 
 
 async def list_http_routes(connection, annotations=HTTP_ANNOTATIONS):
+    """Retrieves the http routes in the application"""
     res = await client.q(
         connection,
         f"""cpg.method.internal.where(_.annotation.fullName("{annotations}")).map(m => (m, m.annotation.l))""",
@@ -61,6 +66,7 @@ async def list_http_routes(connection, annotations=HTTP_ANNOTATIONS):
 
 
 async def list_http_filters(connection, annotations=FILTER_ANNOTATIONS):
+    """Retrieves the http filters in the application"""
     res = await client.q(
         connection,
         f"""cpg.typeDecl.where(_.annotation.fullName("{annotations}")).map(m => (m, m.annotation.l))""",
@@ -69,6 +75,7 @@ async def list_http_filters(connection, annotations=FILTER_ANNOTATIONS):
 
 
 async def list_unresolved_external_methods(connection):
+    """Retrieves the methods without types resolved"""
     return await client.q(
         connection,
         """cpg.method.external.where(_.fullName(".*<unresolved.*")).whereNot(_.name(".*<(operator|init)>.*"))""",
@@ -82,6 +89,7 @@ async def list_methods(
     external=False,
     unresolved=True,
 ):
+    """Function to retrieve list of methods"""
     external_bool_str = "external" if external else "internal"
     filter_str = '.whereNot(_.name(".*<(operator|init)>.*"))'
     if not unresolved:
@@ -104,6 +112,7 @@ def get_sources_query(
     file_pattern=SOURCE_FILE_PATTERN,
     parameter_filter='typeFullName("java.lang.String")',
 ):
+    """Construct a CPGQL query to list the sources for the application"""
     if parameter_filter and not parameter_filter.startswith("."):
         parameter_filter = f".{parameter_filter}"
     return f"""
@@ -117,6 +126,7 @@ async def list_sources(
     file_pattern=SOURCE_FILE_PATTERN,
     parameter_filter='typeFullName("java.lang.String")',
 ):
+    """Retrieves the list of sources by filtering based on conventions"""
     if parameter_filter and not parameter_filter.startswith("."):
         parameter_filter = f".{parameter_filter}"
     return await client.q(
@@ -130,16 +140,19 @@ async def list_sources(
 
 
 def get_sinks_query(pattern=SINK_TYPE_PATTERN):
+    """Construct a CPGQL query to list the sinks for the application"""
     return f'cpg.method.external.where(_.fullName("{pattern}")).whereNot(_.fullName(".*<unresolved.*")).whereNot(_.name(".*<(operator|init)>.*")).whereNot(_.signature("boolean.*")).parameter.location'
 
 
 async def list_sinks(connection, pattern=SINK_TYPE_PATTERN):
+    """Retrieves the list of sinks by filtering based on conventions"""
     return await client.q(connection, get_sinks_query(pattern=pattern))
 
 
 async def suggest_flows(
     connection,
 ):
+    """Suggest some data flows by identifying common sources and sinks"""
     return await client.df(
         connection,
         get_sources_query().replace(".location.toJson", ""),
