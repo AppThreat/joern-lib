@@ -347,6 +347,7 @@ def print_flows(
                     and symbol not in identifiers_list
                     and not symbol.startswith("$")
                     and not symbol.startswith("tmp")
+                    and not symbol.startswith("_tmp_")
                     and symbol != "NULL"
                 ):
                     identifiers_list.append(symbol)

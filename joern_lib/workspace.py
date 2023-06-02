@@ -49,7 +49,7 @@ async def slice_cpg(
         app_manifests.get("slice_out")
     ):
         try:
-            with open(app_manifests.get("slice_out")) as fp:
+            with open(app_manifests.get("slice_out"), encoding="utf-8") as fp:
                 return json.load(fp)
         except Exception:
             return None
@@ -64,6 +64,8 @@ async def create_cpg(
     project_name=None,
     slice=None,
     slice_mode="Usages",
+    auto_build=True,
+    skip_sbom=True,
 ):
     """Function to create CPG using cpggen server"""
     app_manifests = []

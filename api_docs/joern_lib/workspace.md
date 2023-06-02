@@ -10,7 +10,7 @@ Functions
 :   Function to check if a CPG exists in the workspace
 
     
-`create_cpg(connection, src, out_dir=None, languages='autodetect', project_name=None, slice=None, slice_mode='Usages')`
+`create_cpg(connection, src, out_dir=None, languages='autodetect', project_name=None, slice=None, slice_mode='Usages', auto_build=True, skip_sbom=True)`
 :   Function to create CPG using cpggen server
 
     
