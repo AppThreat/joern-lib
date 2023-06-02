@@ -28,8 +28,8 @@ python = ">=3.8.1,<3.12"
 httpx = "^0.24.1"
 websockets = "^11.0.2"
 uvloop = "^0.17.0"
-orjson = "^3.8.13"
-rich = "^13.3.5"
+orjson = "^3.8.14"
+rich = "^13.4.1"
 networkx = {extras = ["default"], version = "^3.1"}
 pydotplus = {version = "^2.0.2", optional = true}
 pygraphviz = {version = "^1.10", optional = true}

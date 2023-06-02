@@ -110,7 +110,9 @@ async def query(connection, query_str):
     """Query joern server"""
     client = connection.httpclient
     response = await client.post(
-        url="/query", headers=headers, json={"query": fix_query(query_str)}
+        url="/query",
+        headers=headers,
+        json={"query": fix_query(query_str)},
     )
     if response.status_code == httpx.codes.OK:
         j = response.json()
@@ -282,7 +284,7 @@ async def create_cpg(
     slice=None,
     slice_mode="Usages",
     auto_build=True,
-    skip_sbom=False,
+    skip_sbom=True,
 ):
     """Create CPG using cpggen server"""
     client = connection.cpggenclient
