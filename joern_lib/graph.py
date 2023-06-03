@@ -1,6 +1,13 @@
+"""
+Module to work with networkx graph data
+"""
+from collections import Counter, defaultdict
+import json
 import tempfile
+from joern_lib.utils import calculate_hash
 
 import networkx as nx
+from networkx.readwrite import json_graph, read_graphml
 
 try:
     import pydotplus
@@ -26,6 +33,92 @@ def convert_dot(data):
     return graph_list[0] if len(graph_list) == 1 else graph_list
 
 
+def _hash_label(label, digest_size):
+    return calculate_hash(label, digest_size=digest_size)
+
+
+def _init_node_labels(G, edge_attr_fn, node_attr_fn):
+    if node_attr_fn:
+        return {u: node_attr_fn(dd) for u, dd in G.nodes(data=True)}
+    elif edge_attr_fn:
+        return {u: "" for u in G}
+    else:
+        return {u: str(deg) for u, deg in G.degree()}
+
+
+def _neighborhood_aggregate(G, node, node_labels, edge_attr_fn=None):
+    """
+    Compute new labels for given node by aggregating
+    the labels of each node's neighbors.
+    """
+    label_list = []
+    for nbr in G.neighbors(node):
+        prefix = "" if edge_attr_fn is None else edge_attr_fn(G[node][nbr])
+        label_list.append(prefix + node_labels[nbr])
+    return node_labels[node] + "".join(sorted(label_list))
+
+
+def graph_hash(G, edge_attr_fn=None, node_attr_fn=None, iterations=3, digest_size=16):
+    """Return Weisfeiler Lehman (WL) graph hash"""
+
+    def weisfeiler_lehman_step(G, labels, edge_attr_fn=None):
+        """
+        Apply neighborhood aggregation to each node
+        in the graph.
+        Computes a dictionary with labels for each node.
+        """
+        new_labels = {}
+        for node in G.nodes():
+            label = _neighborhood_aggregate(G, node, labels, edge_attr_fn=edge_attr_fn)
+            new_labels[node] = _hash_label(label, digest_size)
+        return new_labels
+
+    # set initial node labels
+    node_labels = _init_node_labels(G, edge_attr_fn, node_attr_fn)
+
+    subgraph_hash_counts = []
+    for _ in range(iterations):
+        node_labels = weisfeiler_lehman_step(G, node_labels, edge_attr_fn=edge_attr_fn)
+        counter = Counter(node_labels.values())
+        # sort the counter, extend total counts
+        subgraph_hash_counts.extend(sorted(counter.items(), key=lambda x: x[0]))
+
+    # hash the final counter
+    return _hash_label(str(tuple(subgraph_hash_counts)), digest_size)
+
+
+def subgraph_hashes(
+    G, edge_attr_fn=None, node_attr_fn=None, iterations=3, digest_size=16
+):
+    """Return a dictionary of subgraph hashes by node."""
+
+    def weisfeiler_lehman_step(G, labels, node_subgraph_hashes, edge_attr_fn=None):
+        """
+        Apply neighborhood aggregation to each node
+        in the graph.
+        Computes a dictionary with labels for each node.
+        Appends the new hashed label to the dictionary of subgraph hashes
+        originating from and indexed by each node in G
+        """
+        new_labels = {}
+        for node in G.nodes():
+            label = _neighborhood_aggregate(G, node, labels, edge_attr_fn=edge_attr_fn)
+            hashed_label = _hash_label(label, digest_size)
+            new_labels[node] = hashed_label
+            node_subgraph_hashes[node].append(hashed_label)
+        return new_labels
+
+    node_labels = _init_node_labels(G, edge_attr_fn, node_attr_fn)
+
+    node_subgraph_hashes = defaultdict(list)
+    for _ in range(iterations):
+        node_labels = weisfeiler_lehman_step(
+            G, node_labels, node_subgraph_hashes, edge_attr_fn
+        )
+
+    return dict(node_subgraph_hashes)
+
+
 def diff(first_graph, second_graph, include_common=False, as_dict=False, as_dot=False):
     """Function to compute the difference between two graphs"""
     return diff_graph(
@@ -37,20 +130,29 @@ def diff(first_graph, second_graph, include_common=False, as_dict=False, as_dot=
     )
 
 
+def get_node_label(n):
+    """Retrieve a label for the node from various data attributes"""
+    if not n:
+        return ""
+    for at in ("label", "CODE", "SIGNATURE", "METHOD_FULL_NAME", "NAME"):
+        if n.get(at) is not None:
+            return n.get(at)
+
+
 def diff_graph(
     first_graph, second_graph, include_common=False, as_dict=False, as_dot=False
 ):
     """Function to compute the difference between two graphs and optionally convert the result to dict or dot format"""
-    first_graph_nodes = [r[1]["label"] for r in first_graph.nodes(data=True)]
-    second_graph_nodes = [r[1]["label"] for r in second_graph.nodes(data=True)]
+    first_graph_nodes = [get_node_label(r[1]) for r in first_graph.nodes(data=True)]
+    second_graph_nodes = [get_node_label(r[1]) for r in second_graph.nodes(data=True)]
     removed_nodes = set(first_graph_nodes) - set(second_graph_nodes)
     added_nodes = set(second_graph_nodes) - set(first_graph_nodes)
     nodes = set(second_graph_nodes) & set(first_graph_nodes)
     first_graph_edges = [
-        (r[0], r[1], r[2]["label"]) for r in first_graph.edges(data=True)
+        (r[0], r[1], get_node_label(r[2])) for r in first_graph.edges(data=True)
     ]
     second_graph_edges = [
-        (r[0], r[1], r[2]["label"]) for r in second_graph.edges(data=True)
+        (r[0], r[1], get_node_label(r[2])) for r in second_graph.edges(data=True)
     ]
     removed_edges = set(first_graph_edges) - set(second_graph_edges)
     removed_edges_fmt = []
@@ -101,7 +203,7 @@ def diff_graph(
 
 
 def node_match_fn(n1, n2):
-    return n1.get("label") == n2.get("label")
+    return get_node_label(n1) == get_node_label(n2)
 
 
 def gep(first_graph, second_graph, upper_bound=500):
@@ -135,24 +237,24 @@ def write_dot(G, path):
 def hash(
     G,
     subgraph=False,
-    edge_attr="label",
-    node_attr="label",
+    edge_attr_fn=get_node_label,
+    node_attr_fn=get_node_label,
     iterations=3,
     digest_size=16,
 ):
     """Function to compute the hashes for a graph using Weisfeiler Lehman hashing algorithm"""
     if subgraph:
-        return nx.weisfeiler_lehman_subgraph_hashes(
+        return subgraph_hashes(
             G,
-            edge_attr=edge_attr,
-            node_attr=node_attr,
+            edge_attr_fn=edge_attr_fn,
+            node_attr_fn=node_attr_fn,
             iterations=iterations,
             digest_size=digest_size,
         )
-    return nx.weisfeiler_lehman_graph_hash(
+    return graph_hash(
         G,
-        edge_attr=edge_attr,
-        node_attr=node_attr,
+        edge_attr_fn=edge_attr_fn,
+        node_attr_fn=node_attr_fn,
         iterations=iterations,
         digest_size=digest_size,
     )
@@ -161,7 +263,7 @@ def hash(
 def summarize(G, as_dict=False, as_dot=False):
     """Function to summarize the graph based on node labels"""
     summary_graph = nx.snap_aggregation(
-        G, node_attributes=("label",), edge_attributes=("label",)
+        G, node_attributes=("label", "CODE"), edge_attributes=("label", "CODE")
     )
     if as_dict:
         return nx.to_dict_of_dicts(summary_graph)
@@ -185,3 +287,14 @@ def is_similar(M1, M2, upper_bound=500, timeout=5):
     if distance is None:
         return False
     return True
+
+
+def convert_graphml(
+    gml_file, force_multigraph=False, as_graph=True, as_adjacency_data=False
+):
+    """Function to convert graphml to networkx"""
+    G = read_graphml(gml_file, force_multigraph=force_multigraph)
+    if as_graph:
+        return G
+    if as_adjacency_data:
+        return json.dumps(json_graph.adjacency_data(G))

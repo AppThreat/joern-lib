@@ -134,8 +134,12 @@ async def list_methods(
 ):
     """Function to filter and retrieve a list of methods"""
     if as_graph:
-        res = await export(connection, method=search_descriptor, export_repr=graph_repr)
-        return graph.convert_dot(res)
+        return await export(
+            connection,
+            method=search_descriptor,
+            export_repr=graph_repr,
+            as_graph=as_graph,
+        )
     else:
         search_str = expand_search_str(search_descriptor)
         filter_str = ""
@@ -403,13 +407,23 @@ def printCallTree(callerFullName : String, tree: ListBuffer[String], depth: Int)
     )
 
 
-async def export(connection, method=None, query=None, export_repr="pdg", colorize=True):
+async def export(
+    connection,
+    method=None,
+    query=None,
+    export_repr="pdg",
+    colorize=True,
+    as_graph=False,
+):
     """Function to export graph representations of a method or node"""
     filter_str = "method"
     if method:
         filter_str = f"method{expand_search_str(method)}"
     elif query:
         filter_str = query.replace("cpg.", "")
+    if as_graph:
+        gml_file = await client.graphml_export(connection, filter_str=filter_str)
+        return graph.convert_graphml(gml_file, as_graph=True)
     res = await client.q(
         connection, f"""cpg.{filter_str}.dot{export_repr.capitalize()}"""
     )
