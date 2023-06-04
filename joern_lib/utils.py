@@ -169,6 +169,8 @@ def print_tree(result, guide_style="bold bright_blue"):
 def calculate_hash(content, digest_size=16):
     """Function to calculate has using blake2b algorithm"""
     h = blake2b(digest_size=digest_size)
+    if content and isinstance(content, str):
+        content = content.replace("\n", "").replace("\t", "").replace(" ", "")
     h.update(content.encode())
     return h.hexdigest()
 

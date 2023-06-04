@@ -2,6 +2,7 @@
 import asyncio
 import json
 import os
+import platform
 import tempfile
 
 import httpx
@@ -19,7 +20,11 @@ from joern_lib.utils import (
     print_table,
 )
 
-asyncio.set_event_loop_policy(uvloop.EventLoopPolicy())
+if platform.system() == "Windows":
+    asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
+else:
+    asyncio.set_event_loop_policy(uvloop.EventLoopPolicy())
+
 
 headers = {"Content-Type": "application/json", "Accept-Encoding": "gzip"}
 CLIENT_TIMEOUT = os.getenv("HTTP_CLIENT_TIMEOUT")

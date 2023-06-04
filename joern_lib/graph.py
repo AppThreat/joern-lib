@@ -316,5 +316,4 @@ def convert_graphml(
         if as_adjacency_data:
             return json.dumps(json_graph.adjacency_data(G))
     except Exception:
-        print(gml_file)
         return None
