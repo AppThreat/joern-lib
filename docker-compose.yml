@@ -35,11 +35,11 @@ services:
     environment:
       - JOERN_DATAFLOW_TRACKED_WIDTH=128
   polynote:
-    build:
-      dockerfile: contrib/polynote/Dockerfile
-      labels:
-        com.docker.compose.container-number: "2"
-    # image: ghcr.io/appthreat/polynote:main
+    # build:
+    #   dockerfile: contrib/polynote/Dockerfile
+    #   labels:
+    #     com.docker.compose.container-number: "2"
+    image: ghcr.io/appthreat/polynote:main
     volumes:
       - ./contrib/polynote/notebooks:/opt/notebooks # Set this to your notebook directory
       - ./contrib/polynote/config.yml:/opt/config/config.yml
