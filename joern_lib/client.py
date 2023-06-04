@@ -1,6 +1,8 @@
+"""Client for joern server"""
 import asyncio
 import json
 import os
+import platform
 import tempfile
 
 import httpx
@@ -18,7 +20,11 @@ from joern_lib.utils import (
     print_table,
 )
 
-asyncio.set_event_loop_policy(uvloop.EventLoopPolicy())
+if platform.system() == "Windows":
+    asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
+else:
+    asyncio.set_event_loop_policy(uvloop.EventLoopPolicy())
+
 
 headers = {"Content-Type": "application/json", "Accept-Encoding": "gzip"}
 CLIENT_TIMEOUT = os.getenv("HTTP_CLIENT_TIMEOUT")
@@ -266,7 +272,7 @@ async def df(
             results = json.load(fp)
             if print_result:
                 print_flows(results)
-        except Exception:
+        except json.JSONDecodeError:
             return res[-1] if len(res) else res
     return results
 
@@ -314,3 +320,56 @@ async def create_cpg(
         json=data,
     )
     return response.json()
+
+
+async def graphml_export(connection, filter_str="method"):
+    """Method to export method as graphml"""
+    with tempfile.NamedTemporaryFile(
+        prefix="graphml_export_", suffix=".graphml", delete=False
+    ) as fp:
+        res = await bulk_query(
+            connection,
+            [
+                """
+import overflowdb.formats.ExportResult
+import overflowdb.formats.graphml.GraphMLExporter
+import java.nio.file.{Path, Paths}
+
+case class MethodSubGraph(methodName: String, nodes: Set[Node]) {
+  def edges: Set[Edge] = {
+    for {
+      node <- nodes
+      edge <- node.bothE.asScala
+      if nodes.contains(edge.inNode) && nodes.contains(edge.outNode)
+    } yield edge
+  }
+}
+
+def plus(resultA: ExportResult, resultB: ExportResult): ExportResult = {
+  ExportResult(
+    nodeCount = resultA.nodeCount + resultB.nodeCount,
+    edgeCount = resultA.edgeCount + resultB.edgeCount,
+    files = resultA.files ++ resultB.files,
+    additionalInfo = resultA.additionalInfo
+  )
+}
+
+def splitByMethod(cpg: Cpg): IterableOnce[MethodSubGraph] = {
+  cpg.%(filter_str)s.map { method =>
+    MethodSubGraph(methodName = method.name, nodes = method.ast.toSet)
+  }
+}
+"""
+                % dict(filter_str=filter_str),
+                """
+({splitByMethod(cpg).iterator
+  .map { case subGraph @ MethodSubGraph(methodName, nodes) =>
+    GraphMLExporter.runExport(nodes, subGraph.edges, Paths.get("%(gml_file)s"))
+  }
+  .reduce(plus)
+})
+"""
+                % dict(gml_file=fp.name),
+            ],
+        )
+        return fp.name

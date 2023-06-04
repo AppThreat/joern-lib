@@ -1,5 +1,6 @@
 Module joern_lib.client
 =======================
+Client for joern server
 
 Functions
 ---------
@@ -30,6 +31,10 @@ Functions
     
 `get(base_url='http://localhost:9000', cpggen_url='http://localhost:7072', username=None, password=None)`
 :   Function to create a connection to joern and cpggen server
+
+    
+`graphml_export(connection, filter_str='method')`
+:   Method to export method as graphml
 
     
 `p(connection, query_str, title='', caption='')`

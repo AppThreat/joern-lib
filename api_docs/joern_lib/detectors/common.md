@@ -12,7 +12,7 @@ Functions
     Tags could be a list of string or dictionary of key, value pairs
 
     
-`export(connection, method=None, query=None, export_repr='pdg', colorize=True)`
+`export(connection, method=None, query=None, export_repr='pdg', colorize=True, as_graph=False)`
 :   Function to export graph representations of a method or node
 
     

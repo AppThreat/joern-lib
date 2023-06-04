@@ -4,7 +4,7 @@ LABEL maintainer="appthreat" \
       org.opencontainers.image.authors="Team AppThreat <cloud@appthreat.com>" \
       org.opencontainers.image.source="https://github.com/appthreat/joern-lib" \
       org.opencontainers.image.url="https://github.com/appthreat/joern-lib" \
-      org.opencontainers.image.version="0.9.2" \
+      org.opencontainers.image.version="0.10.0" \
       org.opencontainers.image.vendor="AppThreat" \
       org.opencontainers.image.licenses="Apache-2.0" \
       org.opencontainers.image.title="polynote" \
@@ -35,6 +35,7 @@ RUN set -e; \
     && rm graphviz-devel-2.44.0-25.el9.${ARCH_NAME}.rpm \
     && pip install poetry GitPython pandas matplotlib graphviz pydotplus networkx[default,extra] \
     && pip install torch --index-url https://download.pytorch.org/whl/cpu \
+    && pip install torch_geometric pyg_lib torch_scatter torch_sparse torch_cluster torch_spline_conv -f https://data.pyg.org/whl/torch-2.0.0+cpu.html \
     && useradd -ms /bin/bash polly \
     && chown -R polly:polly /opt \
     && microdnf remove -y gcc \
