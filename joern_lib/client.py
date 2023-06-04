@@ -1,3 +1,4 @@
+"""Client for joern server"""
 import asyncio
 import json
 import os
@@ -266,7 +267,7 @@ async def df(
             results = json.load(fp)
             if print_result:
                 print_flows(results)
-        except Exception:
+        except json.JSONDecodeError:
             return res[-1] if len(res) else res
     return results
 

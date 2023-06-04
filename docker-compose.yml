@@ -1,5 +1,15 @@
 version: "3.9"
 services:
+  atomgen:
+    image: ghcr.io/appthreat/atomgen:main
+    ports:
+      - "7073:7073"
+    volumes:
+      - $HOME:/app # Set this to your directory containing sources
+      - /tmp:/tmp
+    command: --server --server-host 0.0.0.0 --server-port 7073
+    environment:
+      - AT_DEBUG_MODE=debug
   cpggen:
     image: ghcr.io/appthreat/cpggen-oss:main
     ports:
@@ -29,7 +39,7 @@ services:
       dockerfile: contrib/polynote/Dockerfile
       labels:
         com.docker.compose.container-number: "2"
-    # image: ghcr.io/appthreat/polynote
+    # image: ghcr.io/appthreat/polynote:main
     volumes:
       - ./contrib/polynote/notebooks:/opt/notebooks # Set this to your notebook directory
       - ./contrib/polynote/config.yml:/opt/config/config.yml

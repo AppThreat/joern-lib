@@ -1,13 +1,14 @@
 """
 Module to work with networkx graph data
 """
-from collections import Counter, defaultdict
 import json
 import tempfile
-from joern_lib.utils import calculate_hash
+from collections import Counter, defaultdict
 
 import networkx as nx
 from networkx.readwrite import json_graph, read_graphml
+
+from joern_lib.utils import calculate_hash
 
 try:
     import pydotplus
@@ -134,15 +135,31 @@ def get_node_label(n):
     """Retrieve a label for the node from various data attributes"""
     if not n:
         return ""
-    for at in ("label", "CODE", "SIGNATURE", "METHOD_FULL_NAME", "NAME"):
+    for at in (
+        "label",
+        "CODE",
+        "SIGNATURE",
+        "METHOD_FULL_NAME",
+        "NAME",
+        "VARIABLE",
+        "labelE",
+    ):
         if n.get(at) is not None:
             return n.get(at)
+    return ""
 
 
 def diff_graph(
     first_graph, second_graph, include_common=False, as_dict=False, as_dot=False
 ):
     """Function to compute the difference between two graphs and optionally convert the result to dict or dot format"""
+    if not first_graph and second_graph:
+        return second_graph
+    if first_graph and not second_graph:
+        return first_graph
+    graph = nx.Graph()
+    if not first_graph and not second_graph:
+        return graph
     first_graph_nodes = [get_node_label(r[1]) for r in first_graph.nodes(data=True)]
     second_graph_nodes = [get_node_label(r[1]) for r in second_graph.nodes(data=True)]
     removed_nodes = set(first_graph_nodes) - set(second_graph_nodes)
@@ -175,7 +192,6 @@ def diff_graph(
             dest = "+" + added_edge[1]
         added_edges_fmt.append((src, dest, added_edge[2]))
     edges = set(second_graph_edges) & set(first_graph_edges)
-    graph = nx.Graph()
     for removed_node in removed_nodes:
         graph.add_node("-" + removed_node)
     for added_node in added_nodes:
@@ -293,8 +309,12 @@ def convert_graphml(
     gml_file, force_multigraph=False, as_graph=True, as_adjacency_data=False
 ):
     """Function to convert graphml to networkx"""
-    G = read_graphml(gml_file, force_multigraph=force_multigraph)
-    if as_graph:
-        return G
-    if as_adjacency_data:
-        return json.dumps(json_graph.adjacency_data(G))
+    try:
+        G = read_graphml(gml_file, force_multigraph=force_multigraph)
+        if as_graph:
+            return G
+        if as_adjacency_data:
+            return json.dumps(json_graph.adjacency_data(G))
+    except Exception:
+        print(gml_file)
+        return None

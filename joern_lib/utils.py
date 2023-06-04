@@ -19,7 +19,7 @@ console = Console(
     log_time=False,
     log_path=False,
     color_system="auto",
-    width=int(os.getenv("COLUMNS", 180)),
+    width=int(os.getenv("COLUMNS", "180")),
 )
 
 check_labels_list = (
@@ -37,7 +37,7 @@ check_labels_list = (
     "encrypt",
 )
 
-JOERN_DATAFLOW_TRACKED_WIDTH = os.getenv("JOERN_DATAFLOW_TRACKED_WIDTH", 128)
+JOERN_DATAFLOW_TRACKED_WIDTH = os.getenv("JOERN_DATAFLOW_TRACKED_WIDTH", "128")
 if (
     isinstance(JOERN_DATAFLOW_TRACKED_WIDTH, str)
     and JOERN_DATAFLOW_TRACKED_WIDTH.isdigit()
@@ -136,6 +136,7 @@ def print_md(result):
 
 def walk_tree(paths, tree, level_branches):
     """Utility function to walk call tree"""
+    added_nodes = []
     for path in paths:
         if not path:
             continue
@@ -146,7 +147,10 @@ def walk_tree(paths, tree, level_branches):
             branch = level_branches.get(level - 1)
             if not level_branches.get(level):
                 level_branches[level] = branch
-        branch.add(path.replace("+--- ", ""))
+        n = path.replace("+--- ", "")
+        if n not in added_nodes:
+            branch.add(n)
+            added_nodes.append(n)
 
 
 def print_tree(result, guide_style="bold bright_blue"):
@@ -220,21 +224,21 @@ def print_flows(
                     code = code[:JOERN_DATAFLOW_TRACKED_WIDTH] + " ..."
                 if code == last_code:
                     continue
-                methodFullName = loc.get("methodFullName", "").replace("<init>", "")
-                methodShortName = loc.get("methodShortName", "").replace("<init>", "")
+                method_full_name = loc.get("methodFullName", "").replace("<init>", "")
+                method_short_name = loc.get("methodShortName", "").replace("<init>", "")
                 class_name = loc.get("className")
                 # If there is no class name but there is a method full name try to recover
-                if not class_name and methodFullName:
-                    class_name = methodFullName.split(":")[0]
-                    if class_name.endswith("." + methodShortName):
-                        class_name = re.sub(f".{methodShortName}$", "", class_name)
+                if not class_name and method_full_name:
+                    class_name = method_full_name.split(":")[0]
+                    if class_name.endswith("." + method_short_name):
+                        class_name = re.sub(f".{method_short_name}$", "", class_name)
                 # Highlight potential check methods
                 if check_highlight_color:
                     for check_label in check_labels_list:
-                        if check_label in methodShortName:
-                            methodShortName = methodShortName.replace(
-                                methodShortName,
-                                f"[{check_highlight_color}]{methodShortName}[/{check_highlight_color}]",
+                        if check_label in method_short_name:
+                            method_short_name = method_short_name.replace(
+                                method_short_name,
+                                f"[{check_highlight_color}]{method_short_name}[/{check_highlight_color}]",
                             )
                         if node_name and node_name in code:
                             if check_label in node_name.lower():
@@ -249,20 +253,20 @@ def print_flows(
                         loc["fingerprints"][lk] = calculate_hash(loc.get(lk))
                 if code:
                     loc["fingerprints"]["code"] = calculate_hash(code)
-                nodeLabel = loc.get("nodeLabel")
-                if nodeLabel in ("METHOD_PARAMETER_IN", "CALL") or (
+                node_label = loc.get("nodeLabel")
+                if node_label in ("METHOD_PARAMETER_IN", "CALL") or (
                     filename.endswith(".py")
-                    and nodeLabel == "IDENTIFIER"
+                    and node_label == "IDENTIFIER"
                     and (idx == 0 or idx == len(location_list) - 1)
                 ):
-                    floc = f"{loc.get('filename')}:{loc.get('lineNumber')} {methodShortName}()"
+                    floc = f"{loc.get('filename')}:{loc.get('lineNumber')} {method_short_name}()"
                     floc_key = f"{floc}|{symbol}"
                     # If the next entry in the flow is identical to this
                     # but better then ignore the current
                     if idx < len(location_list) - 1:
                         nextloc = location_list[idx + 1]
-                        nextNodeLabel = nextloc.get("nodeLabel")
-                        if nextNodeLabel in (
+                        next_node_label = nextloc.get("nodeLabel")
+                        if next_node_label in (
                             "METHOD_PARAMETER_IN",
                             "CALL",
                             "IDENTIFIER",
@@ -277,11 +281,11 @@ def print_flows(
                             ):
                                 continue
                     if loc.get("filename") == "<empty>":
-                        class_method_sep = "" if not methodShortName else "."
+                        class_method_sep = "" if not method_short_name else "."
                         if symbol_highlight_color:
-                            floc = f"{class_name}{class_method_sep}{methodShortName}( [{symbol_highlight_color}]{code}[/{symbol_highlight_color}] )"
+                            floc = f"{class_name}{class_method_sep}{method_short_name}( [{symbol_highlight_color}]{code}[/{symbol_highlight_color}] )"
                         else:
-                            floc = f"{class_name}{class_method_sep}{methodShortName}( {code} )"
+                            floc = f"{class_name}{class_method_sep}{method_short_name}( {code} )"
                     if floc_key not in floc_list:
                         if symbol == code and last_symbol and last_symbol != code:
                             symbol = last_symbol
@@ -343,7 +347,7 @@ def print_flows(
                                 f'{loc["fingerprints"]["methodFullName"]}|{loc["fingerprints"]["symbol"]}'
                             )
                 if (
-                    nodeLabel in ("METHOD_PARAMETER_IN", "IDENTIFIER")
+                    node_label in ("METHOD_PARAMETER_IN", "IDENTIFIER")
                     and symbol not in identifiers_list
                     and not symbol.startswith("$")
                     and not symbol.startswith("tmp")
@@ -422,7 +426,7 @@ def fix_json(sout):
             sout = "[ " + "\n".join(tmpA) + "]"
         sout = sout.replace('"}]"', '"}]')
         return orjson.loads(sout)
-    except Exception:
+    except orjson.JSONDecodeError:
         return {"response": original_sout}
 
 
@@ -439,7 +443,9 @@ def fix_query(query_str):
         and "printCallTree" not in query_str
     ):
         query_str = f"{query_str}.toJsonPretty"
-    if os.getenv("POLYNOTE_VERSION") or os.getenv("AT_DEBUG_MODE") in ("true", "1"):
+    if "\n" not in query_str and (
+        os.getenv("POLYNOTE_VERSION") or os.getenv("AT_DEBUG_MODE") in ("true", "1")
+    ):
         console.print(
             Panel(Syntax(query_str, "scala"), expand=False, title="CPGQL Query")
         )
