@@ -12,6 +12,6 @@ dependencies:
     - graphviz
     - pydotplus
     - networkx[default,extra]
-
+    - file:///opt/joern_lib
 env:
   AT_DEBUG_MODE: debug
