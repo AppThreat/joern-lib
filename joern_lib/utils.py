@@ -417,8 +417,7 @@ def fix_json(sout):
                     sout = sout.split(': String = "')[-1]
             else:
                 sout = sout.split(': String = "')[-1][-1]
-
-        elif "tree: ListBuffer" in sout:
+        elif "tree: ListBuffer" in sout or " = ListBuffer(" in sout:
             sout = sout.split(": String = ")[-1]
             if '"""' in sout:
                 sout = sout.replace('"""', "")
