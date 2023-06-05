@@ -8,8 +8,10 @@ This project offers a high level python library to interact with a Joern [server
 
 ```shell
 pip install joern-lib
-# To install the optional science pack
-pip install joern-lib[science]
+# To install the optional science pack, clone this repo and use poetry > 1.5 to install the science group
+poetry install --with science # cpu
+poetry install --with science-cu117 # cuda 11.7
+poetry install --with science-cu118 # cuda 11.8
 ```
 
 The repository includes docker compose configuration to interactively query the joern server with polynote notebooks.
