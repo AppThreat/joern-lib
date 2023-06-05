@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "joern-lib"
-version = "0.10.1"
+version = "0.11.0"
 description = "Python library for code analysis with CPG and Joern"
 authors = ["Team AppThreat <cloud@appthreat.com>"]
 license = "Apache-2.0"
