@@ -223,7 +223,7 @@ async def create_tags(connection, query=None, call=None, method=None, tags=None)
                     await client.q(
                         connection,
                         f"""
-                        {query}.newTagNodePair("{k}", "{v}").store
+                        {query}.newTagNodePair("{k}", "{v}").store()
                         run.commit
                         save
                         """,
@@ -232,7 +232,7 @@ async def create_tags(connection, query=None, call=None, method=None, tags=None)
                 await client.q(
                     connection,
                     f"""
-                {query}.newTagNode("{tag}").store
+                {query}.newTagNode("{tag}").store()
                 run.commit
                 save
                 """,
@@ -370,12 +370,12 @@ def printDashes(count: Int) = {
     }
     tabStr
 }
-def printCallTree(callerFullName : String, tree: ListBuffer[String], depth: Int) {
+def printCallTree(callerFullName : String, tree: ListBuffer[String], depth: Int): Unit = {
     var dashCount = 0
     var lastCallerMethod = callerFullName
     var lastDashCount = 0
     tree += callerFullName
-    def findCallee(methodName: String, tree: ListBuffer[String]) {
+    def findCallee(methodName: String, tree: ListBuffer[String]): Unit = {
         var calleeList = cpg.method.fullNameExact(methodName).callee.whereNot(_.name(".*<operator>.*")).l
         var callerNameList = cpg.method.fullNameExact(methodName).caller.fullName.l
         if (callerNameList.contains(lastCallerMethod) || (callerNameList.size == 0)) {

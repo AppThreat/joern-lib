@@ -11,7 +11,7 @@ services:
     environment:
       - AT_DEBUG_MODE=debug
   cpggen:
-    image: ghcr.io/appthreat/cpggen-oss:main
+    image: ghcr.io/appthreat/cpggen:main
     ports:
       - "7072:7072"
     volumes:
@@ -23,7 +23,7 @@ services:
     environment:
       - AT_DEBUG_MODE=debug
   joern:
-    image: ghcr.io/appthreat/cpggen-oss:main
+    image: ghcr.io/appthreat/cpggen:main
     ports:
       - "9000:9000"
     volumes:
