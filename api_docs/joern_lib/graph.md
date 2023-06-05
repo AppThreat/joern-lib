@@ -59,5 +59,10 @@ Functions
 :   Function to summarize the graph based on node labels
 
     
+`to_pyg(G, group_node_attrs=None, group_edge_attrs=None)`
+:   Converts a :obj:`networkx.Graph` or :obj:`networkx.DiGraph` to a
+    :class:`torch_geometric.data.Data` instance.
+
+    
 `write_dot(G, path)`
 :   Function to export graph as dot

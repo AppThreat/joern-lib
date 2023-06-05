@@ -6,8 +6,10 @@ This project offers a high level python library to interact with a Joern [server
 [![Downloads](https://static.pepy.tech/badge/joern-lib)](https://pepy.tech/project/joern-lib)
 [![Discord](https://img.shields.io/badge/-Discord-lime?style=for-the-badge&logo=discord&logoColor=white&color=black)](https://discord.gg/tmmtjCEHNV)
 
-```
+```shell
 pip install joern-lib
+# To install the optional science pack
+pip install joern-lib[science]
 ```
 
 The repository includes docker compose configuration to interactively query the joern server with polynote notebooks.
