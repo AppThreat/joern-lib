@@ -1,6 +1,6 @@
 # Introduction
 
-This project offers a high level python library to interact with a Joern [server](https://docs.joern.io/server). Several API methods including integration with [NetworkX](https://networkx.org/documentation/stable/index.html) are offered to perform code analysis and research on complex code bases in a pythonic manner from cli and from notebooks.
+This project offers a high level python library to perform code analysis with CPG and Joern [server](https://docs.joern.io/server). Several API methods including integration with [NetworkX](https://networkx.org/documentation/stable/index.html) and [PyTorch Geometric](https://pytorch-geometric.readthedocs.io/en/latest/index.html) are offered to perform code analysis and research on complex code bases in a pythonic manner from cli and from notebooks.
 
 [![release](https://github.com/appthreat/joern-lib/actions/workflows/pythonpublish.yml/badge.svg)](https://github.com/appthreat/joern-lib/actions/workflows/pythonpublish.yml)
 [![Downloads](https://static.pepy.tech/badge/joern-lib)](https://pepy.tech/project/joern-lib)
@@ -13,6 +13,8 @@ poetry install --with science # cpu
 poetry install --with science-cu117 # cuda 11.7
 poetry install --with science-cu118 # cuda 11.8
 ```
+
+## Notebook support
 
 The repository includes docker compose configuration to interactively query the joern server with polynote notebooks.
 
@@ -47,6 +49,8 @@ docker compose up -d
 Navigate to http://localhost:8192 for an interactive polynote notebook. You could open one of the sample notebooks from the [contrib](./contrib/polynote/notebooks/joern-notes/) directory to learn about Joern server and this library.
 
 ### Common steps
+
+Refer to the [API documentation](https://github.com/AppThreat/joern-lib/tree/main/api_docs/joern_lib) for programmatic usage.
 
 ```
 python -m asyncio
