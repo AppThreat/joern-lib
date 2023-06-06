@@ -19,7 +19,12 @@ ARG TARGETPLATFORM
 ENV ATOM_VERSION=1.0.0 \
     ATOM_HOME=/opt/atom-1.0.0 \
     JAVA_HOME="/opt/graalvm-ce-java19-22.3.1" \
-    PATH=${PATH}:/root/.local/bin:/opt/atom-1.0.0/bin:
+    POLYNOTE_SCALA_VERSION=${SCALA_VERSION} \
+    POLYNOTE_VERSION=${POLYNOTE_VERSION} \
+    PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    PYTHONIOENCODING="utf-8" \
+    PATH=${PATH}:/root/.local/bin:/opt/atom-1.0.0/bin:/opt/graalvm-ce-java19-22.3.1/bin:
 WORKDIR /opt
 
 RUN set -e; \
@@ -30,6 +35,7 @@ RUN set -e; \
     && python3 --version \
     && python3 -m pip install --upgrade pip \
     && bash <(curl -sL https://get.graalvm.org/jdk) --to /opt graalvm-ce-java19-22.3.1 \
+    && java -version \
     && curl -LO https://github.com/AppThreat/atom/releases/latest/download/atom.zip \
     && curl -LO https://github.com/AppThreat/atom/releases/latest/download/atom.zip.sha512 \
     && echo "$(cat atom.zip.sha512 | cut -d ' ' -f1) atom.zip" | sha512sum -c \
@@ -53,10 +59,5 @@ RUN set -e; \
     && microdnf clean all
 
 EXPOSE 8192
-ENV POLYNOTE_SCALA_VERSION=${SCALA_VERSION} \
-    POLYNOTE_VERSION=${POLYNOTE_VERSION} \
-    PYTHONDONTWRITEBYTECODE=1 \
-    PYTHONUNBUFFERED=1 \
-    PYTHONIOENCODING="utf-8"
 
 ENTRYPOINT ["/opt/polynote/polynote.py"]
