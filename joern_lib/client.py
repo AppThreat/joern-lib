@@ -115,14 +115,14 @@ async def receive(connection):
     return await connection.websocket.recv()
 
 
-async def p(connection, query_str, title="", caption="", sync=True):
+async def p(connection, query_str, title="", caption="", sync=False):
     """Function to print the result as a table"""
     result = await query(connection, query_str, sync=sync)
     print_table(result, title, caption)
     return result
 
 
-async def q(connection, query_str, sync=True):
+async def q(connection, query_str, sync=False):
     """Query joern server and optionally print the result as a table if the query ends with .p"""
     if query_str.strip().endswith(".p"):
         query_str = f"{query_str[:-2]}.toJsonPretty"
@@ -130,7 +130,7 @@ async def q(connection, query_str, sync=True):
     return await query(connection, query_str, sync=sync)
 
 
-async def query(connection, query_str, sync=True):
+async def query(connection, query_str, sync=False):
     """Query joern server"""
     client = connection.httpclient
     if isinstance(client, httpx.AsyncClient):
@@ -140,6 +140,7 @@ async def query(connection, query_str, sync=True):
             json={"query": fix_query(query_str)},
         )
     else:
+        sync = True
         response = client.post(
             url=f"/query{'-sync' if sync else ''}",
             headers=headers,
@@ -168,7 +169,7 @@ async def query(connection, query_str, sync=True):
     return None
 
 
-async def bulk_query(connection, query_list, sync=True):
+async def bulk_query(connection, query_list, sync=False):
     """Bulk query joern server"""
     client = connection.httpclient
     websocket = connection.websocket
@@ -182,6 +183,7 @@ async def bulk_query(connection, query_list, sync=True):
                 json={"query": fix_query(query_str)},
             )
         else:
+            sync = True
             response = client.post(
                 url="/query-sync", headers=headers, json={"query": fix_query(query_str)}
             )

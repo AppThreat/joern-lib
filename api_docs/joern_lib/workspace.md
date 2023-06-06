@@ -10,7 +10,11 @@ Functions
 :   Function to check if a CPG exists in the workspace
 
     
-`create_cpg(connection, src, out_dir=None, languages='autodetect', project_name=None, slice=None, slice_mode='Usages', auto_build=True, skip_sbom=True)`
+`create_atom(connection, src, out_dir=None, languages='autodetect', project_name=None)`
+:   Function to create atom using atomgen server
+
+    
+`create_cpg(connection, src, out_dir=None, languages='autodetect', project_name=None, slice=None, slice_mode='Usages', auto_build=True, skip_sbom=True, use_atom=False)`
 :   Function to create CPG using cpggen server
 
     

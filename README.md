@@ -217,6 +217,8 @@ Adding asyncio.sleep(0) seems to fix such errors.
 await asyncio.sleep(0)
 ```
 
+Alternatively, use the sync api.
+
 ### pygraphviz refuses to install
 
 ```
