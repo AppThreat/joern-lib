@@ -60,6 +60,24 @@ class Connection:
         return await self.close()
 
 
+def get_sync(
+    base_url="http://localhost:9000",
+    cpggen_url="http://localhost:7072",
+    username=None,
+    password=None,
+):
+    """Function to create a plain synchronous http connection to joern and cpggen server"""
+    auth = None
+    if username and password:
+        auth = httpx.BasicAuth(username, password)
+    base_url = base_url.rstrip("/")
+    client = httpx.Client(base_url=base_url, auth=auth, timeout=CLIENT_TIMEOUT)
+    cpggenclient = None
+    if cpggen_url:
+        cpggenclient = httpx.Client(base_url=cpggen_url, timeout=CLIENT_TIMEOUT)
+    return Connection(cpggenclient, client, None)
+
+
 async def get(
     base_url="http://localhost:9000",
     cpggen_url="http://localhost:7072",
@@ -115,11 +133,18 @@ async def q(connection, query_str, sync=True):
 async def query(connection, query_str, sync=True):
     """Query joern server"""
     client = connection.httpclient
-    response = await client.post(
-        url=f"/query{'-sync' if sync else ''}",
-        headers=headers,
-        json={"query": fix_query(query_str)},
-    )
+    if isinstance(client, httpx.AsyncClient):
+        response = await client.post(
+            url=f"/query{'-sync' if sync else ''}",
+            headers=headers,
+            json={"query": fix_query(query_str)},
+        )
+    else:
+        response = client.post(
+            url=f"/query{'-sync' if sync else ''}",
+            headers=headers,
+            json={"query": fix_query(query_str)},
+        )
     if response.status_code == httpx.codes.OK:
         j = response.json()
         if sync:
@@ -143,20 +168,37 @@ async def query(connection, query_str, sync=True):
     return None
 
 
-async def bulk_query(connection, query_list):
+async def bulk_query(connection, query_list, sync=True):
     """Bulk query joern server"""
     client = connection.httpclient
     websocket = connection.websocket
     uuid_list = []
     response_list = []
     for query_str in query_list:
-        response = await client.post(
-            url="/query", headers=headers, json={"query": fix_query(query_str)}
-        )
+        if isinstance(client, httpx.AsyncClient):
+            response = await client.post(
+                url=f"/query{'-sync' if sync else ''}",
+                headers=headers,
+                json={"query": fix_query(query_str)},
+            )
+        else:
+            response = client.post(
+                url="/query-sync", headers=headers, json={"query": fix_query(query_str)}
+            )
         if response.status_code == httpx.codes.OK:
             j = response.json()
-            res_uuid = j.get("uuid")
-            uuid_list.append(res_uuid)
+            if sync:
+                sout = j.get("stdout", "")
+                serr = j.get("stderr", "")
+                if sout:
+                    response_list.append(fix_json(sout))
+                else:
+                    response_list.append({"error": parse_error(serr)})
+            else:
+                res_uuid = j.get("uuid")
+                uuid_list.append(res_uuid)
+    if sync:
+        return response_list
     async for completed_uuid in websocket:
         if completed_uuid in uuid_list:
             response = await client.get(
@@ -181,7 +223,7 @@ async def flows(connection, source, sink):
         connection,
         source,
         sink,
-        print_result=True if os.getenv("POLYNOTE_VERSION") else False,
+        print_result=bool(os.getenv("POLYNOTE_VERSION")),
     )
 
 
@@ -316,11 +358,18 @@ async def create_cpg(
         "auto_build": "true" if auto_build else "false",
         "skip_sbom": "true" if skip_sbom else "false",
     }
-    response = await client.post(
-        url="/cpg",
-        headers=headers,
-        json=data,
-    )
+    if isinstance(client, httpx.AsyncClient):
+        response = await client.post(
+            url="/cpg",
+            headers=headers,
+            json=data,
+        )
+    else:
+        response = client.post(
+            url="/cpg",
+            headers=headers,
+            json=data,
+        )
     return response.json()
 
 
