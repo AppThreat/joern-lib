@@ -76,7 +76,7 @@ async def get(
     if cpggen_url:
         cpggenclient = httpx.AsyncClient(base_url=cpggen_url, timeout=CLIENT_TIMEOUT)
     ws_url = f"""{base_url.replace("http://", "ws://").replace("https://", "wss://")}/connect"""
-    websocket = await websockets.connect(ws_url, ping_timeout=None)
+    websocket = await websockets.connect(ws_url, ping_interval=None, ping_timeout=None)
     connected_msg = await websocket.recv()
     if connected_msg != "connected":
         raise websockets.exceptions.InvalidState(
@@ -97,31 +97,33 @@ async def receive(connection):
     return await connection.websocket.recv()
 
 
-async def p(connection, query_str, title="", caption=""):
+async def p(connection, query_str, title="", caption="", sync=True):
     """Function to print the result as a table"""
-    result = await query(connection, query_str)
+    result = await query(connection, query_str, sync=sync)
     print_table(result, title, caption)
     return result
 
 
-async def q(connection, query_str):
+async def q(connection, query_str, sync=True):
     """Query joern server and optionally print the result as a table if the query ends with .p"""
     if query_str.strip().endswith(".p"):
         query_str = f"{query_str[:-2]}.toJsonPretty"
-        return await p(connection, query_str)
-    return await query(connection, query_str)
+        return await p(connection, query_str, sync=sync)
+    return await query(connection, query_str, sync=sync)
 
 
-async def query(connection, query_str):
+async def query(connection, query_str, sync=True):
     """Query joern server"""
     client = connection.httpclient
     response = await client.post(
-        url="/query",
+        url=f"/query{'-sync' if sync else ''}",
         headers=headers,
         json={"query": fix_query(query_str)},
     )
     if response.status_code == httpx.codes.OK:
         j = response.json()
+        if sync:
+            return fix_json(j.get("stdout", ""))
         res_uuid = j.get("uuid")
         try:
             completed_uuid = await receive(connection)
