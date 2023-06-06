@@ -6,7 +6,7 @@ Functions
 ---------
 
     
-`bulk_query(connection, query_list)`
+`bulk_query(connection, query_list, sync=False)`
 :   Bulk query joern server
 
     
@@ -33,19 +33,23 @@ Functions
 :   Function to create a connection to joern and cpggen server
 
     
+`get_sync(base_url='http://localhost:9000', cpggen_url='http://localhost:7072', username=None, password=None)`
+:   Function to create a plain synchronous http connection to joern and cpggen server
+
+    
 `graphml_export(connection, filter_str='method')`
 :   Method to export method as graphml
 
     
-`p(connection, query_str, title='', caption='')`
+`p(connection, query_str, title='', caption='', sync=False)`
 :   Function to print the result as a table
 
     
-`q(connection, query_str)`
+`q(connection, query_str, sync=False)`
 :   Query joern server and optionally print the result as a table if the query ends with .p
 
     
-`query(connection, query_str)`
+`query(connection, query_str, sync=False)`
 :   Query joern server
 
     

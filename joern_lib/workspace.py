@@ -51,9 +51,31 @@ async def slice_cpg(
         try:
             with open(app_manifests.get("slice_out"), encoding="utf-8") as fp:
                 return json.load(fp)
-        except Exception:
+        except json.JSONDecodeError:
             return None
     return None
+
+
+async def create_atom(
+    connection,
+    src,
+    out_dir=None,
+    languages="autodetect",
+    project_name=None,
+):
+    """Function to create atom using atomgen server"""
+    return await create_cpg(
+        connection,
+        src,
+        out_dir=out_dir,
+        languages=languages,
+        project_name=project_name,
+        slice=False,
+        slice_mode="Usages",
+        auto_build=True,
+        skip_sbom=False,
+        use_atom=True,
+    )
 
 
 async def create_cpg(
@@ -66,6 +88,7 @@ async def create_cpg(
     slice_mode="Usages",
     auto_build=True,
     skip_sbom=True,
+    use_atom=False,
 ):
     """Function to create CPG using cpggen server"""
     app_manifests = []
