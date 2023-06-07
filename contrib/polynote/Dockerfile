@@ -16,15 +16,13 @@ ARG SCALA_VERSION="2.12"
 ARG DIST_TAR="polynote-dist.tar.gz"
 ARG TARGETPLATFORM
 
-ENV ATOM_VERSION=1.0.0 \
-    ATOM_HOME=/opt/atom-1.0.0 \
-    JAVA_HOME="/opt/graalvm-ce-java19-22.3.1" \
+ENV JAVA_HOME="/opt/graalvm-ce-java19-22.3.1" \
     POLYNOTE_SCALA_VERSION=${SCALA_VERSION} \
     POLYNOTE_VERSION=${POLYNOTE_VERSION} \
     PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
     PYTHONIOENCODING="utf-8" \
-    PATH=${PATH}:/root/.local/bin:/opt/atom-1.0.0/bin:/opt/graalvm-ce-java19-22.3.1/bin:
+    PATH=${PATH}:/root/.local/bin:/opt/graalvm-ce-java19-22.3.1/bin:
 WORKDIR /opt
 
 RUN set -e; \
@@ -35,13 +33,9 @@ RUN set -e; \
     && python3 --version \
     && python3 -m pip install --upgrade pip \
     && bash <(curl -sL https://get.graalvm.org/jdk) --to /opt graalvm-ce-java19-22.3.1 \
-    && java -version \
-    && curl -LO https://github.com/AppThreat/atom/releases/latest/download/atom.zip \
-    && curl -LO https://github.com/AppThreat/atom/releases/latest/download/atom.zip.sha512 \
-    && echo "$(cat atom.zip.sha512 | cut -d ' ' -f1) atom.zip" | sha512sum -c \
-    && unzip -q atom.zip -d /opt/ \
-    && rm atom.zip \
-    && ln -s /opt/atom-${ATOM_VERSION}/bin/atom /usr/local/bin/atom \
+    && curl -L https://github.com/AppThreat/cpggen/releases/latest/download/atomgen -o /usr/local/bin/atomgen \
+    && chmod +x /usr/local/bin/atomgen \
+    && atomgen --help \
     && curl -LO https://repo.almalinux.org/almalinux/9/CRB/${ARCH_NAME}/os/Packages/graphviz-devel-2.44.0-25.el9.${ARCH_NAME}.rpm \
     && rpm -ivh graphviz-devel-2.44.0-25.el9.${ARCH_NAME}.rpm \
     && rm graphviz-devel-2.44.0-25.el9.${ARCH_NAME}.rpm \

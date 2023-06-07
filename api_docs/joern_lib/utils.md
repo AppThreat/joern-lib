@@ -10,14 +10,31 @@ Functions
 :   Function to calculate has using blake2b algorithm
 
     
+`check_command(cmd)`
+:   Method to check if command is available
+    :return True if command is available in PATH. False otherwise
+
+    
+`collect_cpg_manifests(cpg_out_dir)`
+:   Utility method to collect all the CPG manifests created in a directory
+
+    
 `colorize_dot_data(dot_data, scheme='paired9', colors=None, shapes=None, style='filled')`
 :   Function to colorize dot data with Brewer color schemes
     
     This product includes color specifications and designs developed by Cynthia Brewer (http://colorbrewer.org/).
 
     
+`exec_tool(tool_name, args=[], cwd=None)`
+:   Method to execute external command
+
+    
 `expand_search_str(search_descriptor)`
 :   Given a descriptor string or dict, this method converts into equivalent cpgql method
+
+    
+`find_files(src, src_ext_name)`
+:   Utility method to find files
 
     
 `fix_json(sout)`

@@ -3,8 +3,10 @@ Functions to perform workspace related operations
 """
 import json
 import os
+import tempfile
 
 from joern_lib import client
+from joern_lib.utils import check_command, collect_cpg_manifests, exec_tool
 
 
 def extract_dir(res):
@@ -63,7 +65,33 @@ async def create_atom(
     languages="autodetect",
     project_name=None,
 ):
-    """Function to create atom using atomgen server"""
+    """Function to create atom using atomgen cli or server"""
+    if not connection:
+        atomgen_bin = check_command("atomgen")
+        if not atomgen_bin:
+            raise ValueError(
+                "atomgen cli not found. Check your PATH environment variable or use remote atomgen server"
+            )
+        if not out_dir:
+            out_dir = tempfile.mkdtemp(prefix="atomgen-")
+        aargs = ["-i", src, "-l", languages, "-o", out_dir]
+        cp = exec_tool("atomgen", aargs)
+        app_manifests = collect_cpg_manifests(out_dir)
+        if app_manifests:
+            first_app = app_manifests[0]
+            if not project_name and first_app.get("app"):
+                project_name = first_app.get("app")
+            cpg_path = first_app.get("cpg")
+            res = await import_cpg(connection, cpg_path, project_name)
+            if not res:
+                return None
+            return (
+                app_manifests[0]
+                if app_manifests and len(app_manifests) == 1
+                else app_manifests
+            )
+        else:
+            return None
     return await create_cpg(
         connection,
         src,

@@ -1,8 +1,11 @@
 """Common utilities"""
 import base64
+import json
 import mimetypes
 import os
 import re
+import shutil
+import subprocess
 from hashlib import blake2b
 
 import orjson
@@ -537,3 +540,51 @@ def colorize_dot_data(
                 fdot_list.append(d)
         return fdot_list[0] if fdot_list and len(fdot_list) == 1 else fdot_list
     return dot_data
+
+
+def check_command(cmd):
+    """
+    Method to check if command is available
+    :return True if command is available in PATH. False otherwise
+    """
+    cpath = shutil.which(cmd, mode=os.F_OK | os.X_OK)
+    return cpath is not None
+
+
+def exec_tool(tool_name, args=[], cwd=None):
+    """Method to execute external command"""
+    try:
+        return subprocess.run(
+            [tool_name, *args],
+            stdout=subprocess.STDOUT,
+            cwd=cwd,
+            check=False,
+            encoding="utf-8",
+            shell=False,
+        )
+    except subprocess.SubprocessError as e:
+        console.print(e)
+        return None
+
+
+def collect_cpg_manifests(cpg_out_dir):
+    """Utility method to collect all the CPG manifests created in a directory"""
+    cpg_manifests = []
+    if os.path.isfile(cpg_out_dir):
+        cpg_out_dir = os.path.dirname(cpg_out_dir)
+    mfiles = find_files(cpg_out_dir, ".manifest.json") if cpg_out_dir else []
+    for amanifest in mfiles:
+        with open(amanifest, encoding="utf-8") as mfp:
+            manifest_obj = json.load(mfp)
+            cpg_manifests.append(manifest_obj)
+    return cpg_manifests
+
+
+def find_files(src, src_ext_name):
+    """Utility method to find files"""
+    result = []
+    for root, _, files in os.walk(src):
+        for file in files:
+            if file == src_ext_name or file.endswith(src_ext_name):
+                result.append(os.path.abspath(os.path.join(root, file)))
+    return result

@@ -11,7 +11,7 @@ Functions
 
     
 `create_atom(connection, src, out_dir=None, languages='autodetect', project_name=None)`
-:   Function to create atom using atomgen server
+:   Function to create atom using atomgen cli or server
 
     
 `create_cpg(connection, src, out_dir=None, languages='autodetect', project_name=None, slice=None, slice_mode='Usages', auto_build=True, skip_sbom=True, use_atom=False)`
