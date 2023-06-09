@@ -15,24 +15,32 @@ ARG POLYNOTE_VERSION="0.5.1"
 ARG SCALA_VERSION="2.12"
 ARG DIST_TAR="polynote-dist.tar.gz"
 ARG TARGETPLATFORM
+ARG JAVA_VERSION=22.3.r19-grl
 
-ENV JAVA_HOME="/opt/graalvm-ce-java19-22.3.1" \
+ENV JAVA_VERSION=$JAVA_VERSION \
+    JAVA_HOME="/opt/java/${JAVA_VERSION}" \
     POLYNOTE_SCALA_VERSION=${SCALA_VERSION} \
     POLYNOTE_VERSION=${POLYNOTE_VERSION} \
     PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
-    PYTHONIOENCODING="utf-8" \
-    PATH=${PATH}:/root/.local/bin:/opt/graalvm-ce-java19-22.3.1/bin:
+    PYTHONIOENCODING="utf-8"
+ENV PATH=${PATH}:/root/.local/bin:${JAVA_HOME}/bin:
 WORKDIR /opt
 
 RUN set -e; \
     ARCH_NAME="$(rpm --eval '%{_arch}')"; \
     microdnf update -y && microdnf install -y gcc git-core python3.11 python3.11-devel python3.11-pip which wget tar zip \
-        unzip sudo graphviz graphviz-gd graphviz-python3 \
+        unzip sudo graphviz graphviz-gd graphviz-python3 findutils \
     && alternatives --install /usr/bin/python3 python /usr/bin/python3.11 1 \
     && python3 --version \
     && python3 -m pip install --upgrade pip \
-    && bash <(curl -sL https://get.graalvm.org/jdk) --to /opt graalvm-ce-java19-22.3.1 \
+    && curl -s "https://get.sdkman.io" | bash \
+    && source "$HOME/.sdkman/bin/sdkman-init.sh" \
+    && echo -e "sdkman_auto_answer=true\nsdkman_selfupdate_feature=false\nsdkman_auto_env=true" >> $HOME/.sdkman/etc/config \
+    && sdk install java $JAVA_VERSION \
+    && sdk offline enable \
+    && mv /root/.sdkman/candidates/* /opt/ \
+    && rm -rf /root/.sdkman \
     && curl -L https://github.com/AppThreat/cpggen/releases/latest/download/atomgen -o /usr/local/bin/atomgen \
     && chmod +x /usr/local/bin/atomgen \
     && atomgen --help \
@@ -47,6 +55,7 @@ RUN set -e; \
     && echo "DIST_TAR=$DIST_TAR" \
     && rm $DIST_TAR \
     && useradd -ms /bin/bash polly \
+    && chmod a-w -R /opt \
     && chown -R polly:polly /opt \
     && microdnf remove -y gcc \
     && rm -rf /var/cache/yum \
