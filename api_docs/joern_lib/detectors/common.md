@@ -128,6 +128,10 @@ Functions
 :   Retrieve the dependency nodes
 
     
+`list_derived_types(connection, base_type_fullname)`
+:   Function to list all derived types given a base type
+
+    
 `list_external_methods(connection)`
 :   Retrieve the external methods
 

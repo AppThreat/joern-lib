@@ -10,6 +10,7 @@ services:
     command: --server --server-host 0.0.0.0 --server-port 7073
     environment:
       - AT_DEBUG_MODE=debug
+      - CPGGEN_MEMORY=4G
   cpggen:
     image: ghcr.io/appthreat/cpggen:main
     ports:
@@ -17,11 +18,10 @@ services:
     volumes:
       - $HOME:/app # Set this to your directory containing sources
       - /tmp:/tmp
-    mem_limit: 128000m
-    mem_reservation: 64000m
     command: cpggen --server --server-host 0.0.0.0 --server-port 7072
     environment:
       - AT_DEBUG_MODE=debug
+      - CPGGEN_MEMORY=4G
   joern:
     image: ghcr.io/appthreat/cpggen:main
     ports:
@@ -29,9 +29,7 @@ services:
     volumes:
       - $HOME:/app # Set this to your directory containing sources
       - /tmp:/tmp
-    mem_limit: 128000m
-    mem_reservation: 64000m
-    command: joern -J-Xmx64g --server --server-host 0.0.0.0 --server-port 9000 --server-auth-username admin --server-auth-password admin
+    command: joern --server --server-host 0.0.0.0 --server-port 9000 --server-auth-username admin --server-auth-password admin
     environment:
       - JOERN_DATAFLOW_TRACKED_WIDTH=128
   polynote:

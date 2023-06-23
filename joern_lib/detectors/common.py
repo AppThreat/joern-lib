@@ -252,6 +252,14 @@ async def list_custom_types(connection):
     )
 
 
+async def list_derived_types(connection, base_type_fullname):
+    """Function to list all derived types given a base type"""
+    return await client.q(
+        connection,
+        f"""cpg.typeDecl.fullNameExact("{base_type_fullname}").derivedTypeDeclTransitive""",
+    )
+
+
 async def get_calls(connection, pattern):
     """Function to list calls"""
     return await client.q(connection, f"""cpg.call.code("(?i){pattern}")""")

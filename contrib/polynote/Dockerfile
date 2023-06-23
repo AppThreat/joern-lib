@@ -57,7 +57,7 @@ RUN set -e; \
     && useradd -ms /bin/bash polly \
     && chmod a-w -R /opt \
     && chown -R polly:polly /opt \
-    && microdnf remove -y gcc \
+    && microdnf remove -y gcc findutils \
     && rm -rf /var/cache/yum \
     && microdnf clean all
 

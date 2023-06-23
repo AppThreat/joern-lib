@@ -82,7 +82,7 @@ async def create_atom(
             if not project_name and first_app.get("app"):
                 project_name = first_app.get("app")
             cpg_path = first_app.get("cpg")
-            res = await import_cpg(connection, cpg_path, project_name)
+            res = await import_cpg(connection, cpg_path, project_name, is_atom=True)
             if not res:
                 return None
             return (
@@ -143,7 +143,12 @@ async def create_cpg(
     )
 
 
-async def import_cpg(connection, cpg_path, project_name=None):
+async def import_atom(connection, cpg_path, project_name=None):
+    """Function to import atom"""
+    return await import_cpg(connection, cpg_path, project_name, is_atom=True)
+
+
+async def import_cpg(connection, cpg_path, project_name=None, is_atom=False):
     """Function to import CPG"""
     if cpg_path:
         res = await dir_exists(connection, cpg_path)
@@ -151,7 +156,17 @@ async def import_cpg(connection, cpg_path, project_name=None):
             raise ValueError(
                 f"CPG {cpg_path} doesn't exist for import into Joern. Check if the directory containing this CPG is mounted and accessible from the server."
             )
-    if project_name:
+    if is_atom:
+        if not project_name:
+            project_name = "app"
+        res = await client.q(
+            connection,
+            f"""
+                             workspace.createProject("{cpg_path}", "{project_name}")
+                             openForInputPath("{cpg_path}")
+                             """,
+        )
+    elif project_name:
         res = await client.q(
             connection, f"""importCpg("{cpg_path}", "{project_name}")"""
         )

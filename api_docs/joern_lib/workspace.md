@@ -46,11 +46,15 @@ Functions
 :   Function to retrieve the path to a workspace
 
     
+`import_atom(connection, cpg_path, project_name=None)`
+:   Function to import atom
+
+    
 `import_code(connection, directory, project_name=None)`
 :   Function to import code to joern
 
     
-`import_cpg(connection, cpg_path, project_name=None)`
+`import_cpg(connection, cpg_path, project_name=None, is_atom=False)`
 :   Function to import CPG
 
     
